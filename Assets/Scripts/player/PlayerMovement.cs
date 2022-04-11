@@ -6,9 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10f;
 
-    public Rigidbody2D rigidbody;
-
-    Vector2 movement;
+    private Vector2 movement;
     public string x_axis;
     public string y_axis;
     // Start is called before the first frame update
@@ -33,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rigidbody.MovePosition(rigidbody.position + movement*moveSpeed*Time.fixedDeltaTime);
+        Rigidbody2D myRigidbody = GetComponent<Rigidbody2D>();
+        myRigidbody.MovePosition(myRigidbody.position + movement*moveSpeed*Time.fixedDeltaTime);
     }
 }
