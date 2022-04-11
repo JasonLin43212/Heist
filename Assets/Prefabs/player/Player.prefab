@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2957237617291600147}
   - component: {fileID: 5323455744409526872}
   - component: {fileID: -3522677471127249613}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  rigidbody: {fileID: 2957237617291600147}
   x_axis: 
   y_axis: 
 --- !u!58 &-3522677471127249613
