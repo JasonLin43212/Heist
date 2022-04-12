@@ -6,7 +6,7 @@ public class GuardBehaviour : MonoBehaviour
 {
     // Constants
     const float MOVE_SPEED = 1.5f, ROTATION_SPEED = 120f, ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
-    const float PLAYER_RADIUS = 0.5f;
+    const float PLAYER_RADIUS = 0.4f;
     const int DRAW_VISION_SEGMENTS = 40;
 
     // Modifiable constants
@@ -77,30 +77,28 @@ public class GuardBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (enableMove)
+        float angleDifference = targetAngle % 360 - myRigidbody.rotation % 360;
+        if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
         {
-            float angleDifference = targetAngle % 360 - myRigidbody.rotation % 360;
-            if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
+            // Rotate
+            float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
+            float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
+            if (enableMove) myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+        }
+        else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
+        {
+            // Move
+            bool updatedVision = UpdateVision(Time.fixedDeltaTime);
+            if (!updatedVision)
             {
-                // Rotate
-                float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
-                float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
-                myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+                Vector2 movementDirection = targetPosition - myRigidbody.position;
+                float moveDistance = Mathf.Min(Time.fixedDeltaTime * MOVE_SPEED / movementDirection.magnitude, 1f);
+                if (enableMove) myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
             }
-            else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
-            {
-                // Move
-                if (!UpdateVision(Time.fixedDeltaTime))
-                {
-                    Vector2 movementDirection = targetPosition - myRigidbody.position;
-                    float moveDistance = Mathf.Min(Time.fixedDeltaTime * MOVE_SPEED / movementDirection.magnitude, 1f);
-                    myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
-                }
-            }
-            else
-            {
-                if (!UpdateVision(Time.fixedDeltaTime)) UpdateMoveTargets();
-            }
+        }
+        else
+        {
+            if (!UpdateVision(Time.fixedDeltaTime) && enableMove) UpdateMoveTargets();
         }
     }
 
@@ -278,9 +276,6 @@ public class GuardBehaviour : MonoBehaviour
 
         // Set collider points
         PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
-        collider.enabled = false;
         collider.SetPath(0, colliderPoints);
-        collider.enabled = true;
     }
-
 }
