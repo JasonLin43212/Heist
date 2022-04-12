@@ -11,7 +11,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // Modifiable constants
 
-    public float visionRange = 5f, visionAngle = 10f;
+    public float visionRange = 7f, visionAngle = 10f;
     public float secondsToCatch = 2f;
 
     // Movement variables
@@ -222,7 +222,15 @@ public class GuardBehaviour : MonoBehaviour
     private (bool, float) CanSeePlayer(Rigidbody2D playerRigidbody)
     {
         PolygonCollider2D visionConeCollider = visionConeObject.GetComponent<PolygonCollider2D>();
-        if (playerRigidbody.IsTouching(visionConeCollider)) return (true, (playerRigidbody.position - myRigidbody.position).magnitude);
+        if (playerRigidbody.IsTouching(visionConeCollider))
+        {
+            // Calculate the projected distance in the direction of the cone
+            // We use this instead of moving directly toward the player to avoid moving at weird angles.
+            float angledDistance = (playerRigidbody.position - myRigidbody.position).magnitude;
+            float angleOffset = Vector2.Angle(playerRigidbody.position - myRigidbody.position, (Vector2)directionMarkerTransform.position - myRigidbody.position);
+            float straightDistance = Mathf.Cos(Mathf.Deg2Rad * angleOffset) * angledDistance;
+            return (true, straightDistance);
+        }
         return (false, 0);
     }
 
