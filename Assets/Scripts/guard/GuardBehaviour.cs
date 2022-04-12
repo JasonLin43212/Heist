@@ -11,7 +11,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // Modifiable constants
 
-    public float visionRange = 5f, visionAngle = 15f;
+    public float visionRange = 5f, visionAngle = 10f;
     public float secondsToCatch = 2f;
 
     // Movement variables
@@ -30,13 +30,10 @@ public class GuardBehaviour : MonoBehaviour
     private float blockedVisionRange, drawnVisionRange, drawnVisionAngle;
 
     // References
-    private Rigidbody2D myRigidbody;
+    private Rigidbody2D myRigidbody, player1Rigidbody, player2Rigidbody;
     public Transform directionMarkerTransform;
     public GameObject visionConeObject, alertMarkerObject;
     private Mesh visionConeMesh;
-
-    // TEMPORARY
-    public Rigidbody2D player1Rigidbody, player2Rigidbody;
 
     // Toggles
     public bool enableMove;
@@ -44,7 +41,12 @@ public class GuardBehaviour : MonoBehaviour
 
     void Start()
     {
+        // Set references
         myRigidbody = GetComponent<Rigidbody2D>();
+        player1Rigidbody = GameState.Instance.GetPlayerObject(Player.Player1).GetComponent<Rigidbody2D>();
+        player2Rigidbody = GameState.Instance.GetPlayerObject(Player.Player2).GetComponent<Rigidbody2D>();
+
+        // Set initial movement variables
         defaultRouteIndex = 0;
         queueIndex = 0;
         queue = new List<Vector2>();
@@ -57,6 +59,7 @@ public class GuardBehaviour : MonoBehaviour
         visionConeMesh = new Mesh();
         visionConeObject.GetComponent<MeshFilter>().mesh = visionConeMesh;
 
+        // Get initial movement target and vision collider
         UpdateMoveTargets();
         CastVisionRay();
         DrawVisionCone();
