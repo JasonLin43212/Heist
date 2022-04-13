@@ -109,7 +109,7 @@ public class GuardBehaviour : MonoBehaviour
         {
             waitTime -= Time.fixedDeltaTime;
             UpdateVision(Time.fixedDeltaTime);
-            Debug.Log(targetAngle);
+            // Debug.Log(targetAngle);
         }
         float angleDifference = (targetAngle - transform.eulerAngles.z) % 360;
         if (Mathf.Abs(angleDifference) > 180f) angleDifference = (360 - angleDifference) % 360;
