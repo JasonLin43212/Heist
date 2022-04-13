@@ -584,6 +584,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mouse Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5937351034015474660, guid: e53e118cacb569946b43646716e1c324, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: enableMove
       value: 1
@@ -619,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166422521656341081, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6166422521656341085, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: m_RootOrder
@@ -673,5 +677,13 @@ PrefabInstance:
       propertyPath: player2Rigidbody
       value: 
       objectReference: {fileID: 163641225}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRoute.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRoute.Array.data[1].x
+      value: -5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}

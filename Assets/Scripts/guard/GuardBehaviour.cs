@@ -5,14 +5,19 @@ using UnityEngine;
 public class GuardBehaviour : MonoBehaviour
 {
     // Constants
-    const float ROTATION_SPEED = 120f, ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
+    const float ROTATION_SPEED = 180f, ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
     const float PLAYER_RADIUS = 0.4f;
+
+    // If a position.y = PLEASE_WAIT, then position.x means seconds it needs to wait
+    const float PLEASE_WAIT = 18.18f; 
 
     // Modifiable constants
 
-    public float visionRange = 7f, visionAngle = 10f;
+    public float visionRange = 15f, visionAngle = 30f;
     public float moveSpeed = 1.5f;
-    public float secondsToCatch = 2f;
+
+    public float chaseSpeed = 3f;
+    public float secondsToCatch = 1.5f;
     public int visionConeResolution = 100;
 
     // Movement variables
@@ -29,6 +34,10 @@ public class GuardBehaviour : MonoBehaviour
     private bool isAlert;
     private float suspicionTime;
     private float blockedVisionRange, drawnVisionRange, drawnVisionAngle;
+
+    private float waitTime = -1;
+
+    private Vector2 lastPos; // For backtracking
 
     private LayerMask raycastLayerMask;
 
@@ -94,6 +103,12 @@ public class GuardBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (waitTime >= 0) 
+        {
+            waitTime -= Time.fixedDeltaTime;
+            bool updatedVision = UpdateVision(Time.fixedDeltaTime);
+            return;
+        }
         float angleDifference = (targetAngle - transform.eulerAngles.z) % 360;
         if (Mathf.Abs(angleDifference) > 180f) angleDifference = (360 - angleDifference) % 360;
         if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
@@ -101,6 +116,7 @@ public class GuardBehaviour : MonoBehaviour
             // Rotate
             float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
             float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
+            bool updatedVision = UpdateVision(Time.fixedDeltaTime);
             if (enableMove) myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
         }
         else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
@@ -110,7 +126,8 @@ public class GuardBehaviour : MonoBehaviour
             if (!updatedVision)
             {
                 Vector2 movementDirection = targetPosition - myRigidbody.position;
-                float moveDistance = Mathf.Min(Time.fixedDeltaTime * moveSpeed / movementDirection.magnitude, 1f);
+                float theSpeed = isAlert ? chaseSpeed : moveSpeed;
+                float moveDistance = Mathf.Min(Time.fixedDeltaTime * theSpeed / movementDirection.magnitude, 1f);
                 if (enableMove) myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
             }
         }
@@ -137,8 +154,15 @@ public class GuardBehaviour : MonoBehaviour
         {
             case MovementMode.Default:
                 targetPosition = queue[queueIndex];
-                if (defaultRoute.Count == 1 && (targetPosition - myRigidbody.position).magnitude < POSITION_TOL) targetAngle = defaultAngle;
+                if(targetPosition.y == PLEASE_WAIT) 
+                {
+                    waitTime = targetPosition.x;
+                    targetPosition = myRigidbody.position;
+                }
+                else if (defaultRoute.Count == 1 && (targetPosition - myRigidbody.position).magnitude < POSITION_TOL) targetAngle = defaultAngle;
                 else targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
+
+                lastPos = targetPosition;
 
                 queueIndex++;
                 if (queueIndex >= queue.Count)
@@ -160,7 +184,7 @@ public class GuardBehaviour : MonoBehaviour
                 // TODO: update queue so that interrupted sightings are handled properly
                 queue.RemoveAt(queueIndex - 1);
                 queueIndex--;
-                targetPosition = queue[queueIndex - 1];
+                targetPosition = lastPos;
                 targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
                 break;
         }
@@ -210,6 +234,8 @@ public class GuardBehaviour : MonoBehaviour
             {
                 isAlert = true;
                 suspicionTime = 0;
+
+                waitTime = 0;
 
                 // Add new waypoint to movement queue to chase down player
                 float distance = (foundPlayer.Value == Player.Player1) ? player1Distance : player2Distance;
