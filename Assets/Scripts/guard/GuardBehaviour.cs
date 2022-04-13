@@ -20,7 +20,7 @@ public class GuardBehaviour : MonoBehaviour
     private int defaultRouteIndex, queueIndex;
     private List<Vector2> queue;
     private Vector2 targetPosition;
-    private float targetAngle;
+    private float targetAngle, defaultAngle;
 
     private enum MovementMode { Default, LookLeft, LookRight, Backtrack };
     private MovementMode movementMode;
@@ -65,6 +65,12 @@ public class GuardBehaviour : MonoBehaviour
         raycastLayerMask = ~LayerMask.GetMask("Ignore Raycast", "Clickable");
 
         // Get initial movement target and vision collider
+        if (defaultRoute.Count == 0)
+        {
+            defaultRoute = new List<Vector2>();
+            defaultRoute.Add(myRigidbody.position);
+        }
+        if (defaultRoute.Count == 1) defaultAngle = myRigidbody.rotation;
         UpdateMoveTargets();
         CastVisionRay();
         DrawVisionCone();
@@ -131,7 +137,9 @@ public class GuardBehaviour : MonoBehaviour
         {
             case MovementMode.Default:
                 targetPosition = queue[queueIndex];
-                targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
+                if (defaultRoute.Count == 1 && (targetPosition - myRigidbody.position).magnitude < POSITION_TOL) targetAngle = defaultAngle;
+                else targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
+
                 queueIndex++;
                 if (queueIndex >= queue.Count)
                 {
