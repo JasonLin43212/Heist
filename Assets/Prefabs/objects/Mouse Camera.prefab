@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 5937351034015474661}
   m_Layer: 2
   m_Name: Mouse Camera
-  m_TagString: Guard
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
