@@ -289,8 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaf56d8b3bbf394d800d22401da4a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRange: 2
-  visionAngle: 40
+  visionRange: 5
+  visionAngle: 30
   rotationSpeed: 5
   secondsToCatch: 0.2
   visionConeResolution: 50
@@ -300,7 +300,7 @@ MonoBehaviour:
   visionConeObject: {fileID: 5937351034480565911}
   alertMarkerObject: {fileID: 5937351033040400127}
   alertSpriteMaskObject: {fileID: 7244913512494353834}
-  enableMove: 0
+  enableMove: 1
   betterVisionCone: 1
 --- !u!1 &5937351034480565911
 GameObject:

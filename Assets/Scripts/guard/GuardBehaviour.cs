@@ -10,6 +10,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // If a position.y = PLEASE_WAIT, then position.x means seconds it needs to wait
     const float PLEASE_WAIT = 18.18f; 
+    const float PLEASE_TURN = 48.48f;
 
     // Modifiable constants
 
@@ -103,11 +104,11 @@ public class GuardBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (waitTime >= 0) 
+        if (waitTime >= 0)
         {
             waitTime -= Time.fixedDeltaTime;
-            bool updatedVision = UpdateVision(Time.fixedDeltaTime);
-            return;
+            UpdateVision(Time.fixedDeltaTime);
+            Debug.Log(targetAngle);
         }
         float angleDifference = (targetAngle - transform.eulerAngles.z) % 360;
         if (Mathf.Abs(angleDifference) > 180f) angleDifference = (360 - angleDifference) % 360;
@@ -131,7 +132,7 @@ public class GuardBehaviour : MonoBehaviour
                 if (enableMove) myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
             }
         }
-        else
+        else if(waitTime < 0)
         {
             if (!UpdateVision(Time.fixedDeltaTime) && enableMove) UpdateMoveTargets();
         }
