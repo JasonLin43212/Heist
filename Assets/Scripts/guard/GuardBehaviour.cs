@@ -6,13 +6,13 @@ public class GuardBehaviour : MonoBehaviour
 {
     // Constants
     const float MOVE_SPEED = 1.5f, ROTATION_SPEED = 120f, ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
-    const float PLAYER_RADIUS = 0.5f;
-    const int DRAW_VISION_SEGMENTS = 40;
+    const float PLAYER_RADIUS = 0.4f;
 
     // Modifiable constants
 
     public float visionRange = 7f, visionAngle = 10f;
     public float secondsToCatch = 2f;
+    public int visionConeResolution = 100;
 
     // Movement variables
     public List<Vector2> defaultRoute;
@@ -32,11 +32,11 @@ public class GuardBehaviour : MonoBehaviour
     // References
     private Rigidbody2D myRigidbody, player1Rigidbody, player2Rigidbody;
     public Transform directionMarkerTransform;
-    public GameObject visionConeObject, alertMarkerObject;
+    public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     private Mesh visionConeMesh;
 
     // Toggles
-    public bool enableMove;
+    public bool enableMove, betterVisionCone;
 
 
     void Start()
@@ -63,44 +63,48 @@ public class GuardBehaviour : MonoBehaviour
         UpdateMoveTargets();
         CastVisionRay();
         DrawVisionCone();
+        if (betterVisionCone) DrawBetterVisionCone();
     }
 
     void Update()
     {
-        CastVisionRay();
-        DrawVisionCone();
+        if (betterVisionCone) DrawBetterVisionCone();
+        else
+        {
+            CastVisionRay();
+            DrawVisionCone();
+        }
 
         // Set alert marker position
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
         alertMarkerObject.SetActive(isAlert);
+        alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
     }
 
     void FixedUpdate()
     {
-        if (enableMove)
+        float angleDifference = targetAngle % 360 - myRigidbody.rotation % 360;
+        if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
         {
-            float angleDifference = targetAngle % 360 - myRigidbody.rotation % 360;
-            if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
+            // Rotate
+            float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
+            float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
+            if (enableMove) myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+        }
+        else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
+        {
+            // Move
+            bool updatedVision = UpdateVision(Time.fixedDeltaTime);
+            if (!updatedVision)
             {
-                // Rotate
-                float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
-                float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
-                myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+                Vector2 movementDirection = targetPosition - myRigidbody.position;
+                float moveDistance = Mathf.Min(Time.fixedDeltaTime * MOVE_SPEED / movementDirection.magnitude, 1f);
+                if (enableMove) myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
             }
-            else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
-            {
-                // Move
-                if (!UpdateVision(Time.fixedDeltaTime))
-                {
-                    Vector2 movementDirection = targetPosition - myRigidbody.position;
-                    float moveDistance = Mathf.Min(Time.fixedDeltaTime * MOVE_SPEED / movementDirection.magnitude, 1f);
-                    myRigidbody.MovePosition(myRigidbody.position + movementDirection * moveDistance);
-                }
-            }
-            else
-            {
-                if (!UpdateVision(Time.fixedDeltaTime)) UpdateMoveTargets();
-            }
+        }
+        else
+        {
+            if (!UpdateVision(Time.fixedDeltaTime) && enableMove) UpdateMoveTargets();
         }
     }
 
@@ -245,24 +249,24 @@ public class GuardBehaviour : MonoBehaviour
         visionConeMesh.Clear();
 
         // Get vertices of mesh
-        Vector2[] colliderPoints = new Vector2[DRAW_VISION_SEGMENTS + 2];
+        Vector2[] colliderPoints = new Vector2[visionConeResolution + 2];
         colliderPoints[0] = new Vector2(0, 0);
         float angle = -visionAngle;
         float arcLength = 2 * visionAngle;
-        for (int i = 0; i <= DRAW_VISION_SEGMENTS; i++)
+        for (int i = 0; i <= visionConeResolution; i++)
         {
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * blockedVisionRange;
-            float y = Mathf.Cos(Mathf.Deg2Rad * angle) * blockedVisionRange;
+            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * blockedVisionRange;
+            float y = Mathf.Sin(Mathf.Deg2Rad * angle) * blockedVisionRange;
 
             colliderPoints[i + 1] = new Vector2(x, y);
 
-            angle += (arcLength / DRAW_VISION_SEGMENTS);
+            angle += (arcLength / visionConeResolution);
         }
         Vector3[] meshPoints = System.Array.ConvertAll<Vector2, Vector3>(colliderPoints, point => point);
 
         // Calculate triangles array
-        int[] triangles = new int[DRAW_VISION_SEGMENTS * 3];
-        for (int i = 0; i < DRAW_VISION_SEGMENTS; i++)
+        int[] triangles = new int[visionConeResolution * 3];
+        for (int i = 0; i < visionConeResolution; i++)
         {
             triangles[3 * i] = 0;
             triangles[3 * i + 1] = i + 1;
@@ -271,16 +275,58 @@ public class GuardBehaviour : MonoBehaviour
 
         // Set mesh
         visionConeMesh.vertices = meshPoints;
-        visionConeMesh.uv = new Vector2[DRAW_VISION_SEGMENTS + 2];
+        visionConeMesh.uv = new Vector2[visionConeResolution + 2];
         visionConeMesh.triangles = triangles;
         visionConeMesh.RecalculateNormals();
         visionConeMesh.RecalculateBounds();
 
         // Set collider points
         PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
-        collider.enabled = false;
         collider.SetPath(0, colliderPoints);
-        collider.enabled = true;
     }
 
+    private void DrawBetterVisionCone()
+    {
+        // Get vertices of mesh
+        Vector2[] colliderPoints = new Vector2[visionConeResolution + 2];
+        colliderPoints[0] = new Vector2(0, 0);
+        float angle = -visionAngle;
+        float arcLength = 2 * visionAngle;
+        for (int i = 0; i <= visionConeResolution; i++)
+        {
+            float worldAngle = transform.rotation.eulerAngles.z + angle;
+            Vector2 raycastDirection = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
+            RaycastHit2D raycastHit = Physics2D.Raycast(myRigidbody.position, raycastDirection, visionRange);
+            float raycastRange = (raycastHit.collider != null) ? raycastHit.distance : visionRange;
+
+            Vector2 vertexDirection = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
+            // Debug.Log($"Angle: {angle}, World Angle: {worldAngle}, Raycast direction: {raycastDirection}, Raycast range: {raycastRange}, v: {vertexDirection}");
+            colliderPoints[i + 1] = vertexDirection * raycastRange;
+
+            angle += (arcLength / visionConeResolution);
+        }
+
+        Vector3[] meshPoints = System.Array.ConvertAll<Vector2, Vector3>(colliderPoints, point => point);
+
+        // Calculate triangles array
+        int[] triangles = new int[visionConeResolution * 3];
+        for (int i = 0; i < visionConeResolution; i++)
+        {
+            triangles[3 * i] = 0;
+            triangles[3 * i + 1] = i + 1;
+            triangles[3 * i + 2] = i + 2;
+        }
+
+        // Set mesh
+        visionConeMesh.Clear();
+        visionConeMesh.vertices = meshPoints;
+        visionConeMesh.uv = new Vector2[visionConeResolution + 2];
+        visionConeMesh.triangles = triangles;
+        visionConeMesh.RecalculateNormals();
+        visionConeMesh.RecalculateBounds();
+
+        // Set collider points
+        PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
+        collider.SetPath(0, colliderPoints);
+    }
 }

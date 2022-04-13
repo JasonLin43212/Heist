@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5715634409019086025}
     m_Modifications:
+    - target: {fileID: 3849114828733150452, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6166422521656341081, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: m_Name
       value: Guard
