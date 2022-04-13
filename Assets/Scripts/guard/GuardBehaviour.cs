@@ -32,7 +32,7 @@ public class GuardBehaviour : MonoBehaviour
     // References
     private Rigidbody2D myRigidbody, player1Rigidbody, player2Rigidbody;
     public Transform directionMarkerTransform;
-    public GameObject visionConeObject, alertMarkerObject;
+    public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     private Mesh visionConeMesh;
 
     // Toggles
@@ -78,6 +78,7 @@ public class GuardBehaviour : MonoBehaviour
         // Set alert marker position
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
         alertMarkerObject.SetActive(isAlert);
+        alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
     }
 
     void FixedUpdate()
