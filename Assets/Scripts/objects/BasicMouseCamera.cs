@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class BasicMouseCamera : MonoBehaviour
 {
     // Constants
@@ -150,6 +150,7 @@ public class BasicMouseCamera : MonoBehaviour
     private void PlayerCaught(Player caughtPlayer)
     {
         Debug.Log($"Player {(int)caughtPlayer + 1} was caught!");
+        SceneManager.LoadScene(sceneName:"Lose Screen");
     }
 
     private void CastVisionRay()
