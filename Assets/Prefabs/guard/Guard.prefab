@@ -272,6 +272,8 @@ MonoBehaviour:
   moveSpeed: 1.5
   chaseSpeed: 4
   secondsToCatch: 1.5
+  catchRateMultiplierMin: 1
+  catchRateMultiplierMax: 3
   visionConeResolution: 100
   defaultRouteActions: []
   targetPosition: {x: 0, y: 0}

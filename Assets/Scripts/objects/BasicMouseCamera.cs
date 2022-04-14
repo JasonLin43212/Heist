@@ -10,6 +10,7 @@ public class BasicMouseCamera : MonoBehaviour
     public float visionRange = 7f, visionAngle = 10f;
     public float rotationSpeed = 10f;
     public float secondsToCatch = 0.2f;
+    public float catchRateMultiplierMin, catchRateMultiplierMax;
     public int visionConeResolution = 50;
 
     // State variables
@@ -138,7 +139,11 @@ public class BasicMouseCamera : MonoBehaviour
         {
             if (isAlert)
             {
-                suspicionTime += deltaTime;  // Increment alert timer
+                Vector2 playerPosition = (foundPlayer == Player.Player1) ? player1Sighted.Value : player2Sighted.Value;
+                float playerDistance = (playerPosition - (Vector2)transform.position).magnitude;
+                // The multiplier to deltaTime is scaled linearly based on distance between catchRateMultiplierMin and catchRateMultiplierMax
+                float timeIncrementMultiplier = (1 - playerDistance / visionRange) * (catchRateMultiplierMax - catchRateMultiplierMin) + catchRateMultiplierMin;
+                suspicionTime += deltaTime * timeIncrementMultiplier;  // Increment alert timer
                 // Catch player if has been suspicious for sufficient time
                 if (suspicionTime >= secondsToCatch) PlayerCaught(foundPlayer.Value);
             }

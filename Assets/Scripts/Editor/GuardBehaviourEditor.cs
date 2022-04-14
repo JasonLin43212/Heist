@@ -13,7 +13,11 @@ public class GuardBehaviourEditor : Editor
     void OnEnable()
     {
         constantFields = new List<string> {
-            "visionRange", "visionAngle", "targetChaseDistanceRatio", "moveSpeed", "chaseSpeed", "secondsToCatch", "visionConeResolution"
+            "visionRange", "visionAngle",
+            "targetChaseDistanceRatio",
+            "moveSpeed", "chaseSpeed",
+            "secondsToCatch", "catchRateMultiplierMin", "catchRateMultiplierMax",
+            "visionConeResolution"
         };
         referenceFields = new List<string> {
             "directionMarkerTransform", "visionConeObject", "alertMarkerObject", "alertSpriteMaskObject"

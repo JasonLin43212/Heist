@@ -16,6 +16,7 @@ public class GuardBehaviour : MonoBehaviour
 
     public float chaseSpeed = 3f;
     public float secondsToCatch = 1.5f;
+    public float catchRateMultiplierMin, catchRateMultiplierMax;
     public int visionConeResolution = 100;
 
     // Movement variables
@@ -245,7 +246,10 @@ public class GuardBehaviour : MonoBehaviour
             if (isAlert)
             {
                 // Handle suspicion
-                suspicionTime += deltaTime;
+                float playerDistance = (targetPosition - (Vector2)myRigidbody.position).magnitude;
+                // The multiplier to deltaTime is scaled linearly based on distance between catchRateMultiplierMin and catchRateMultiplierMax
+                float timeIncrementMultiplier = (1 - playerDistance / visionRange) * (catchRateMultiplierMax - catchRateMultiplierMin) + catchRateMultiplierMin;
+                suspicionTime += deltaTime * timeIncrementMultiplier;
                 if (suspicionTime >= secondsToCatch) PlayerCaught(foundPlayer.Value);
 
                 // Modify the current queue to chase
