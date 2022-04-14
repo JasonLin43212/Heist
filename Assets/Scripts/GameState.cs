@@ -9,14 +9,17 @@ public class GameState
 
     // Global GameObject references
     private GameObject player1Object, player2Object;
+    private GameObject levelObject;
 
     public GameState(
         GameObject player1Object,
-        GameObject player2Object
+        GameObject player2Object,
+        GameObject levelObject
     )
     {
         this.player1Object = player1Object;
         this.player2Object = player2Object;
+        this.levelObject = levelObject;
 
         instance = this;
     }
