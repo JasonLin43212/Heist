@@ -19,7 +19,7 @@ public class GuardBehaviourEditor : Editor
             "directionMarkerTransform", "visionConeObject", "alertMarkerObject", "alertSpriteMaskObject"
         };
         toggleFields = new List<string> {
-            "enableMove", "strictChasing", "betterVisionCone"
+            "enableMove", "strictChasing"
         };
     }
 
