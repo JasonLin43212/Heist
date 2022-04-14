@@ -42,7 +42,9 @@ public class GameController : MonoBehaviour
         LevelBehaviour levelBehaviourScript = levelObject.GetComponent<LevelBehaviour>();
         player1Object.SetActive(true);
         player1Object.transform.position = levelBehaviourScript.GetPlayerSpawnPosition(Player.Player1);
+        player1Object.GetComponent<SpriteRenderer>().color = levelBehaviourScript.GetPlayerColor(Player.Player1);
         player2Object.SetActive(true);
         player2Object.transform.position = levelBehaviourScript.GetPlayerSpawnPosition(Player.Player2);
+        player2Object.GetComponent<SpriteRenderer>().color = levelBehaviourScript.GetPlayerColor(Player.Player2);
     }
 }

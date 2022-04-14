@@ -18,4 +18,11 @@ public class LevelBehaviour : MonoBehaviour
         Vector3 spawnPosition = spawnMarker.transform.position;
         return new Vector3(spawnPosition.x, spawnPosition.y, 0);
     }
+
+    public Color GetPlayerColor(Player player)
+    {
+        GameObject spawnMarker = (player == Player.Player1) ? player1SpawnMarker : player2SpawnMarker;
+        GameObject spawnSprite = spawnMarker.transform.GetChild(0).gameObject;
+        return spawnSprite.GetComponent<SpriteRenderer>().color;
+    }
 }
