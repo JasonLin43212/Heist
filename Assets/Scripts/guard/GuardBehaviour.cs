@@ -82,26 +82,12 @@ public class GuardBehaviour : MonoBehaviour
             defaultRouteActions.Add(GuardRouteAction.CreateGuardTurnAction(myRigidbody.rotation));
         }
         UpdateMoveTargets();
-        VisionUtils.DrawBetterVisionCone(
-            originTransform: transform,
-            visionConeMesh: visionConeMesh,
-            visionConeObject: visionConeObject,
-            visionConeResolution: visionConeResolution,
-            visionAngle: visionAngle,
-            visionRange: visionRange
-        );
+        DrawVisionCone();
     }
 
     void Update()
     {
-        VisionUtils.DrawBetterVisionCone(
-            originTransform: transform,
-            visionConeMesh: visionConeMesh,
-            visionConeObject: visionConeObject,
-            visionConeResolution: visionConeResolution,
-            visionAngle: visionAngle,
-            visionRange: visionRange
-        );
+        DrawVisionCone();
 
         // Set alert marker position
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -296,6 +282,19 @@ public class GuardBehaviour : MonoBehaviour
     private void PlayerCaught(Player caughtPlayer)
     {
         GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
+    }
+
+    private void DrawVisionCone()
+    {
+        VisionUtils.DrawBetterVisionCone(
+            originTransform: transform,
+            visionConeMesh: visionConeMesh,
+            visionConeObject: visionConeObject,
+            visionConeResolution: visionConeResolution,
+            visionAngle: visionAngle,
+            visionRange: visionRange
+        );
+        VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
     }
 
     private string QueueToString()

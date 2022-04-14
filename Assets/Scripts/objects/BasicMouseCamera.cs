@@ -56,26 +56,12 @@ public class BasicMouseCamera : MonoBehaviour
         // Get initial movement targets and vision collider
         if (defaultAngleRoute.Count == 0) enableMove = false;
         UpdateMoveTargets();
-        VisionUtils.DrawBetterVisionCone(
-            originTransform: transform,
-            visionConeMesh: visionConeMesh,
-            visionConeObject: visionConeObject,
-            visionConeResolution: visionConeResolution,
-            visionAngle: visionAngle,
-            visionRange: visionRange
-        );
+        DrawVisionCone();
     }
 
     void Update()
     {
-        VisionUtils.DrawBetterVisionCone(
-            originTransform: transform,
-            visionConeMesh: visionConeMesh,
-            visionConeObject: visionConeObject,
-            visionConeResolution: visionConeResolution,
-            visionAngle: visionAngle,
-            visionRange: visionRange
-        );
+        DrawVisionCone();
 
         bool updatedVision = UpdateVision(Time.deltaTime);
         if (!updatedVision && enableMove)
@@ -156,6 +142,19 @@ public class BasicMouseCamera : MonoBehaviour
         }
         if (isAlert) isAlert = false;
         return false;
+    }
+
+    private void DrawVisionCone()
+    {
+        VisionUtils.DrawBetterVisionCone(
+            originTransform: transform,
+            visionConeMesh: visionConeMesh,
+            visionConeObject: visionConeObject,
+            visionConeResolution: visionConeResolution,
+            visionAngle: visionAngle,
+            visionRange: visionRange
+        );
+        VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
     }
 
     private void PlayerCaught(Player caughtPlayer)
