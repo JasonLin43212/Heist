@@ -975,6 +975,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5534304691385442095, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1936,6 +1940,10 @@ PrefabInstance:
     - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: player
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+      propertyPath: moveSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5534304691385442095, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_RootOrder
