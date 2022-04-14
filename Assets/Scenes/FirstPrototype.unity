@@ -288,6 +288,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
+      propertyPath: secondsToCatch
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -512,19 +516,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: visionAngle
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: rotationSpeed
-      value: 15
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
+      propertyPath: secondsToCatch
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.data[0]
-      value: -105
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.data[1]
