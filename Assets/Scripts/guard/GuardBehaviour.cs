@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GuardBehaviour : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class GuardBehaviour : MonoBehaviour
     public List<GuardRouteAction> defaultRouteActions;
     private int defaultRouteIndex, queueIndex;
     private List<GuardRouteAction> queue;
-    private Vector2 targetPosition;
+    public Vector2 targetPosition;
     private float targetAngle;
 
     private enum MovementMode { Default, LookLeft, LookRight, Backtrack };
@@ -47,7 +46,11 @@ public class GuardBehaviour : MonoBehaviour
     private Mesh visionConeMesh;
 
     // Toggles
-    public bool enableMove, betterVisionCone;
+    public bool enableMove, strictChasing, betterVisionCone;
+
+    // Debugging
+    public string debugText;
+    public bool enableDebugLogging = false;
 
 
     void Start()
@@ -107,6 +110,7 @@ public class GuardBehaviour : MonoBehaviour
         if (waitTime >= 0) waitTime -= Time.fixedDeltaTime;
         bool updatedVision = UpdateVision(Time.fixedDeltaTime);
         if (!enableMove) return;
+        if (!strictChasing && updatedVision) return;
 
         float angleDifference = (targetAngle - myRigidbody.rotation) % 360;
         if (angleDifference > 180f) angleDifference -= 360;
@@ -155,6 +159,7 @@ public class GuardBehaviour : MonoBehaviour
                 {
                     case GuardRouteActionType.Move:
                         targetPosition = action.moveTarget;
+                        if (enableDebugLogging) Debug.Log($"Default Move updated: {action}.");
                         targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
                         break;
                     case GuardRouteActionType.Turn:
@@ -174,6 +179,7 @@ public class GuardBehaviour : MonoBehaviour
                     if (queue.Count == 1) movementMode = MovementMode.Backtrack;
                     else movementMode = MovementMode.LookLeft;
                 }
+                if (enableDebugLogging) Debug.Log($"Default movement updated: {action}. New movement mode: {movementMode}");
                 break;
             case MovementMode.LookLeft:
                 targetAngle += 90;
@@ -185,9 +191,11 @@ public class GuardBehaviour : MonoBehaviour
                 break;
             case MovementMode.Backtrack:
                 isAlert = false;
+                if (enableDebugLogging) Debug.Log($"Backtracking (queue index: {queueIndex}). {QueueToString()}");
                 queue.RemoveAt(queueIndex - 1);
                 queueIndex--;
                 action = queue[queueIndex - 1];
+                if (enableDebugLogging) Debug.Log($"Backtracking going to {action}");
                 switch (action.actionType)
                 {
                     case GuardRouteActionType.Move:
@@ -210,21 +218,22 @@ public class GuardBehaviour : MonoBehaviour
     private bool UpdateVision(float deltaTime)
     {
         // Look for players within vision range
-        (bool player1Visible, float player1Distance) = CanSeePlayer(player1Rigidbody);
-        (bool player2Visible, float player2Distance) = CanSeePlayer(player2Rigidbody);
+        Vector2? player1Sighted = CanSeePlayer(player1Rigidbody);
+        Vector2? player2Sighted = CanSeePlayer(player2Rigidbody);
         Player? foundPlayer = null;
-        if (player1Visible && player2Visible)
+        if (player1Sighted.HasValue && player2Sighted.HasValue)
         {
+            float player1Distance = (player1Sighted.Value - myRigidbody.position).magnitude;
+            float player2Distance = (player2Sighted.Value - myRigidbody.position).magnitude;
             foundPlayer = (player1Distance < player2Distance) ? Player.Player1 : Player.Player2;
         }
-        else if (player1Visible) foundPlayer = Player.Player1;
-        else if (player2Visible) foundPlayer = Player.Player2;
+        else if (player1Sighted.HasValue) foundPlayer = Player.Player1;
+        else if (player2Sighted.HasValue) foundPlayer = Player.Player2;
 
         if (foundPlayer.HasValue)
         {
             // Compute new chase waypoint
-            Rigidbody2D playerRigidbody = (foundPlayer.Value == Player.Player1) ? player1Rigidbody : player2Rigidbody;
-            targetPosition = playerRigidbody.position;
+            targetPosition = (foundPlayer.Value == Player.Player1) ? player1Sighted.Value : player2Sighted.Value;
             targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
 
             GuardRouteAction newChaseWaypoint = new GuardRouteAction();
@@ -237,7 +246,10 @@ public class GuardBehaviour : MonoBehaviour
                 if (suspicionTime >= secondsToCatch) PlayerCaught(foundPlayer.Value);
 
                 // Modify the current queue to chase
-                if (movementMode == MovementMode.LookLeft) queue[queue.Count - 1] = newChaseWaypoint;
+                if (movementMode == MovementMode.LookLeft)
+                {
+                    queue[queue.Count - 1] = newChaseWaypoint;
+                }
                 else
                 {
                     // movementMode is either LookRight or Backtrack
@@ -256,20 +268,16 @@ public class GuardBehaviour : MonoBehaviour
                 GuardRouteAction currentAction = queue[queue.Count - 1];
                 if (currentAction.actionType == GuardRouteActionType.Wait)
                 {
-                    GuardRouteAction resetMoveAction = new GuardRouteAction();
-                    resetMoveAction.moveTarget = myRigidbody.position;
-                    queue[queue.Count - 1] = resetMoveAction;
+                    queue.RemoveAt(queue.Count - 1);
+                    queueIndex--;
                 }
-                // If currently "turning", then add a position reset action afterwards but skip it
-                else if (currentAction.actionType == GuardRouteActionType.Turn)
-                {
-                    GuardRouteAction resetMoveAction = new GuardRouteAction();
-                    resetMoveAction.moveTarget = myRigidbody.position;
-                    queue.Add(resetMoveAction);
-                    queueIndex++;
-                }
+                // Add a position reset action but skip it
+
+                GuardRouteAction resetMoveAction = new GuardRouteAction();
+                resetMoveAction.moveTarget = myRigidbody.position;
+                queue.Add(resetMoveAction);
                 queue.Add(newChaseWaypoint);
-                queueIndex++;
+                queueIndex += 2;
                 movementMode = MovementMode.LookLeft;
             }
             return true;
@@ -280,8 +288,7 @@ public class GuardBehaviour : MonoBehaviour
 
     private void PlayerCaught(Player caughtPlayer)
     {
-        Debug.Log($"Player {(int)caughtPlayer + 1} was caught!");
-        SceneManager.LoadScene(sceneName:"Lose Screen");
+        GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
     }
 
     private void CastVisionRay()
@@ -291,16 +298,16 @@ public class GuardBehaviour : MonoBehaviour
         blockedVisionRange = (raycast.collider != null) ? raycast.distance : visionRange;
     }
 
-    // Check if the guard can see a player at the given position. Returns (canSeePlayer, distanceToPlayer).
-    private (bool, float) CanSeePlayer(Rigidbody2D playerRigidbody)
+    // Check if the guard can see a player at the given position. Returns Nullable<Vector2> of the new target position.
+    private Vector2? CanSeePlayer(Rigidbody2D playerRigidbody)
     {
         PolygonCollider2D visionConeCollider = visionConeObject.GetComponent<PolygonCollider2D>();
         if (playerRigidbody.IsTouching(visionConeCollider))
         {
-            float angledDistance = (playerRigidbody.position - myRigidbody.position).magnitude;
-            return (true, angledDistance);
+            Vector2 sightedPosition = visionConeCollider.ClosestPoint(playerRigidbody.position);
+            return sightedPosition;
         }
-        return (false, 0);
+        return null;
     }
 
     private void DrawVisionCone()
@@ -394,6 +401,17 @@ public class GuardBehaviour : MonoBehaviour
         PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
         collider.SetPath(0, colliderPoints);
     }
+
+    private string QueueToString()
+    {
+        string output = $"Queue<{queue.Count}>: [";
+        foreach (GuardRouteAction queueAction in queue)
+        {
+            output = output + queueAction.ToString() + ", ";
+        }
+        output = output + "]";
+        return output;
+    }
 }
 
 
@@ -435,5 +453,20 @@ public class GuardRouteAction
         action.actionType = GuardRouteActionType.Wait;
         action.waitTime = seconds;
         return action;
+    }
+
+    public override string ToString()
+    {
+        switch (actionType)
+        {
+            case GuardRouteActionType.Move:
+                return $"Move<{moveTarget}>";
+            case GuardRouteActionType.Turn:
+                return $"Turn<{turnTarget}>";
+            case GuardRouteActionType.Wait:
+                return $"Wait<{waitTime}>";
+            default:
+                return "EmptyAction";
+        }
     }
 }

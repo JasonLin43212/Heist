@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class GameController : MonoBehaviour
     public GameObject player1Object, player2Object;
     public GameObject levelObject;
 
+    // Cheat codes
+    public bool disableDeath;
+
     // Start is called before the first frame update
     void Start()
     {
         new GameState(
+            gameController: this,
             player1Object: player1Object,
             player2Object: player2Object,
             levelObject: levelObject
@@ -24,6 +29,12 @@ public class GameController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void PlayerCaught(Player caughtPlayer)
+    {
+        Debug.Log($"Player {(int)caughtPlayer + 1} was caught!");
+        if (!disableDeath) SceneManager.LoadScene(sceneName: "Lose Screen");
     }
 
     private void SpawnPlayersOnLevel()

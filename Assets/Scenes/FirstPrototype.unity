@@ -710,6 +710,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 68152175}
     - target: {fileID: 2112600577794416790, guid: 274fe8392580ff24aa90e11320a74f7f, type: 3}
+      propertyPath: disableDeath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2112600577794416790, guid: 274fe8392580ff24aa90e11320a74f7f, type: 3}
       propertyPath: player1Object
       value: 
       objectReference: {fileID: 939013915}

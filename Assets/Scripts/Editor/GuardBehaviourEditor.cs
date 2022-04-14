@@ -19,12 +19,14 @@ public class GuardBehaviourEditor : Editor
             "directionMarkerTransform", "visionConeObject", "alertMarkerObject", "alertSpriteMaskObject"
         };
         toggleFields = new List<string> {
-            "enableMove", "betterVisionCone"
+            "enableMove", "strictChasing", "betterVisionCone"
         };
     }
 
     public override void OnInspectorGUI()
     {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("debugText"));
+
         serializedObject.Update();
 
         // Constants
@@ -45,7 +47,6 @@ public class GuardBehaviourEditor : Editor
         if (displayRoute)
         {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("defaultRouteActions"), true);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("defaultRoute"), true);
         }
         EditorGUILayout.Separator();
 
