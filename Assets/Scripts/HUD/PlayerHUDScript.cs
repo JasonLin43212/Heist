@@ -38,7 +38,7 @@ public class PlayerHUDScript : MonoBehaviour
             bool itemHasFiniteUses = itemBehaviour.HasFiniteUses;  // this is true if the item has a finite number of uses;
                                                                    // if false, it can be used unlimited times
             int remainingUses = itemBehaviour.GetRemainingUses();  // number of uses remaining (0 if itemHasFiniteUses is false)
-            int totalUses = itemBehaviour.GetTotalUses();  // total number of allowed uses, i.e. before it's used (idk if you want this)
+            int maxUses = itemBehaviour.GetMaxUses();  // maximum number of stored uses, i.e. if we ever have an item that can replenish (idk if you want this)
 
             // ItemDescriptor has information about the type of item
             string itemName = itemDescriptor.Name;  // e.g. "Crowbar"

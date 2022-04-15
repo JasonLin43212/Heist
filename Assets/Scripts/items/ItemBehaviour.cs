@@ -16,7 +16,7 @@ public abstract class ItemBehaviour : MonoBehaviour
 
     // Using the item
     public virtual bool HasFiniteUses => false;
-    protected int totalUses = 0, remainingUses = 0;
+    protected int maxUses = 0, remainingUses = 0;
 
     protected virtual void Start()
     {
@@ -74,6 +74,12 @@ public abstract class ItemBehaviour : MonoBehaviour
             return false;  // No attached item descriptor!
         }
 
+        if (HasFiniteUses && remainingUses < 1)
+        {
+            // Item is out of uses.
+            return false;
+        }
+
         // Use key pressed
         if (itemDescriptor.CanUseWithKey && Input.GetKeyDown(GameState.Instance.GetUseKey(player)))
         {
@@ -98,19 +104,22 @@ public abstract class ItemBehaviour : MonoBehaviour
     }
 
     // Called when a finite-use item runs out of uses
-    protected virtual void ItemOutOfUses() { }
+    protected virtual void ItemOutOfUses()
+    {
+        Debug.Log("Item ran out of uses.");
+    }
 
     // Set all important starting fields
     protected virtual void InitializeItemProperties() { }
 
     private void ValidateItemProperties()
     {
-        Debug.Assert(HasFiniteUses || (totalUses == 0 && remainingUses == 0), "If HasFiniteUses is false, totalUses and remainingUses must be set to 0.");
+        Debug.Assert(HasFiniteUses || (maxUses == 0 && remainingUses == 0), "If HasFiniteUses is false, maxUses and remainingUses must be set to 0.");
     }
 
     // Getters
     public bool IsBeingHeld() => holder.HasValue;
     public Player? GetHolder() => holder;
     public int GetRemainingUses() => remainingUses;
-    public int GetTotalUses() => totalUses;
+    public int GetMaxUses() => maxUses;
 }

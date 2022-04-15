@@ -5,7 +5,6 @@ using UnityEngine;
 public class ItemCrowbar : ItemDescriptor
 {
     public override string Name => "Crowbar";
-    public override ItemType ItemType => ItemType.Permanent;
 
     public override bool CanUseWithKey => true;
 
