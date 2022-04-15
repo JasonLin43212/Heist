@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerHUDScript : MonoBehaviour
 {
     public Player player;
 
     private ItemManager itemManager;
+    
+    public TMP_Text itemNameText;
+    public TMP_Text itemDurabilityText;
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +50,15 @@ public class PlayerHUDScript : MonoBehaviour
             Sprite displaySprite = itemDescriptor.GetDisplaySprite();  // returns the sprite which you can attach via the editor
 
             // TODO pls display something lol
+
+            itemNameText.text = itemName;
+            itemDurabilityText.text = remainingUses.ToString();
         }
         else
         {
             // TODO if you want to display anything when you're not holding an item
+            itemNameText.text = "None";
+            itemDurabilityText.text = "∞";
         }
     }
 }
