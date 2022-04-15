@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: defaultRoute.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: defaultRoute.Array.data[1].x
@@ -670,6 +670,30 @@ PrefabInstance:
     - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
       propertyPath: defaultRoute.Array.data[2].y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.data[1].waitTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.data[2].waitTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.data[1].actionType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.data[2].actionType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166422521656341087, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
+      propertyPath: defaultRouteActions.Array.data[2].moveTarget.x
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6bc101a49f34864eb2649fd637584a4, type: 3}
