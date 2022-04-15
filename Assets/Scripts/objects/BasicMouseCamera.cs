@@ -10,6 +10,7 @@ public class BasicMouseCamera : MonoBehaviour
     public float visionRange = 7f, visionAngle = 10f;
     public float rotationSpeed = 10f;
     public float secondsToCatch = 0.2f;
+    [Min(0.1f)]
     public float catchRateMultiplierMin, catchRateMultiplierMax;
     public int visionConeResolution = 50;
 

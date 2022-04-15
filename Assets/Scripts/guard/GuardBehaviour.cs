@@ -16,6 +16,7 @@ public class GuardBehaviour : MonoBehaviour
 
     public float chaseSpeed = 3f;
     public float secondsToCatch = 1.5f;
+    [Min(0.1f)]
     public float catchRateMultiplierMin, catchRateMultiplierMax;
     public int visionConeResolution = 100;
 
