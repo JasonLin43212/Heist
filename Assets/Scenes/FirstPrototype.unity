@@ -1111,15 +1111,15 @@ PrefabInstance:
     - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: moveSpeed
       value: 8
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.b
       value: 1
-      objectReference: {fileI {fileID: 0}
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.g
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
