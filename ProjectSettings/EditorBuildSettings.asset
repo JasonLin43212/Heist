@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Heist.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Lose Screen.unity
-    guid: 9923da8c4d2b0d77a974454ffd160169
-  - enabled: 1
     path: Assets/Scenes/FirstPrototype.unity
     guid: e2daeb4957e877442baa16f2a3dd4cad
+  - enabled: 1
+    path: Assets/Scenes/Lose Screen.unity
+    guid: 9923da8c4d2b0d77a974454ffd160169
   m_configObjects: {}

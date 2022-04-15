@@ -268,17 +268,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visionRange: 7
   visionAngle: 20
+  targetChaseDistanceRatio: 0.7
   moveSpeed: 1.5
   chaseSpeed: 4
   secondsToCatch: 1.5
   visionConeResolution: 100
-  defaultRoute: []
+  defaultRouteActions: []
+  targetPosition: {x: 0, y: 0}
   directionMarkerTransform: {fileID: 6166422522362928954}
   visionConeObject: {fileID: 6166422522389729066}
   alertMarkerObject: {fileID: 6166422520614027074}
   alertSpriteMaskObject: {fileID: 7168929777098054679}
   enableMove: 1
+  strictChasing: 0
   betterVisionCone: 1
+  debugText: 
+  enableDebugLogging: 0
 --- !u!1 &6166422522362928955
 GameObject:
   m_ObjectHideFlags: 0
