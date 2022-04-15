@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
         itemContactFilter = new ContactFilter2D();
         itemContactFilter.SetLayerMask(LayerMask.GetMask("Item"));
+        itemContactFilter.useTriggers = true;
     }
 
     // Update is called once per frame
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             if (itemManager.PlayerIsHoldingItem(player))
             {
                 // Drop the current item
-                Item heldItem = itemManager.GetHeldItem(player);
+                ItemBehaviour heldItem = itemManager.GetHeldItem(player);
                 heldItem.Drop();
             }
             else
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     // Try to pick up the item
                     GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
-                    overlappingItem.GetComponent<Item>().Pickup(player);  // is true if pick up was successful
+                    overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
                 }
             }
         }
@@ -81,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         if (itemManager.PlayerIsHoldingItem(player))
         {
             // Check if item is being used
-            Item heldItem = itemManager.GetHeldItem(player);
+            ItemBehaviour heldItem = itemManager.GetHeldItem(player);
             heldItem.CheckForUse(player);
         }
     }

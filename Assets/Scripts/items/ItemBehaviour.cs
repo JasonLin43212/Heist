@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Item : MonoBehaviour
+public abstract class ItemBehaviour : MonoBehaviour
 {
-    public abstract string Name { get; }
     public abstract ItemType ItemType { get; }
 
     // Resources / References
     public GameObject spriteObject;  // Child GameObject containing the item's sprite and collider
+    private ItemDescriptor itemDescriptor;
 
     // Holding the item
     public virtual bool CanHold => false;
@@ -18,11 +18,9 @@ public abstract class Item : MonoBehaviour
     public virtual bool HasFiniteUses => false;
     protected int totalUses = 0, remainingUses = 0;
 
-    // Item use interfaces (set to true to enable trigger)
-    protected virtual bool CanUseWithKey => false;  // When Use Item key is pressed, call UseKeyPressed()
-
     protected virtual void Start()
     {
+        itemDescriptor = GetComponent<ItemDescriptor>();
         InitializeItemProperties();
         ValidateItemProperties();
     }
@@ -70,18 +68,24 @@ public abstract class Item : MonoBehaviour
     // Checks for user input and calls use methods if appropriate - this method should be repeatedly executed whenever held
     public virtual bool CheckForUse(Player player)
     {
-        // Use key pressed
-        if (CanUseWithKey && Input.GetKeyDown(GameState.Instance.GetUseKey(player)))
+        if (itemDescriptor == null)
         {
-            UseKeyPressed();
-            RecordUse();
-            return true;
+            Debug.Log("No attached item descriptor!");
+            return false;  // No attached item descriptor!
+        }
+
+        // Use key pressed
+        if (itemDescriptor.CanUseWithKey && Input.GetKeyDown(GameState.Instance.GetUseKey(player)))
+        {
+            if (itemDescriptor.UseKeyPressed())
+            {
+                RecordUse();
+                return true;
+            }
         }
 
         return false;
     }
-
-    protected virtual bool UseKeyPressed() => false;
 
     // Called each time this item is used via any means
     protected virtual void RecordUse()

@@ -11,9 +11,9 @@ public class ItemManager
     public void SetHeldItem(Player player, GameObject itemObject)
     {
         // Error checking
-        if (itemObject && itemObject.GetComponent<Item>() == null)
+        if (itemObject && itemObject.GetComponent<ItemBehaviour>() == null)
             throw new System.Exception("Attempted to hold an item that doesn't have an Item script.");
-        if (itemObject && itemObject.GetComponent<Item>().GetHolder() != player)
+        if (itemObject && itemObject.GetComponent<ItemBehaviour>().GetHolder() != player)
             throw new System.Exception("Item's stored holder is inconsistent with argument passed into SetHeldItem.");
 
         if (player == Player.Player1) player1Item = itemObject;
@@ -31,10 +31,16 @@ public class ItemManager
         return (player == Player.Player1) ? player1Item : player2Item;
     }
 
-    public Item GetHeldItem(Player player)
+    public ItemBehaviour GetHeldItem(Player player)
     {
         GameObject heldItemObject = GetHeldItemObject(player);
-        return heldItemObject.GetComponent<Item>();
+        return heldItemObject.GetComponent<ItemBehaviour>();
+    }
+
+    public ItemDescriptor GetHeldItemDescriptor(Player player)
+    {
+        GameObject heldItemObject = GetHeldItemObject(player);
+        return heldItemObject.GetComponent<ItemDescriptor>();
     }
 
     public bool PlayerIsHoldingItem(Player player) => GetHeldItemObject(player) != null;
