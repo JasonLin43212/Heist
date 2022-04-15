@@ -182,6 +182,8 @@ public class GuardBehaviour : MonoBehaviour
                 break;
             case MovementMode.Backtrack:
                 isAlert = false;
+                suspicionTime = 0;
+                VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
                 if (enableDebugLogging) Debug.Log($"Backtracking (queue index: {queueIndex}). {QueueToString()}");
                 queue.RemoveAt(queueIndex - 1);
                 queueIndex--;
@@ -256,7 +258,6 @@ public class GuardBehaviour : MonoBehaviour
             {
                 isAlert = true;
                 suspicionTime = 0;
-                VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
                 waitTime = 0;
 
                 // If currently "waiting", then replace Wait action with a position reset
