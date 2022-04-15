@@ -256,6 +256,7 @@ public class GuardBehaviour : MonoBehaviour
             {
                 isAlert = true;
                 suspicionTime = 0;
+                VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
                 waitTime = 0;
 
                 // If currently "waiting", then replace Wait action with a position reset

@@ -73,8 +73,9 @@ public static class VisionUtils
     public static void UpdateVisionConeColor(GameObject visionConeObject, float suspicionTime, float secondsToCatch)
     {
         float alertRatio = Mathf.Min(suspicionTime / secondsToCatch, 1f);  // between 0 and 1
-        float red = Mathf.Min(alertRatio * 2, 1f);  // linear from 0 to 0.5
-        float green = 1f - Mathf.Max(alertRatio * 2 - 1, 0f);  // linear from 0.5 to 1
+        float colorRatio = Mathf.Sqrt(alertRatio); // colors change quicker at the beginning to alert player
+        float red = Mathf.Min(colorRatio * 2, 1f);  // linear from 0 to 0.5
+        float green = 1f - Mathf.Max(colorRatio * 2 - 1, 0f);  // linear from 0.5 to 1
         visionConeObject.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(red, green, 0f, 83f / 255f));
     }
 

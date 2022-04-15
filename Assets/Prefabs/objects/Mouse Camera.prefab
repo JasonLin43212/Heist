@@ -293,7 +293,7 @@ MonoBehaviour:
   visionAngle: 30
   rotationSpeed: 5
   secondsToCatch: 0.2
-  catchRateMultiplierMin: 1
+  catchRateMultiplierMin: 0.4
   catchRateMultiplierMax: 3
   visionConeResolution: 50
   defaultAngleRoute: []

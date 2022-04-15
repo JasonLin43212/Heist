@@ -138,6 +138,7 @@ public class BasicMouseCamera : MonoBehaviour
             {
                 isAlert = true;
                 suspicionTime = 0;
+                VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
             }
             return true;
         }
