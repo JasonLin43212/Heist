@@ -59,30 +59,30 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(pickDropKey))
         {
+            // Look to see if we're touching any items
+            Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
+            int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
+
+            // If currently holding an item, drop it
             if (itemManager.PlayerIsHoldingItem(player))
             {
-                // Drop the current item
-                ItemBehaviour heldItem = itemManager.GetHeldItem(player);
+                ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
                 heldItem.Drop();
             }
-            else
+
+            // If we are overlapping any other item, pick it up
+            if (numOverlappingColliders > 0)
             {
-                // Look to see if we're touching any items
-                Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
-                int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
-                if (numOverlappingColliders > 0)
-                {
-                    // Try to pick up the item
-                    GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
-                    overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
-                }
+                // Try to pick up the item
+                GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
+                overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
             }
         }
 
         if (itemManager.PlayerIsHoldingItem(player))
         {
             // Check if item is being used
-            ItemBehaviour heldItem = itemManager.GetHeldItem(player);
+            ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
             heldItem.CheckForUse(player);
         }
     }

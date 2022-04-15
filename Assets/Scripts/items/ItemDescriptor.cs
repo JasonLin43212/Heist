@@ -17,6 +17,7 @@ public abstract class ItemDescriptor : MonoBehaviour
     protected virtual void Start()
     {
         itemBehaviour = GetComponent<ItemBehaviour>();
+        Debug.Assert(ItemType == itemBehaviour.ItemType, "Item types don't match for item object with descriptor " + Name);
     }
 
     public virtual bool UseKeyPressed() => false;

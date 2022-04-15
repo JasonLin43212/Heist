@@ -112,4 +112,5 @@ public abstract class ItemBehaviour : MonoBehaviour
     public bool IsBeingHeld() => holder.HasValue;
     public Player? GetHolder() => holder;
     public int GetRemainingUses() => remainingUses;
+    public int GetTotalUses() => totalUses;
 }

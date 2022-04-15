@@ -31,7 +31,7 @@ public class ItemManager
         return (player == Player.Player1) ? player1Item : player2Item;
     }
 
-    public ItemBehaviour GetHeldItem(Player player)
+    public ItemBehaviour GetHeldItemBehaviour(Player player)
     {
         GameObject heldItemObject = GetHeldItemObject(player);
         return heldItemObject.GetComponent<ItemBehaviour>();
