@@ -5,9 +5,16 @@ using UnityEngine;
 public class MouseEventHandler : MonoBehaviour
 {
     private bool mouseDown = false;
+    private static int numberOfCamerasDisabled = 0;
+    private bool isDisabled = false;
+
 
     void OnMouseDown()
     {
+        if (numberOfCamerasDisabled < 2){
+            numberOfCamerasDisabled += 1;
+            isDisabled = true;
+        }
         mouseDown = true;
     }
 
@@ -19,5 +26,14 @@ public class MouseEventHandler : MonoBehaviour
     public bool HasMouseDown()
     {
         return mouseDown;
+    }
+
+    public bool cameraIsDisabled(){
+        return isDisabled;
+    }
+
+    public void enableCamera(){
+        isDisabled = false;
+        numberOfCamerasDisabled -=1;
     }
 }
