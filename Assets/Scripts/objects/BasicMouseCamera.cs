@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class BasicMouseCamera : MonoBehaviour
 {
     // Constants
@@ -149,7 +148,7 @@ public class BasicMouseCamera : MonoBehaviour
 
     private void PlayerCaught(Player caughtPlayer)
     {
-        Debug.Log($"Player {(int)caughtPlayer + 1} was caught!");
+        GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
     }
 
     private void CastVisionRay()
