@@ -16,7 +16,7 @@ public class GuardBehaviourEditor : Editor
             "visionRange", "visionAngle",
             "targetChaseDistanceRatio",
             "moveSpeed", "chaseSpeed",
-            "secondsToCatch", "catchRateMultiplierMin", "catchRateMultiplierMax",
+            "secondsToCatch", "catchRateMultiplierMin", "catchRateMultiplierMax", "suspicionDecreaseRate",
             "visionConeResolution"
         };
         referenceFields = new List<string> {

@@ -18,6 +18,7 @@ public class GuardBehaviour : MonoBehaviour
     public float secondsToCatch = 1.5f;
     [Min(0.1f)]
     public float catchRateMultiplierMin, catchRateMultiplierMax;
+    public float suspicionDecreaseRate = 1f;
     public int visionConeResolution = 100;
 
     // Movement variables
@@ -182,8 +183,6 @@ public class GuardBehaviour : MonoBehaviour
                 break;
             case MovementMode.Backtrack:
                 isAlert = false;
-                suspicionTime = 0;
-                VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
                 if (enableDebugLogging) Debug.Log($"Backtracking (queue index: {queueIndex}). {QueueToString()}");
                 queue.RemoveAt(queueIndex - 1);
                 queueIndex--;
@@ -277,6 +276,14 @@ public class GuardBehaviour : MonoBehaviour
                 movementMode = MovementMode.LookLeft;
             }
             return true;
+        }
+        else
+        {
+            // Slowly return to yellow vision cone
+            if (!isAlert && suspicionTime > 0)
+            {
+                suspicionTime = Mathf.Max(0f, suspicionTime - deltaTime * suspicionDecreaseRate);
+            }
         }
 
         return false;

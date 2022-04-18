@@ -12,6 +12,7 @@ public class BasicMouseCamera : MonoBehaviour
     public float secondsToCatch = 0.2f;
     [Min(0.1f)]
     public float catchRateMultiplierMin, catchRateMultiplierMax;
+    public float suspicionDecreaseRate = 1f;
     public int visionConeResolution = 50;
 
     // State variables
@@ -141,12 +142,11 @@ public class BasicMouseCamera : MonoBehaviour
             }
             return true;
         }
-        if (isAlert) 
+        if (isAlert)
         {
             isAlert = false;
-            suspicionTime = 0;
-            VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
         }
+        if (suspicionTime > 0) suspicionTime = Mathf.Max(0f, suspicionTime - deltaTime * suspicionDecreaseRate);
         return false;
     }
 
