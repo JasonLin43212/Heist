@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
     public string x_axis;
     public string y_axis;
+<<<<<<< HEAD
 
     // Controls
     private KeyCode pickDropKey;
@@ -17,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     // Misc
     private ContactFilter2D itemContactFilter;
 
+=======
+    public CircleCollider2D collider;
+>>>>>>> main
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +55,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Rigidbody2D myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.MovePosition(myRigidbody.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().closed == false)
+        {
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), collider);
+        }
     }
 
     private void HandleItems()
