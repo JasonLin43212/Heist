@@ -7,8 +7,11 @@ public class SceneNavigator : MonoBehaviour
 {
     public void RestartGame()
     {
-        Debug.Log("Level: " + GameState.sceneName);
-        SceneManager.LoadScene(sceneName:GameState.sceneName);
+        if (GameState.sceneName == null) {
+            SceneManager.LoadScene(sceneName:"MainMenu");
+        } else {
+            SceneManager.LoadScene(sceneName:GameState.sceneName);
+        }
     }
 
     public void StartGame(string sceneName) {
