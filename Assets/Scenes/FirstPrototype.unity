@@ -353,6 +353,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
+      propertyPath: secondsToCatch
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -577,19 +581,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: visionAngle
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: rotationSpeed
-      value: 15
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
+      propertyPath: secondsToCatch
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.data[0]
-      value: -105
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 5937351034015474661, guid: e53e118cacb569946b43646716e1c324, type: 3}
       propertyPath: defaultAngleRoute.Array.data[1]
@@ -1100,15 +1108,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.g
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1470506021865361564, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
@@ -2149,6 +2160,10 @@ PrefabInstance:
     - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: player
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323455744409526872, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
+      propertyPath: moveSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5534304691385442095, guid: 685df290d5d64d94388f56e4b4d8ae30, type: 3}
       propertyPath: m_RootOrder
