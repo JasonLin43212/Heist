@@ -8,9 +8,50 @@ public class ItemCrowbar : ItemDescriptor
 
     public override bool CanUseWithKey => true;
 
+    // Parameters
+    [Min(0f)]
+    public float guardDisableTime = 5f;
+    [Min(0f)]
+    public float crowbarUseRange = 1.5f;
+
+    // Private variables
+    private ContactFilter2D guardContactFilter;
+
+    protected override void Start()
+    {
+        base.Start();
+        guardContactFilter = new ContactFilter2D();
+        guardContactFilter.SetLayerMask(LayerMask.GetMask("Guard"));
+        // guardContactFilter.useTriggers = true;
+    }
+
     public override bool UseKeyPressed()
     {
-        Debug.Log($"Crowbar used by {itemBehaviour.GetHolder()}.");
-        return true;
+        // TODO: figure out when disabling the guard should work in terms of collisions
+        // For now, crowbar has a range and we pick the guard closest to the player, if one exists
+        Player? heldPlayer = itemBehaviour.GetHolder();
+        if (!heldPlayer.HasValue) return false;  // item isn't actually being held?
+        GameObject playerObject = GameState.Instance.GetPlayerObject(heldPlayer.Value);
+        Vector2 playerPosition = (Vector2)playerObject.transform.position;
+
+        List<Collider2D> colliderResults = new List<Collider2D>();
+        int numOverlappingColliders = Physics2D.OverlapCircle(playerPosition, crowbarUseRange, guardContactFilter, colliderResults);
+
+        if (numOverlappingColliders == 0) return false;  // no guards found within range
+
+        GameObject closestGuard = colliderResults[0].gameObject;
+        float shortestDistance = float.PositiveInfinity;
+        foreach (Collider2D guardCollider in colliderResults)
+        {
+            GameObject guardObject = guardCollider.gameObject;
+            float distance = ((Vector2)guardObject.transform.position - playerPosition).magnitude;
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestGuard = guardObject;
+            }
+        }
+
+        return closestGuard.GetComponent<GuardBehaviour>().DisableGuard(guardDisableTime);
     }
 }
