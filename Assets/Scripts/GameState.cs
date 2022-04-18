@@ -13,6 +13,7 @@ public class GameState
     // Global GameObject references
     private GameObject player1Object, player2Object;
     private GameObject levelObject;
+    public static string sceneName { get; set; }
 
     public GameState(
         GameController gameController,
@@ -34,4 +35,5 @@ public class GameState
     {
         return (player == Player.Player1) ? player1Object : player2Object;
     }
+
 }
