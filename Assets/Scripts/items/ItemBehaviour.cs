@@ -50,6 +50,7 @@ public abstract class ItemBehaviour : MonoBehaviour
         if (holder.HasValue) return false;  // item already being held
         holder = player;
         GameState.Instance.ItemManager.SetHeldItem(player, gameObject);
+        itemDescriptor.OnPickup(player);
         return true;
     }
 
@@ -57,8 +58,10 @@ public abstract class ItemBehaviour : MonoBehaviour
     {
         if (holder.HasValue)
         {
-            GameState.Instance.ItemManager.RemoveHeldItem(holder.Value);
+            Player prevPlayer = holder.Value;
+            GameState.Instance.ItemManager.RemoveHeldItem(prevPlayer);
             holder = null;
+            itemDescriptor.OnDrop(prevPlayer);
         }
     }
 

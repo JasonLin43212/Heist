@@ -13,6 +13,7 @@ public class ItemCrowbar : ItemDescriptor
     public float guardDisableTime = 5f;
     [Min(0f)]
     public float crowbarUseRange = 1.5f;
+    protected override float ItemUseRange => crowbarUseRange;
 
     // Private variables
     private ContactFilter2D guardContactFilter;
@@ -34,8 +35,9 @@ public class ItemCrowbar : ItemDescriptor
         GameObject playerObject = GameState.Instance.GetPlayerObject(heldPlayer.Value);
         Vector2 playerPosition = (Vector2)playerObject.transform.position;
 
+        Collider2D playerRangeCollider = playerObject.GetComponent<PlayerMovement>().GetRangeCollider();
         List<Collider2D> colliderResults = new List<Collider2D>();
-        int numOverlappingColliders = Physics2D.OverlapCircle(playerPosition, crowbarUseRange, guardContactFilter, colliderResults);
+        int numOverlappingColliders = playerRangeCollider.OverlapCollider(guardContactFilter, colliderResults);
 
         if (numOverlappingColliders == 0) return false;  // no guards found within range
 

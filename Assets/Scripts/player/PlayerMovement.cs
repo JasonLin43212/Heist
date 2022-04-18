@@ -16,8 +16,11 @@ public class PlayerMovement : MonoBehaviour
 
     // Misc
     private ContactFilter2D itemContactFilter;
-
     public CircleCollider2D collider;
+
+    // References
+    public GameObject rangeDisplayObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,5 +97,21 @@ public class PlayerMovement : MonoBehaviour
             ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
             heldItem.CheckForUse(player);
         }
+    }
+
+    public void SetRange(float worldRadius)
+    {
+        rangeDisplayObject.SetActive(true);
+        rangeDisplayObject.transform.localScale = new Vector3(2.5f * worldRadius, 2.5f * worldRadius, 1f);
+    }
+
+    public void HideRange()
+    {
+        rangeDisplayObject.SetActive(false);
+    }
+
+    public Collider2D GetRangeCollider()
+    {
+        return rangeDisplayObject.GetComponent<Collider2D>();
     }
 }

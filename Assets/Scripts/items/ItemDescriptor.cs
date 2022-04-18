@@ -10,6 +10,7 @@ public abstract class ItemDescriptor : MonoBehaviour
 
     // Item use interfaces
     public virtual bool CanUseWithKey => false;
+    protected virtual float ItemUseRange => 0f;
 
     protected ItemBehaviour itemBehaviour;
 
@@ -19,6 +20,25 @@ public abstract class ItemDescriptor : MonoBehaviour
     }
 
     public virtual bool UseKeyPressed() => false;
+    public virtual void OnPickup(Player player)
+    {
+        GameState.Instance.GetPlayerObject(player).GetComponent<PlayerMovement>().SetRange(ItemUseRange);
+    }
+
+    public virtual void OnDrop(Player player)
+    {
+        GameState.Instance.GetPlayerObject(player).GetComponent<PlayerMovement>().HideRange();
+    }
+
+    // Getters + Utility functions
 
     public Sprite GetDisplaySprite() => displaySprite;
+
+    protected virtual Collider2D GetHolderRangeCollider()
+    {
+        Player? holder = itemBehaviour.GetHolder();
+        if (!holder.HasValue) return null;
+        GameObject holderObject = GameState.Instance.GetPlayerObject(holder.Value);
+        return holderObject.GetComponent<PlayerMovement>().GetRangeCollider();
+    }
 }
