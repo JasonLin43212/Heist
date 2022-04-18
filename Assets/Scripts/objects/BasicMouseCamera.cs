@@ -37,7 +37,7 @@ public class BasicMouseCamera : MonoBehaviour
     // References
     private Rigidbody2D player1Rigidbody, player2Rigidbody;
     public MouseEventHandler mouseEventHandler;
-    public Transform directionMarkerTransform;
+    public Transform directionMarkerTransform, canvasTransform;
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     private Mesh visionConeMesh;
 
@@ -99,6 +99,8 @@ public class BasicMouseCamera : MonoBehaviour
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
 
+        canvasTransform.eulerAngles = new Vector3(0, 0, 0);
+
         // Check enabled/disabled
         HandleMouseInteraction();
         visionConeObject.SetActive(cameraEnabled);
@@ -109,7 +111,8 @@ public class BasicMouseCamera : MonoBehaviour
     private void HandleMouseInteraction()
     {
         bool disabled = mouseEventHandler.cameraIsDisabled();
-        if(disabled && cameraEnabled){
+        if (disabled && cameraEnabled)
+        {
             cameraEnabled = false;
             timerIsCountingDown = true;
         }
@@ -118,11 +121,14 @@ public class BasicMouseCamera : MonoBehaviour
     }
 
     // Counts down timer and resets camera when done
-    private void HandleTimerCountdown(){
-        if(timerIsCountingDown){
+    private void HandleTimerCountdown()
+    {
+        if (timerIsCountingDown)
+        {
             timerText.text = Math.Truncate(timerUntilEnabled).ToString();
             timerUntilEnabled -= Time.deltaTime;
-            if(timerUntilEnabled <= 0){
+            if (timerUntilEnabled <= 0)
+            {
                 timerUntilEnabled = timerLimit;
                 timerIsCountingDown = false;
                 mouseEventHandler.enableCamera();
