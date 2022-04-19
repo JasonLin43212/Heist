@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
+
 public class BasicMouseCamera : MonoBehaviour
 {
     // Constants
@@ -14,9 +17,13 @@ public class BasicMouseCamera : MonoBehaviour
     public float catchRateMultiplierMin, catchRateMultiplierMax;
     public float suspicionDecreaseRate = 1f;
     public int visionConeResolution = 50;
+    public float timerLimit = 30f;
+    public TMP_Text timerText;
 
     // State variables
     private bool cameraEnabled;
+    private bool timerIsCountingDown = false;
+    private float timerUntilEnabled;
 
     // Movement variables
     public List<float> defaultAngleRoute;
@@ -32,7 +39,7 @@ public class BasicMouseCamera : MonoBehaviour
     // References
     private Rigidbody2D player1Rigidbody, player2Rigidbody;
     public MouseEventHandler mouseEventHandler;
-    public Transform directionMarkerTransform;
+    public Transform directionMarkerTransform, canvasTransform;
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     private Mesh visionConeMesh;
 
@@ -48,6 +55,8 @@ public class BasicMouseCamera : MonoBehaviour
 
         cameraEnabled = true;
         isAlert = false;
+        timerUntilEnabled = timerLimit;
+        timerText.text = "";
 
         // Legacy vision system
         // drawnVisionRange = -1f;
@@ -84,16 +93,43 @@ public class BasicMouseCamera : MonoBehaviour
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
 
+        canvasTransform.eulerAngles = new Vector3(0, 0, 0);
+
         // Check enabled/disabled
         HandleMouseInteraction();
         visionConeObject.SetActive(cameraEnabled);
+        HandleTimerCountdown();
     }
 
     // Set enabled/disabled based on if the mouse is holding down on the camera
     private void HandleMouseInteraction()
     {
-        cameraEnabled = !mouseEventHandler.HasMouseDown();
+        bool disabled = mouseEventHandler.cameraIsDisabled();
+        if (disabled && cameraEnabled)
+        {
+            cameraEnabled = false;
+            timerIsCountingDown = true;
+        }
+        // cameraEnabled = !mouseEventHandler.HasMouseDown();
         if (!cameraEnabled) isAlert = false;
+    }
+
+    // Counts down timer and resets camera when done
+    private void HandleTimerCountdown()
+    {
+        if (timerIsCountingDown)
+        {
+            timerText.text = Math.Truncate(timerUntilEnabled).ToString();
+            timerUntilEnabled -= Time.deltaTime;
+            if (timerUntilEnabled <= 0)
+            {
+                timerUntilEnabled = timerLimit;
+                timerIsCountingDown = false;
+                mouseEventHandler.enableCamera();
+                cameraEnabled = true;
+                timerText.text = "";
+            }
+        }
     }
 
     // Updates the target angle of the camera based on its route

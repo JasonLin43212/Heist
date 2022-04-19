@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6166422520614027077}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Alert Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6166422520933204250}
   - component: {fileID: 6166422520933204253}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Alert Symbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 6166422521656341080}
   - component: {fileID: 6166422521656341084}
   - component: {fileID: 6166422521656341087}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Guard
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -274,6 +274,7 @@ MonoBehaviour:
   secondsToCatch: 1.5
   catchRateMultiplierMin: 1
   catchRateMultiplierMax: 3
+  disabledTimeMultiplier: 1
   visionConeResolution: 100
   defaultRouteActions: []
   targetPosition: {x: 0, y: 0}
@@ -295,7 +296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6166422522362928954}
   - component: {fileID: 6166422522362928957}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Direction Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +382,7 @@ GameObject:
   - component: {fileID: 6166422522389729071}
   - component: {fileID: 6166422522389729068}
   - component: {fileID: 6166422522389729070}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Vision Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6802216593988329213}
   - component: {fileID: 6033506778300345078}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Alert Indicator Sprite Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6491236250021008224}
   - component: {fileID: 3849114828733150452}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Alert Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -19,6 +19,7 @@ public class GuardBehaviour : MonoBehaviour
     [Min(0.1f)]
     public float catchRateMultiplierMin, catchRateMultiplierMax;
     public float suspicionDecreaseRate = 1f;
+    public float disabledTimeMultiplier = 1f;  // multiply intended disable time by this amount (controls how hardy each guard is)
     public int visionConeResolution = 100;
 
     // Movement variables
@@ -30,6 +31,10 @@ public class GuardBehaviour : MonoBehaviour
 
     private enum MovementMode { Default, LookLeft, LookRight, Backtrack };
     private MovementMode movementMode;
+
+    // Disabled
+    private float disabledTime;
+    private Color baseColor, disabledColor;
 
     // Vision variables
     private bool isAlert;
@@ -68,6 +73,10 @@ public class GuardBehaviour : MonoBehaviour
         queue = new List<GuardRouteAction>();
         movementMode = MovementMode.Default;
 
+        disabledTime = 0;
+        baseColor = GetComponent<SpriteRenderer>().material.color;
+        disabledColor = new Color(baseColor.r - 0.3f, baseColor.g - 0.3f, baseColor.b - 0.3f, baseColor.a);
+
         isAlert = false;
 
         // Legacy vision system
@@ -75,6 +84,7 @@ public class GuardBehaviour : MonoBehaviour
         // drawnVisionAngle = -1f;
         visionConeMesh = new Mesh();
         visionConeObject.GetComponent<MeshFilter>().mesh = visionConeMesh;
+        visionConeObject.tag = "GuardVisionCone";
 
         // Get initial movement target and vision collider
         if (defaultRouteActions.Count == 0)
@@ -99,6 +109,14 @@ public class GuardBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Handle guard being disabled
+        if (disabledTime > 0)
+        {
+            disabledTime -= Time.fixedDeltaTime;
+            if (disabledTime <= 0) GetComponent<SpriteRenderer>().material.color = baseColor;
+            else return;
+        }
+
         if (waitTime >= 0) waitTime -= Time.fixedDeltaTime;
         bool updatedVision = UpdateVision(Time.fixedDeltaTime);
         if (!enableMove) return;
@@ -305,6 +323,14 @@ public class GuardBehaviour : MonoBehaviour
             visionRange: visionRange
         );
         VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
+    }
+
+    public bool DisableGuard(float timeToDisableFor)
+    {
+        if (disabledTime > 0) return false;  // already disabled
+        disabledTime = timeToDisableFor * disabledTimeMultiplier;
+        GetComponent<SpriteRenderer>().material.color = disabledColor;
+        return true;
     }
 
     private string QueueToString()
