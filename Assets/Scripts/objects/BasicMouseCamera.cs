@@ -61,7 +61,7 @@ public class BasicMouseCamera : MonoBehaviour
         visionConeMesh = new Mesh();
         visionConeObject.GetComponent<MeshFilter>().mesh = visionConeMesh;
 
-        raycastLayerMask = ~LayerMask.GetMask("Ignore Raycast", "Clickable");
+        raycastLayerMask = ~LayerMask.GetMask("Ignore Raycast", "Clickable", "Guard");
 
         // Get initial movement targets and vision collider
         if (defaultAngleRoute.Count == 0) enableMove = false;
