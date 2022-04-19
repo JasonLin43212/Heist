@@ -12,10 +12,12 @@ public class SceneNavigator : MonoBehaviour
         } else {
             SceneManager.LoadScene(sceneName:GameState.sceneName);
         }
+        GameState.numberOfCamerasDisabled = 0;
     }
 
     public void StartGame(string sceneName) {
         GameState.sceneName = sceneName;
+        GameState.numberOfCamerasDisabled = 0;
         SceneManager.LoadScene(sceneName:sceneName);
     }
 

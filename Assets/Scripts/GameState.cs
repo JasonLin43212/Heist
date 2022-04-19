@@ -14,6 +14,7 @@ public class GameState
     private GameObject player1Object, player2Object;
     private GameObject levelObject;
     public static string sceneName { get; set; }
+    public static int numberOfCamerasDisabled { get; set; }
 
     // Items
     private ItemManager itemManager;
