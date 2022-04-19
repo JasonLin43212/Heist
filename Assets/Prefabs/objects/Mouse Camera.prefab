@@ -530,6 +530,8 @@ MonoBehaviour:
   visionAngle: 30
   rotationSpeed: 5
   secondsToCatch: 0.2
+  catchRateMultiplierMin: 0.4
+  catchRateMultiplierMax: 3
   visionConeResolution: 50
   timerLimit: 10
   timerText: {fileID: 8602198278446731193}
@@ -541,7 +543,6 @@ MonoBehaviour:
   alertMarkerObject: {fileID: 5937351033040400127}
   alertSpriteMaskObject: {fileID: 7244913512494353834}
   enableMove: 1
-  betterVisionCone: 1
 --- !u!1 &5937351034480565911
 GameObject:
   m_ObjectHideFlags: 0

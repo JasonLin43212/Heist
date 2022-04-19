@@ -16,6 +16,9 @@ public class GuardBehaviour : MonoBehaviour
 
     public float chaseSpeed = 3f;
     public float secondsToCatch = 1.5f;
+    [Min(0.1f)]
+    public float catchRateMultiplierMin, catchRateMultiplierMax;
+    public float suspicionDecreaseRate = 1f;
     public float disabledTimeMultiplier = 1f;  // multiply intended disable time by this amount (controls how hardy each guard is)
     public int visionConeResolution = 100;
 
@@ -36,13 +39,10 @@ public class GuardBehaviour : MonoBehaviour
     // Vision variables
     private bool isAlert;
     private float suspicionTime;
-    private float blockedVisionRange, drawnVisionRange, drawnVisionAngle;
+    // Legacy vision system
+    // private float blockedVisionRange, drawnVisionRange, drawnVisionAngle;
 
     private float waitTime = -1;
-
-    private Vector2 lastPos; // For backtracking
-
-    private LayerMask raycastLayerMask;
 
     // References
     private Rigidbody2D myRigidbody, player1Rigidbody, player2Rigidbody;
@@ -51,7 +51,7 @@ public class GuardBehaviour : MonoBehaviour
     private Mesh visionConeMesh;
 
     // Toggles
-    public bool enableMove, strictChasing, betterVisionCone;
+    public bool enableMove, strictChasing;  // , betterVisionCone;
 
     // Debugging
     public string debugText;
@@ -79,13 +79,12 @@ public class GuardBehaviour : MonoBehaviour
 
         isAlert = false;
 
-        drawnVisionRange = -1f;
-        drawnVisionAngle = -1f;
+        // Legacy vision system
+        // drawnVisionRange = -1f;
+        // drawnVisionAngle = -1f;
         visionConeMesh = new Mesh();
         visionConeObject.GetComponent<MeshFilter>().mesh = visionConeMesh;
         visionConeObject.tag = "GuardVisionCone";
-
-        raycastLayerMask = ~LayerMask.GetMask("Ignore Raycast", "Clickable", "Guard");
 
         // Get initial movement target and vision collider
         if (defaultRouteActions.Count == 0)
@@ -95,19 +94,12 @@ public class GuardBehaviour : MonoBehaviour
             defaultRouteActions.Add(GuardRouteAction.CreateGuardTurnAction(myRigidbody.rotation));
         }
         UpdateMoveTargets();
-        CastVisionRay();
         DrawVisionCone();
-        if (betterVisionCone) DrawBetterVisionCone();
     }
 
     void Update()
     {
-        if (betterVisionCone) DrawBetterVisionCone();
-        else
-        {
-            CastVisionRay();
-            DrawVisionCone();
-        }
+        DrawVisionCone();
 
         // Set alert marker position
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -236,8 +228,8 @@ public class GuardBehaviour : MonoBehaviour
     private bool UpdateVision(float deltaTime)
     {
         // Look for players within vision range
-        Vector2? player1Sighted = CanSeePlayer(player1Rigidbody);
-        Vector2? player2Sighted = CanSeePlayer(player2Rigidbody);
+        Vector2? player1Sighted = VisionUtils.CanSeePlayer(visionConeObject, player1Rigidbody);
+        Vector2? player2Sighted = VisionUtils.CanSeePlayer(visionConeObject, player2Rigidbody);
         Player? foundPlayer = null;
         if (player1Sighted.HasValue && player2Sighted.HasValue)
         {
@@ -260,7 +252,10 @@ public class GuardBehaviour : MonoBehaviour
             if (isAlert)
             {
                 // Handle suspicion
-                suspicionTime += deltaTime;
+                float playerDistance = (targetPosition - (Vector2)myRigidbody.position).magnitude;
+                // The multiplier to deltaTime is scaled linearly based on distance between catchRateMultiplierMin and catchRateMultiplierMax
+                float timeIncrementMultiplier = (1 - playerDistance / visionRange) * (catchRateMultiplierMax - catchRateMultiplierMin) + catchRateMultiplierMin;
+                suspicionTime += deltaTime * timeIncrementMultiplier;
                 if (suspicionTime >= secondsToCatch) PlayerCaught(foundPlayer.Value);
 
                 // Modify the current queue to chase
@@ -300,6 +295,14 @@ public class GuardBehaviour : MonoBehaviour
             }
             return true;
         }
+        else
+        {
+            // Slowly return to yellow vision cone
+            if (!isAlert && suspicionTime > 0)
+            {
+                suspicionTime = Mathf.Max(0f, suspicionTime - deltaTime * suspicionDecreaseRate);
+            }
+        }
 
         return false;
     }
@@ -309,116 +312,17 @@ public class GuardBehaviour : MonoBehaviour
         GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
     }
 
-    private void CastVisionRay()
-    {
-        Vector2 direction = (Vector2)directionMarkerTransform.position - myRigidbody.position;
-        RaycastHit2D raycast = Physics2D.Raycast(myRigidbody.position, direction, visionRange, raycastLayerMask);
-        blockedVisionRange = (raycast.collider != null) ? raycast.distance : visionRange;
-    }
-
-    // Check if the guard can see a player at the given position. Returns Nullable<Vector2> of the new target position.
-    private Vector2? CanSeePlayer(Rigidbody2D playerRigidbody)
-    {
-        PolygonCollider2D visionConeCollider = visionConeObject.GetComponent<PolygonCollider2D>();
-        visionConeCollider.isTrigger = true;
-        if (playerRigidbody.IsTouching(visionConeCollider))
-        {
-            Vector2 sightedPosition = visionConeCollider.ClosestPoint(playerRigidbody.position);
-            return sightedPosition;
-        }
-        return null;
-    }
-
     private void DrawVisionCone()
     {
-        if (Mathf.Abs(drawnVisionRange - blockedVisionRange) < 1e-5 && Mathf.Abs(drawnVisionAngle - visionAngle) < 1e-5) return;
-        // Don't redraw unless necessary
-
-        drawnVisionRange = blockedVisionRange;
-        drawnVisionAngle = visionAngle;
-
-        visionConeMesh.Clear();
-
-        // Get vertices of mesh
-        Vector2[] colliderPoints = new Vector2[visionConeResolution + 2];
-        colliderPoints[0] = new Vector2(0, 0);
-        float angle = -visionAngle;
-        float arcLength = 2 * visionAngle;
-        for (int i = 0; i <= visionConeResolution; i++)
-        {
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * blockedVisionRange;
-            float y = Mathf.Sin(Mathf.Deg2Rad * angle) * blockedVisionRange;
-
-            colliderPoints[i + 1] = new Vector2(x, y);
-
-            angle += (arcLength / visionConeResolution);
-        }
-        Vector3[] meshPoints = System.Array.ConvertAll<Vector2, Vector3>(colliderPoints, point => point);
-
-        // Calculate triangles array
-        int[] triangles = new int[visionConeResolution * 3];
-        for (int i = 0; i < visionConeResolution; i++)
-        {
-            triangles[3 * i] = 0;
-            triangles[3 * i + 1] = i + 1;
-            triangles[3 * i + 2] = i + 2;
-        }
-
-        // Set mesh
-        visionConeMesh.vertices = meshPoints;
-        visionConeMesh.uv = new Vector2[visionConeResolution + 2];
-        visionConeMesh.triangles = triangles;
-        visionConeMesh.RecalculateNormals();
-        visionConeMesh.RecalculateBounds();
-
-        // Set collider points
-        PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
-        collider.SetPath(0, colliderPoints);
-    }
-
-    private void DrawBetterVisionCone()
-    {
-        // Get vertices of mesh
-        Vector2[] colliderPoints = new Vector2[visionConeResolution + 2];
-        colliderPoints[0] = new Vector2(0, 0);
-        float angle = -visionAngle;
-        float arcLength = 2 * visionAngle;
-        for (int i = 0; i <= visionConeResolution; i++)
-        {
-            float worldAngle = transform.rotation.eulerAngles.z + angle;
-            Vector2 raycastDirection = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
-            RaycastHit2D raycastHit = Physics2D.Raycast(myRigidbody.position, raycastDirection, visionRange, raycastLayerMask);
-            float raycastRange = (raycastHit.collider != null) ? raycastHit.distance : visionRange;
-
-            Vector2 vertexDirection = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
-            // Debug.Log($"Angle: {angle}, World Angle: {worldAngle}, Raycast direction: {raycastDirection}, Raycast range: {raycastRange}, v: {vertexDirection}");
-            colliderPoints[i + 1] = vertexDirection * raycastRange;
-
-            angle += (arcLength / visionConeResolution);
-        }
-
-        Vector3[] meshPoints = System.Array.ConvertAll<Vector2, Vector3>(colliderPoints, point => point);
-
-        // Calculate triangles array
-        int[] triangles = new int[visionConeResolution * 3];
-        for (int i = 0; i < visionConeResolution; i++)
-        {
-            triangles[3 * i] = 0;
-            triangles[3 * i + 1] = i + 1;
-            triangles[3 * i + 2] = i + 2;
-        }
-
-        // Set mesh
-        visionConeMesh.Clear();
-        visionConeMesh.vertices = meshPoints;
-        visionConeMesh.uv = new Vector2[visionConeResolution + 2];
-        visionConeMesh.triangles = triangles;
-        visionConeMesh.RecalculateNormals();
-        visionConeMesh.RecalculateBounds();
-
-        // Set collider points
-        PolygonCollider2D collider = visionConeObject.GetComponent<PolygonCollider2D>();
-        collider.SetPath(0, colliderPoints);
+        VisionUtils.DrawBetterVisionCone(
+            originTransform: transform,
+            visionConeMesh: visionConeMesh,
+            visionConeObject: visionConeObject,
+            visionConeResolution: visionConeResolution,
+            visionAngle: visionAngle,
+            visionRange: visionRange
+        );
+        VisionUtils.UpdateVisionConeColor(visionConeObject, suspicionTime, secondsToCatch);
     }
 
     public bool DisableGuard(float timeToDisableFor)
