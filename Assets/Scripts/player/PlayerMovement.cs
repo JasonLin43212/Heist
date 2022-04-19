@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     // References
     public GameObject rangeDisplayObject;
-    public CircleCollider2D collider;
 
     // Start is called before the first frame update
     void Start()
@@ -114,11 +113,5 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D GetRangeCollider()
     {
         return rangeDisplayObject.GetComponent<Collider2D>();
-    }
-    
-    void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().closed == false){
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), collider);
-        }
     }
 }
