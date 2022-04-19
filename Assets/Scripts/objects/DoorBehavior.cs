@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorBehavior : MonoBehaviour
 {
     public bool closed = true;
-    public BoxCollider2D collider;
+    public BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,7 @@ public class DoorBehavior : MonoBehaviour
     private void ResetCollision(){
         PlayerMovement[] players = (PlayerMovement[])FindObjectsOfType(typeof(PlayerMovement));
             foreach(PlayerMovement player in players){
-                Physics2D.IgnoreCollision(collider, player.collider, false);
+                Physics2D.IgnoreCollision(boxCollider, player.boxCollider, false);
             }
     }
 }

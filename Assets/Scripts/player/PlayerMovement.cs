@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
     public string x_axis;
     public string y_axis;
-    public CircleCollider2D collider;
+    public CircleCollider2D boxCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     
     void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().closed == false){
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), collider);
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), boxCollider);
         }
     }
 }
