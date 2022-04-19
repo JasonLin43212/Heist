@@ -124,5 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35657aaba85641f46a61eaf8df8f4290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closed: 1
-  collider: {fileID: 1441137061337167898}
+  shouldDoorBeClosed: 1
+  initialRotation: 0
+  initialPosition: {x: 0, y: 0, z: 0}
+  boxCollider: {fileID: 1441137061337167898}

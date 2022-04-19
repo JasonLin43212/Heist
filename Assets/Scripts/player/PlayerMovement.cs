@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Misc
     private ContactFilter2D itemContactFilter;
-    public CircleCollider2D collider;
+    public CircleCollider2D circleCollider;
 
     // References
     public GameObject rangeDisplayObject;
@@ -56,12 +56,10 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.MovePosition(myRigidbody.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().closed == false)
-        {
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), collider);
+    
+    void OnCollisionEnter2D(Collision2D collision){
+        if(collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().shouldDoorBeClosed == false){
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), circleCollider);
         }
     }
 

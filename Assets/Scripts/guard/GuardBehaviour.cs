@@ -83,6 +83,7 @@ public class GuardBehaviour : MonoBehaviour
         drawnVisionAngle = -1f;
         visionConeMesh = new Mesh();
         visionConeObject.GetComponent<MeshFilter>().mesh = visionConeMesh;
+        visionConeObject.tag = "GuardVisionCone";
 
         raycastLayerMask = ~LayerMask.GetMask("Ignore Raycast", "Clickable", "Guard");
 
@@ -319,6 +320,7 @@ public class GuardBehaviour : MonoBehaviour
     private Vector2? CanSeePlayer(Rigidbody2D playerRigidbody)
     {
         PolygonCollider2D visionConeCollider = visionConeObject.GetComponent<PolygonCollider2D>();
+        visionConeCollider.isTrigger = true;
         if (playerRigidbody.IsTouching(visionConeCollider))
         {
             Vector2 sightedPosition = visionConeCollider.ClosestPoint(playerRigidbody.position);

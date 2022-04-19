@@ -4,39 +4,76 @@ using UnityEngine;
 
 public class DoorBehavior : MonoBehaviour
 {
-    public bool closed = true;
-    public BoxCollider2D collider;
+    private const int RIGHT_ANGLE_DEGREES = 90;
+    private const float VERTICAL_Y_DISPLACEMENT = .4f;
+    private const float HORIZONTAL_X_DISPLACEMENT = .5f;
+
+    private float initialRotation;
+    private Vector3 initialPosition;
+    private bool closed = true;
+    private bool guardNotLooking = true;
+
+    public bool shouldDoorBeClosed = true;
+    public BoxCollider2D boxCollider;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        initialRotation = this.transform.rotation.z;
+        initialPosition = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(guardNotLooking && closed){
+            shouldDoorBeClosed = true;
+            closeDoor();
+            ResetCollision();
+        }else{
+            shouldDoorBeClosed = false;
+            closeDoor();
+        }
 
     }
+
+    
 
     void OnMouseDown(){
         if(closed){
             closed = false;
-            this.transform.position += transform.up*.4f + transform.right*.5f;
-            this.transform.rotation *= Quaternion.Euler(0,0,90);
         }else{
             closed = true;
-            // this.transform.forward += new Vector3(-.5f,-.4f,0f);
-            this.transform.position += transform.up*.5f + transform.right*-.4f;
-            this.transform.rotation *= Quaternion.Euler(0,0,-90);
-            ResetCollision();
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider){
+        if(collider.gameObject.tag == "GuardVisionCone"){
+            guardNotLooking = false;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider){
+        if(collider.gameObject.tag == "GuardVisionCone"){
+            guardNotLooking = true;
+        }
+    }
+
+    void closeDoor(){
+        if(shouldDoorBeClosed){
+            this.transform.rotation = Quaternion.Euler(0,0,initialRotation);
+            this.transform.position = initialPosition;
+        } else{
+            this.transform.rotation = Quaternion.Euler(0,0,initialRotation-RIGHT_ANGLE_DEGREES);
+            this.transform.position = initialPosition + transform.up*VERTICAL_Y_DISPLACEMENT + transform.right*HORIZONTAL_X_DISPLACEMENT;
         }
     }
 
     private void ResetCollision(){
         PlayerMovement[] players = (PlayerMovement[])FindObjectsOfType(typeof(PlayerMovement));
             foreach(PlayerMovement player in players){
-                Physics2D.IgnoreCollision(collider, player.collider, false);
+                Physics2D.IgnoreCollision(boxCollider, player.circleCollider, false);
             }
     }
 }
