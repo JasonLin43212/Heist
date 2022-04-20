@@ -6,6 +6,8 @@ public class MouseEventHandler : MonoBehaviour
 {
     private bool mouseDown = false;
     private bool isDisabled = false;
+    public bool canBeReset = false;
+    public bool resetTimer = false;
 
 
     void OnMouseDown()
@@ -13,6 +15,8 @@ public class MouseEventHandler : MonoBehaviour
         if (!PauseMenu.isGamePaused && GameState.numberOfCamerasDisabled < 2){
             GameState.numberOfCamerasDisabled += 1;
             isDisabled = true;
+        } else if (isDisabled && canBeReset){
+            resetTimer = true;
         }
         mouseDown = true;
     }
@@ -34,5 +38,9 @@ public class MouseEventHandler : MonoBehaviour
     public void enableCamera(){
         isDisabled = false;
         GameState.numberOfCamerasDisabled -=1;
+    }
+
+    public bool isTimerReset(){
+        return resetTimer;
     }
 }

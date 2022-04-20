@@ -225,6 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9578175584109b45a5b1957ed7c1899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeReset: 0
+  resetTimer: 0
 --- !u!1 &3986848553403530722
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,11 +530,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visionRange: 5
   visionAngle: 30
-  rotationSpeed: 5
+  rotationSpeed: 0
   secondsToCatch: 0.2
+  catchRateMultiplierMin: 0.4
+  catchRateMultiplierMax: 3
+  suspicionDecreaseRate: 1
   visionConeResolution: 50
   timerLimit: 10
   timerText: {fileID: 8602198278446731193}
+  canBeReset: 0
   defaultAngleRoute: []
   mouseEventHandler: {fileID: 3549212072911219732}
   directionMarkerTransform: {fileID: 5937351034520735367}
@@ -541,7 +547,6 @@ MonoBehaviour:
   alertMarkerObject: {fileID: 5937351033040400127}
   alertSpriteMaskObject: {fileID: 7244913512494353834}
   enableMove: 1
-  betterVisionCone: 1
 --- !u!1 &5937351034480565911
 GameObject:
   m_ObjectHideFlags: 0
