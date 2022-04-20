@@ -14,8 +14,9 @@ public class BasicMouseCamera : MonoBehaviour
     public float rotationSpeed = 10f;
     public float secondsToCatch = 0.2f;
     public int visionConeResolution = 50;
-    public float timerLimit = 30f;
+    public float timerLimit;
     public TMP_Text timerText;
+    public bool canBeReset = false;
 
     // State variables
     private bool cameraEnabled;
@@ -55,6 +56,7 @@ public class BasicMouseCamera : MonoBehaviour
         isAlert = false;
         timerUntilEnabled = timerLimit;
         timerText.text = "";
+        mouseEventHandler.canBeReset = canBeReset;
 
         drawnVisionRange = -1f;
         drawnVisionAngle = -1f;
@@ -111,10 +113,14 @@ public class BasicMouseCamera : MonoBehaviour
     private void HandleMouseInteraction()
     {
         bool disabled = mouseEventHandler.cameraIsDisabled();
+        bool resetTimer = mouseEventHandler.isTimerReset();
         if (disabled && cameraEnabled)
         {
             cameraEnabled = false;
             timerIsCountingDown = true;
+        } else if (resetTimer){
+            timerUntilEnabled = timerLimit;
+            mouseEventHandler.resetTimer = false;
         }
         // cameraEnabled = !mouseEventHandler.HasMouseDown();
         if (!cameraEnabled) isAlert = false;
