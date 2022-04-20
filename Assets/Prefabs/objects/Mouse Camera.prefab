@@ -531,14 +531,14 @@ MonoBehaviour:
   visionRange: 5
   visionAngle: 30
   rotationSpeed: 0
-  secondsToCatch: 0.2
+  secondsToCatch: 0.4
   catchRateMultiplierMin: 0.4
   catchRateMultiplierMax: 3
   suspicionDecreaseRate: 1
   visionConeResolution: 50
-  timerLimit: 10
+  timerLimit: 2.5
   timerText: {fileID: 8602198278446731193}
-  canBeReset: 0
+  canBeReset: 1
   defaultAngleRoute: []
   mouseEventHandler: {fileID: 3549212072911219732}
   directionMarkerTransform: {fileID: 5937351034520735367}

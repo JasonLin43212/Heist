@@ -17,7 +17,7 @@ public class GuardBehaviourEditor : Editor
             "targetChaseDistanceRatio",
             "moveSpeed", "chaseSpeed",
             "secondsToCatch", "catchRateMultiplierMin", "catchRateMultiplierMax", "suspicionDecreaseRate",
-            "visionConeResolution"
+            "visionConeResolution", "ROTATION_SPEED"
         };
         referenceFields = new List<string> {
             "directionMarkerTransform", "visionConeObject", "alertMarkerObject", "alertSpriteMaskObject"

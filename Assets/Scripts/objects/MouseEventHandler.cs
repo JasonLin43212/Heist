@@ -12,7 +12,7 @@ public class MouseEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!PauseMenu.isGamePaused && GameState.numberOfCamerasDisabled < 2){
+        if (!PauseMenu.isGamePaused && GameState.numberOfCamerasDisabled < 200){
             GameState.numberOfCamerasDisabled += 1;
             isDisabled = true;
         } else if (isDisabled && canBeReset){
