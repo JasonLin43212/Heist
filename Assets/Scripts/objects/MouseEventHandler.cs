@@ -7,13 +7,17 @@ public class MouseEventHandler : MonoBehaviour
     private bool mouseDown = false;
     private static int numberOfCamerasDisabled = 0;
     private bool isDisabled = false;
+    public bool canBeReset = false;
+    public bool resetTimer = false;
 
 
     void OnMouseDown()
     {
-        if (numberOfCamerasDisabled < 2){
+        if (!isDisabled && numberOfCamerasDisabled < 2){
             numberOfCamerasDisabled += 1;
             isDisabled = true;
+        } else if (isDisabled && canBeReset){
+            resetTimer = true;
         }
         mouseDown = true;
     }
@@ -35,5 +39,9 @@ public class MouseEventHandler : MonoBehaviour
     public void enableCamera(){
         isDisabled = false;
         numberOfCamerasDisabled -=1;
+    }
+
+    public bool isTimerReset(){
+        return resetTimer;
     }
 }
