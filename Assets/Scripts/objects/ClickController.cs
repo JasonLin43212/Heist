@@ -45,7 +45,7 @@ public class ClickController : MonoBehaviour
         }
 
         // Try door
-        DoorBehavior doorScript = targetObject.GetComponent<DoorBehavior>();
+        ClickDoorBehavior doorScript = targetObject.GetComponent<ClickDoorBehavior>();
         if (doorScript != null)
         {
             doorScript.OnClick();
