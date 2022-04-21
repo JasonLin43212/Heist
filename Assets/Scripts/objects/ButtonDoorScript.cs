@@ -6,7 +6,8 @@ public class ButtonDoorScript : DoorScript
 {
     public ButtonScript button1, button2;
     public bool togglesPermanently = false;  // If set to true, after toggling for the first time,
-                                             //the door cannot be reset to its previous state
+                                             // the door cannot be reset to its previous state
+    public bool useImmediateButtonState = false;  // If true, door state = button state versus toggling
 
     private bool wereButtonsPressed = false, doorLock = false;
 
@@ -16,12 +17,16 @@ public class ButtonDoorScript : DoorScript
         if (doorLock) return;  // door is locked, cannot open again
 
         bool bothButtonsPressed = button1.IsTouchingPlayer && button2.IsTouchingPlayer;
-        if (!wereButtonsPressed && bothButtonsPressed)
+        if (useImmediateButtonState) closed = (bothButtonsPressed != defaultState);
+        else
         {
-            closed = !closed;
-            doorLock = togglesPermanently;
+            if (!wereButtonsPressed && bothButtonsPressed)
+            {
+                closed = !closed;
+                doorLock = togglesPermanently;
+            }
+            wereButtonsPressed = bothButtonsPressed;
         }
-        wereButtonsPressed = bothButtonsPressed;
 
         base.Update();
     }

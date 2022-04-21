@@ -15,6 +15,7 @@ public class DoorScript : MonoBehaviour
     private bool doorWasAlreadyClosed = true;
 
     public bool shouldDoorBeClosed = true, openableByGuard = true;
+    protected bool defaultState;
     public Transform spriteTransform;
     public BoxCollider2D boxCollider;
 
@@ -24,31 +25,29 @@ public class DoorScript : MonoBehaviour
     {
         initialRotation = spriteTransform.rotation.eulerAngles.z;
         initialPosition = spriteTransform.position;
+        defaultState = shouldDoorBeClosed;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (openableByGuard)
+        if (guardNotLooking && closed)
         {
-            if (guardNotLooking && closed)
+            shouldDoorBeClosed = true;
+            if (!doorWasAlreadyClosed)
             {
-                shouldDoorBeClosed = true;
-                if (!doorWasAlreadyClosed)
-                {
-                    closeDoor();
-                    ResetCollision();
-                    doorWasAlreadyClosed = true;
-                }
+                closeDoor();
+                ResetCollision();
+                doorWasAlreadyClosed = true;
             }
-            else
+        }
+        else
+        {
+            shouldDoorBeClosed = false;
+            if (doorWasAlreadyClosed)
             {
-                shouldDoorBeClosed = false;
-                if (doorWasAlreadyClosed)
-                {
-                    closeDoor();
-                    doorWasAlreadyClosed = false;
-                }
+                closeDoor();
+                doorWasAlreadyClosed = false;
             }
         }
     }
@@ -78,6 +77,6 @@ public class DoorScript : MonoBehaviour
 
     public void SetGuardNotLooking(bool target)
     {
-        guardNotLooking = target;
+        if (openableByGuard) guardNotLooking = target;
     }
 }
