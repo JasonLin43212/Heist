@@ -12,6 +12,7 @@ public class DoorBehavior : MonoBehaviour
     private Vector3 initialPosition;
     private bool closed = true;
     private bool guardNotLooking = true;
+    private bool doorWasAlreadyClosed = true;
 
     public bool shouldDoorBeClosed = true;
     public BoxCollider2D boxCollider;
@@ -29,11 +30,17 @@ public class DoorBehavior : MonoBehaviour
     {
         if(guardNotLooking && closed){
             shouldDoorBeClosed = true;
-            closeDoor();
-            ResetCollision();
+            if (!doorWasAlreadyClosed){
+                closeDoor();
+                ResetCollision();
+                doorWasAlreadyClosed = true;
+            }
         }else{
             shouldDoorBeClosed = false;
-            closeDoor();
+            if (doorWasAlreadyClosed){
+                closeDoor();
+                doorWasAlreadyClosed = false;
+            }
         }
 
     }
