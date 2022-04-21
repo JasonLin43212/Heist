@@ -49,13 +49,13 @@ public class DoorBehavior : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D collider){
-        if(collider.gameObject.tag == "Guard"){
+        if(collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox"){
             guardNotLooking = false;
         }
     }
 
     void OnTriggerExit2D(Collider2D collider){
-        if(collider.gameObject.tag == "Guard"){
+        if(collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox"){
             guardNotLooking = true;
         }
     }
