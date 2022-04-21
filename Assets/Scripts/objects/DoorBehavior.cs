@@ -20,7 +20,7 @@ public class DoorBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initialRotation = this.transform.rotation.z;
+        initialRotation = this.transform.rotation.eulerAngles.z;
         initialPosition = this.transform.position;
     }
 
@@ -49,13 +49,13 @@ public class DoorBehavior : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D collider){
-        if(collider.gameObject.tag == "GuardVisionCone"){
+        if(collider.gameObject.tag == "Guard"){
             guardNotLooking = false;
         }
     }
 
     void OnTriggerExit2D(Collider2D collider){
-        if(collider.gameObject.tag == "GuardVisionCone"){
+        if(collider.gameObject.tag == "Guard"){
             guardNotLooking = true;
         }
     }
