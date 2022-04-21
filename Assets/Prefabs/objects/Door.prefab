@@ -125,6 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldDoorBeClosed: 1
-  initialRotation: 0
-  initialPosition: {x: 0, y: 0, z: 0}
   boxCollider: {fileID: 1441137061337167898}
