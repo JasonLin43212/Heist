@@ -12,7 +12,7 @@ public class ItemCrowbar : ItemDescriptor
     [Min(0f)]
     public float guardDisableTime = 5f;
     [Min(0f)]
-    public float crowbarUseRange = 1.5f;
+    public float crowbarUseRange = 1f;
     protected override float ItemUseRange => crowbarUseRange;
 
     // Private variables

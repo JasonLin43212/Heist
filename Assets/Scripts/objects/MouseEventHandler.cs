@@ -5,7 +5,6 @@ using UnityEngine;
 public class MouseEventHandler : MonoBehaviour
 {
     private bool mouseDown = false;
-    private static int numberOfCamerasDisabled = 0;
     private bool isDisabled = false;
     public bool canBeReset = false;
     public bool resetTimer = false;
@@ -13,8 +12,8 @@ public class MouseEventHandler : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!isDisabled && numberOfCamerasDisabled < 2){
-            numberOfCamerasDisabled += 1;
+        if (!PauseMenu.isGamePaused && GameState.numberOfCamerasDisabled < 200){
+            GameState.numberOfCamerasDisabled += 1;
             isDisabled = true;
         } else if (isDisabled && canBeReset){
             resetTimer = true;
@@ -38,7 +37,7 @@ public class MouseEventHandler : MonoBehaviour
 
     public void enableCamera(){
         isDisabled = false;
-        numberOfCamerasDisabled -=1;
+        GameState.numberOfCamerasDisabled -=1;
     }
 
     public bool isTimerReset(){

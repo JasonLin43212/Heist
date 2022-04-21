@@ -5,7 +5,8 @@ using UnityEngine;
 public class GuardBehaviour : MonoBehaviour
 {
     // Constants
-    const float ROTATION_SPEED = 180f, ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
+    public float ROTATION_SPEED = 180f;
+    const float ANGLE_TOL = 0.3f, POSITION_TOL = 0.05f;  // movement
     const float PLAYER_RADIUS = 0.4f;
 
     // Modifiable constants

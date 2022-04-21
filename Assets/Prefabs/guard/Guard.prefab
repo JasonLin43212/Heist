@@ -266,14 +266,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba70b22bf040d54d8ea432198dbd8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ROTATION_SPEED: 120
   visionRange: 7
   visionAngle: 20
   targetChaseDistanceRatio: 0.7
-  moveSpeed: 1.5
+  moveSpeed: 2
   chaseSpeed: 4
-  secondsToCatch: 1.5
+  secondsToCatch: 2
   catchRateMultiplierMin: 1
   catchRateMultiplierMax: 3
+  suspicionDecreaseRate: 1
   disabledTimeMultiplier: 1
   visionConeResolution: 100
   defaultRouteActions: []
