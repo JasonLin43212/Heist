@@ -105,7 +105,7 @@ public class BasicMouseCamera : MonoBehaviour
     // Set enabled/disabled based on if the mouse is holding down on the camera
     private void HandleMouseInteraction()
     {
-        spriteOutlineObject.SetActive(cameraEnabled && GameState.Instance.ClickControllerScript.IsTargetObject(gameObject));
+        spriteOutlineObject.SetActive(cameraEnabled && GameState.Instance.ClickController.IsTargetObject(gameObject));
         if (isAlert && !cameraEnabled) isAlert = false;
     }
 
@@ -212,6 +212,6 @@ public class BasicMouseCamera : MonoBehaviour
 
     private void PlayerCaught(Player caughtPlayer)
     {
-        GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
+        GameState.Instance.GameController.PlayerCaught(caughtPlayer);
     }
 }

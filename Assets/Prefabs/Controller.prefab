@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2112600577794416785}
   - component: {fileID: 2112600577794416790}
   - component: {fileID: 1956869279278644312}
+  - component: {fileID: 6979527973911103215}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -47,8 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Object: {fileID: 0}
   player2Object: {fileID: 0}
-  player1Camera: {fileID: 0}
-  player2Camera: {fileID: 0}
   levelObject: {fileID: 0}
   disableDeath: 0
 --- !u!114 &1956869279278644312
@@ -63,3 +62,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0454dca09a31f54eaa7b28dc6a6899a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetObject: {fileID: 0}
+  collidersList: []
+  worldPosPublic: {x: 0, y: 0}
+  mousePosPublic: {x: 0, y: 0}
+--- !u!114 &6979527973911103215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112600577794416791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4fc6d984ff2ea04e9bbafcc70a914d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterList:
+  - name: Belle
+    displayName: Belle
+    sprite: {fileID: 21300000, guid: d40f975b7a91607459f2e22c1255ce35, type: 3}
+  - name: Pepper
+    displayName: Pepper
+    sprite: {fileID: 21300000, guid: 20fe5c8611bbcc24fad2907de03d8004, type: 3}
+  - name: Egg
+    displayName: Egg
+    sprite: {fileID: 21300000, guid: c3f30e97db9ca2f4b9d6b55d56e20679, type: 3}
