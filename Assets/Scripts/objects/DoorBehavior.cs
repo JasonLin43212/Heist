@@ -15,72 +15,92 @@ public class DoorBehavior : MonoBehaviour
     private bool doorWasAlreadyClosed = true;
 
     public bool shouldDoorBeClosed = true;
+    public GameObject spriteOutlineObject;
+    public Transform spriteTransform;
     public BoxCollider2D boxCollider;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        initialRotation = this.transform.rotation.eulerAngles.z;
-        initialPosition = this.transform.position;
+        initialRotation = spriteTransform.rotation.eulerAngles.z;
+        initialPosition = spriteTransform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(guardNotLooking && closed){
+        if (guardNotLooking && closed)
+        {
             shouldDoorBeClosed = true;
-            if (!doorWasAlreadyClosed){
+            if (!doorWasAlreadyClosed)
+            {
                 closeDoor();
                 ResetCollision();
                 doorWasAlreadyClosed = true;
             }
-        }else{
+        }
+        else
+        {
             shouldDoorBeClosed = false;
-            if (doorWasAlreadyClosed){
+            if (doorWasAlreadyClosed)
+            {
                 closeDoor();
                 doorWasAlreadyClosed = false;
             }
         }
-
+        spriteOutlineObject.SetActive(GameState.Instance.ClickControllerScript.IsTargetObject(gameObject));
     }
 
-    
 
-    void OnMouseDown(){
-        if(closed){
+    public void OnClick()
+    {
+        if (closed)
+        {
             closed = false;
-        }else{
+        }
+        else
+        {
             closed = true;
         }
     }
 
-    void OnTriggerStay2D(Collider2D collider){
-        if(collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox"){
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox")
+        {
             guardNotLooking = false;
         }
     }
 
-    void OnTriggerExit2D(Collider2D collider){
-        if(collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox"){
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "GuardVisionCone" || collider.gameObject.tag == "GuardCollisionBox")
+        {
             guardNotLooking = true;
         }
     }
 
-    void closeDoor(){
-        if(shouldDoorBeClosed){
-            this.transform.rotation = Quaternion.Euler(0,0,initialRotation);
-            this.transform.position = initialPosition;
-        } else{
-            this.transform.rotation = Quaternion.Euler(0,0,initialRotation-RIGHT_ANGLE_DEGREES);
-            this.transform.position = initialPosition + transform.up*VERTICAL_Y_DISPLACEMENT + transform.right*HORIZONTAL_X_DISPLACEMENT;
+    void closeDoor()
+    {
+        if (shouldDoorBeClosed)
+        {
+            spriteTransform.rotation = Quaternion.Euler(0, 0, initialRotation);
+            spriteTransform.position = initialPosition;
+        }
+        else
+        {
+            spriteTransform.rotation = Quaternion.Euler(0, 0, initialRotation - RIGHT_ANGLE_DEGREES);
+            spriteTransform.position = initialPosition + spriteTransform.up * VERTICAL_Y_DISPLACEMENT + spriteTransform.right * HORIZONTAL_X_DISPLACEMENT;
         }
     }
 
-    private void ResetCollision(){
+    private void ResetCollision()
+    {
         PlayerMovement[] players = (PlayerMovement[])FindObjectsOfType(typeof(PlayerMovement));
-            foreach(PlayerMovement player in players){
-                Physics2D.IgnoreCollision(boxCollider, player.circleCollider, false);
-            }
+        foreach (PlayerMovement player in players)
+        {
+            Physics2D.IgnoreCollision(boxCollider, player.circleCollider, false);
+        }
     }
 }

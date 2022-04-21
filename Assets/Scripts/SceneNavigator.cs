@@ -7,21 +7,24 @@ public class SceneNavigator : MonoBehaviour
 {
     public void RestartGame()
     {
-        if (GameState.sceneName == null) {
-            SceneManager.LoadScene(sceneName:"MainMenu");
-        } else {
-            SceneManager.LoadScene(sceneName:GameState.sceneName);
+        if (GameState.sceneName == null)
+        {
+            SceneManager.LoadScene(sceneName: "MainMenu");
         }
-        GameState.numberOfCamerasDisabled = 0;
+        else
+        {
+            SceneManager.LoadScene(sceneName: GameState.sceneName);
+        }
     }
 
-    public void StartGame(string sceneName) {
+    public void StartGame(string sceneName)
+    {
         GameState.sceneName = sceneName;
-        GameState.numberOfCamerasDisabled = 0;
-        SceneManager.LoadScene(sceneName:sceneName);
+        SceneManager.LoadScene(sceneName: sceneName);
     }
 
-    public void MainMenu() {
-        SceneManager.LoadScene(sceneName:"MainMenu");
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(sceneName: "MainMenu");
     }
 }
