@@ -6,9 +6,7 @@ public class ClickController : MonoBehaviour
 {
     private ContactFilter2D colliderContactFilter;
 
-    public GameObject targetObject = null;
-    public List<Collider2D> collidersList;
-    public Vector2 worldPosPublic, mousePosPublic;
+    private GameObject targetObject = null;
 
     // Start is called before the first frame update
     void Start()
@@ -77,11 +75,9 @@ public class ClickController : MonoBehaviour
     private Vector2 GetMouseWorldPosition()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePosPublic = (Vector2)mousePos;
         Player cameraPlayer = (mousePos.x > Screen.width / 2) ? Player.Player2 : Player.Player1;
         Camera correctCamera = GameState.Instance.GetPlayerCamera(cameraPlayer);
         Vector2 worldPos = (Vector2)correctCamera.ScreenToWorldPoint(mousePos);
-        worldPosPublic = worldPos;
         return worldPos;
     }
 
@@ -89,7 +85,6 @@ public class ClickController : MonoBehaviour
     {
         List<Collider2D> overlappingColliders = new List<Collider2D>();
         Physics2D.OverlapPoint(mousePos, colliderContactFilter, overlappingColliders);
-        collidersList = overlappingColliders;
         return overlappingColliders;
     }
 
