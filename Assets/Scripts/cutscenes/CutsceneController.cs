@@ -27,9 +27,12 @@ public class CutsceneController : MonoBehaviour
         if (inCutscene && Input.GetMouseButtonDown(0))
         {
             // Clicked during a cutscene; progress the dialogue
-            frameIndex++;
-            if (frameIndex < currentCutscene.NumFrames) UpdateDialogueUI();
-            else EndCutscene();
+            if (dialogueUI.FinishRevealDialogue())
+            {
+                frameIndex++;
+                if (frameIndex < currentCutscene.NumFrames) UpdateDialogueUI();
+                else EndCutscene();
+            }
         }
     }
 

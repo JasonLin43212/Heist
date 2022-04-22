@@ -25,8 +25,7 @@ public class DialogueUIScript : MonoBehaviour
     void Start()
     {
         cutsceneController = GameState.Instance.CutsceneController;
-        SetDialogueUI("Belle", "Look! This text should do a good job of revealing exactly a single character at a time. It might be that there is overflow, but the system should be able to handle that! Hopefully this works... I tried very hard :3");
-        // gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,9 +45,9 @@ public class DialogueUIScript : MonoBehaviour
         targetDialogueText = dialogue;
         showDialogueIndex = 0;
         nextSpaceIndex = 0;
-        if (!revealCoroutineGoing) StartCoroutine(DelayTextReveal());
 
         SetDialogueUIDisplay(true);
+        if (!revealCoroutineGoing) StartCoroutine(DelayTextReveal());
     }
 
     private bool ShowNewLetter()
@@ -57,6 +56,7 @@ public class DialogueUIScript : MonoBehaviour
         else if (showDialogueIndex == targetDialogueText.Length - 1)
         {
             dialogueText.text = targetDialogueText;
+            showDialogueIndex++;
             return false;  // We just finished revealing the dialogue
         }
 
