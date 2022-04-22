@@ -27,7 +27,7 @@ public class CutsceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inCutscene && Input.GetMouseButtonDown(0))
+        if (!PauseMenu.isGamePaused && inCutscene && Input.GetMouseButtonDown(0))
         {
             // Clicked during a cutscene; progress the dialogue
             if (dialogueUIScript.FinishRevealDialogue())

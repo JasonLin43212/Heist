@@ -83,7 +83,7 @@ public class DialogueUIScript : MonoBehaviour
         while (ShowNewLetter())
         {
             float start = Time.realtimeSinceStartup;
-            while (Time.realtimeSinceStartup < start + characterRevealDelay) yield return null;
+            while (PauseMenu.isGamePaused || Time.realtimeSinceStartup < start + characterRevealDelay) yield return null;
         }
         revealCoroutineGoing = false;
     }
