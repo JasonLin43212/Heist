@@ -76,7 +76,7 @@ public class BasicMouseCamera : MonoBehaviour
         DrawVisionCone();
 
         bool updatedVision = UpdateVision(Time.deltaTime);
-        if (!updatedVision && enableMove && !PauseMenu.isGamePaused)
+        if (!updatedVision && enableMove && !PauseMenu.isGamePaused && !PauseMenu.PausedByCutscene)
         {
             float angleDifference = (targetAngle - transform.eulerAngles.z) % 360;
             if (Mathf.Abs(angleDifference) > 180f) angleDifference = (360 - angleDifference) % 360;

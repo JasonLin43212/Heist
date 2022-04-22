@@ -82,7 +82,8 @@ public class DialogueUIScript : MonoBehaviour
         revealCoroutineGoing = true;
         while (ShowNewLetter())
         {
-            yield return new WaitForSeconds(characterRevealDelay);
+            float start = Time.realtimeSinceStartup;
+            while (Time.realtimeSinceStartup < start + characterRevealDelay) yield return null;
         }
         revealCoroutineGoing = false;
     }

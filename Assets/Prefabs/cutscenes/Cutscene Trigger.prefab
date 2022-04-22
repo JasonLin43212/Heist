@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2952708113857684323}
   - component: {fileID: 8552569804690077230}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Visibility Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8143041917201562940}
   - component: {fileID: 8576581741964103418}
   - component: {fileID: 3057600035187794183}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cutscene Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
