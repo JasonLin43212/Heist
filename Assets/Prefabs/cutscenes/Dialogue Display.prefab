@@ -56,6 +56,7 @@ MonoBehaviour:
   portrait: {fileID: 6357340658801638788}
   nameText: {fileID: 5911223294707484576}
   dialogueText: {fileID: 1983857616914318384}
+  characterRevealDelay: 0.01
 --- !u!1 &850395535672113894
 GameObject:
   m_ObjectHideFlags: 0
