@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CutsceneController : MonoBehaviour
 {
-    public DialogueUIScript dialogueUI;
+    public GameObject dialogueUI;
 
     // Character info
     public List<CharacterData> characterList;
@@ -19,6 +19,9 @@ public class CutsceneController : MonoBehaviour
     void Start()
     {
         LoadCharactersToDictionary();
+        dialogueUIScript.cutsceneController = this;
+        dialogueUI.transform.GetChild(0).gameObject.SetActive(true);
+        dialogueUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,7 +30,7 @@ public class CutsceneController : MonoBehaviour
         if (inCutscene && Input.GetMouseButtonDown(0))
         {
             // Clicked during a cutscene; progress the dialogue
-            if (dialogueUI.FinishRevealDialogue())
+            if (dialogueUIScript.FinishRevealDialogue())
             {
                 frameIndex++;
                 if (frameIndex < currentCutscene.NumFrames) UpdateDialogueUI();
@@ -48,14 +51,15 @@ public class CutsceneController : MonoBehaviour
     private void EndCutscene()
     {
         inCutscene = false;
-        dialogueUI.SetDialogueUIDisplay(false);
+        dialogueUI.SetActive(false);
     }
 
     private void UpdateDialogueUI()
     {
         if (frameIndex >= currentCutscene.NumFrames) return;
         (string speaker, string dialogue) = currentCutscene[frameIndex];
-        dialogueUI.SetDialogueUI(speaker, dialogue);
+        dialogueUI.SetActive(true);
+        dialogueUIScript.SetDialogueUI(speaker, dialogue);
     }
 
     private void LoadCharactersToDictionary()
@@ -74,4 +78,5 @@ public class CutsceneController : MonoBehaviour
     }
 
     public bool InCutscene => inCutscene;
+    private DialogueUIScript dialogueUIScript => dialogueUI.GetComponent<DialogueUIScript>();
 }

@@ -10,7 +10,7 @@ public class DialogueUIScript : MonoBehaviour
     public Image portrait;
     public TextMeshProUGUI nameText, dialogueText;
 
-    private CutsceneController cutsceneController;
+    public CutsceneController cutsceneController;
 
     // Text display variables
     [Min(0f)]
@@ -20,19 +20,6 @@ public class DialogueUIScript : MonoBehaviour
     private string targetDialogueText = "";
     private int showDialogueIndex = 0, nextSpaceIndex = 0;
     private bool revealCoroutineGoing = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        cutsceneController = GameState.Instance.CutsceneController;
-        gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void SetDialogueUI(string speaker, string dialogue)
     {
@@ -46,7 +33,6 @@ public class DialogueUIScript : MonoBehaviour
         showDialogueIndex = 0;
         nextSpaceIndex = 0;
 
-        SetDialogueUIDisplay(true);
         if (!revealCoroutineGoing) StartCoroutine(DelayTextReveal());
     }
 
@@ -99,10 +85,5 @@ public class DialogueUIScript : MonoBehaviour
             yield return new WaitForSeconds(characterRevealDelay);
         }
         revealCoroutineGoing = false;
-    }
-
-    public void SetDialogueUIDisplay(bool showDisplay)
-    {
-        gameObject.SetActive(showDisplay);
     }
 }
