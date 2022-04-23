@@ -56,9 +56,11 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.MovePosition(myRigidbody.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
-    
-    void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<DoorBehavior>().shouldDoorBeClosed == false){
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<ClickDoorBehavior>().shouldDoorBeClosed == false)
+        {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), circleCollider);
         }
     }

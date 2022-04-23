@@ -39,9 +39,9 @@ public class BasicMouseCamera : MonoBehaviour
 
     // References
     private Rigidbody2D player1Rigidbody, player2Rigidbody;
-    public MouseEventHandler mouseEventHandler;
     public Transform directionMarkerTransform, canvasTransform;
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
+    public GameObject spriteOutlineObject;
     private Mesh visionConeMesh;
 
     // Toggles
@@ -58,7 +58,6 @@ public class BasicMouseCamera : MonoBehaviour
         isAlert = false;
         timerUntilEnabled = timerLimit;
         timerText.text = "";
-        mouseEventHandler.canBeReset = canBeReset;
 
         // Legacy vision system
         // drawnVisionRange = -1f;
@@ -106,18 +105,24 @@ public class BasicMouseCamera : MonoBehaviour
     // Set enabled/disabled based on if the mouse is holding down on the camera
     private void HandleMouseInteraction()
     {
-        bool disabled = mouseEventHandler.cameraIsDisabled();
-        bool resetTimer = mouseEventHandler.isTimerReset();
-        if (disabled && cameraEnabled)
+        spriteOutlineObject.SetActive(cameraEnabled && GameState.Instance.ClickControllerScript.IsTargetObject(gameObject));
+        if (isAlert && !cameraEnabled) isAlert = false;
+    }
+
+    public void OnClick()
+    {
+        if (GameState.Instance.numberOfCamerasDisabled >= 200) return;  // Too many cameras disabled at once
+        if (cameraEnabled)
         {
+            // Disable
             cameraEnabled = false;
             timerIsCountingDown = true;
-        } else if (resetTimer){
-            timerUntilEnabled = timerLimit;
-            mouseEventHandler.resetTimer = false;
+            GameState.Instance.numberOfCamerasDisabled++;
         }
-        // cameraEnabled = !mouseEventHandler.HasMouseDown();
-        if (!cameraEnabled) isAlert = false;
+        else if (canBeReset)
+        {
+            timerUntilEnabled = timerLimit;
+        }
     }
 
     // Counts down timer and resets camera when done
@@ -131,7 +136,7 @@ public class BasicMouseCamera : MonoBehaviour
             {
                 timerUntilEnabled = timerLimit;
                 timerIsCountingDown = false;
-                mouseEventHandler.enableCamera();
+                GameState.Instance.numberOfCamerasDisabled--;
                 cameraEnabled = true;
                 timerText.text = "";
             }
