@@ -310,7 +310,7 @@ public class GuardBehaviour : MonoBehaviour
 
     private void PlayerCaught(Player caughtPlayer)
     {
-        GameState.Instance.ControllerScript.PlayerCaught(caughtPlayer);
+        GameState.Instance.GameController.PlayerCaught(caughtPlayer);
     }
 
     private void DrawVisionCone()

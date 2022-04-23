@@ -21,8 +21,7 @@ public class GameController : MonoBehaviour
         player2Camera = player2Object.GetComponentInChildren<Camera>(true);
 
         new GameState(
-            gameController: this,
-            clickController: GetComponent<ClickController>(),
+            controllerObject: gameObject,
             player1Object: player1Object,
             player2Object: player2Object,
             player1Camera: player1Camera,

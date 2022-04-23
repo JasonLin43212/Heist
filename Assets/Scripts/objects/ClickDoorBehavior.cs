@@ -10,7 +10,7 @@ public class ClickDoorBehavior : DoorScript
     {
         base.Update();
 
-        spriteOutlineObject.SetActive(GameState.Instance.ClickControllerScript.IsTargetObject(gameObject));
+        spriteOutlineObject.SetActive(GameState.Instance.ClickController.IsTargetObject(gameObject));
     }
     public void OnClick()
     {
