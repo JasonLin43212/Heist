@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
     // References
     public GameObject player1Object, player2Object;
+    private Camera player1Camera, player2Camera;
     public GameObject levelObject;
 
     // Cheat codes
@@ -15,10 +16,16 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get cameras
+        player1Camera = player1Object.GetComponentInChildren<Camera>(true);
+        player2Camera = player2Object.GetComponentInChildren<Camera>(true);
+
         new GameState(
-            gameController: this,
+            controllerObject: gameObject,
             player1Object: player1Object,
             player2Object: player2Object,
+            player1Camera: player1Camera,
+            player2Camera: player2Camera,
             levelObject: levelObject
         );
 

@@ -7,33 +7,39 @@ public class PauseMenu : MonoBehaviour
     public static bool isGamePaused = false;
     public GameObject pauseMenuUI;
 
-    void Start() {
+    void Start()
+    {
         Resume();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            if (isGamePaused) { 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isGamePaused)
+            {
                 Resume();
-            } else {
+            }
+            else
+            {
                 Pause();
             }
         }
+        Time.timeScale = (isGamePaused || GameState.Instance.CutsceneController.InCutscene) ? 0f : 1f;
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
         isGamePaused = false;
     }
 
     void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
         isGamePaused = true;
     }
+
+    public static bool PausedByCutscene => GameState.Instance.CutsceneController.InCutscene;
 }
