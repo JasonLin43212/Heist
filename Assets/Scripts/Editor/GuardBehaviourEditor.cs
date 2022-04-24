@@ -20,7 +20,8 @@ public class GuardBehaviourEditor : Editor
             "visionConeResolution", "ROTATION_SPEED"
         };
         referenceFields = new List<string> {
-            "directionMarkerTransform", "visionConeObject", "alertMarkerObject", "alertSpriteMaskObject"
+            "directionMarkerTransform", "visionConeObject", "alertMarkerObject", 
+            "alertSpriteMaskObject", "timerText", "canvasTransform"
         };
         toggleFields = new List<string> {
             "enableMove", "strictChasing"

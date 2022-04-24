@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class GuardBehaviour : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class GuardBehaviour : MonoBehaviour
     public float suspicionDecreaseRate = 1f;
     public float disabledTimeMultiplier = 1f;  // multiply intended disable time by this amount (controls how hardy each guard is)
     public int visionConeResolution = 100;
+    public TMP_Text timerText;
+    public Transform canvasTransform;
 
     // Movement variables
     public List<GuardRouteAction> defaultRouteActions;
@@ -80,6 +84,8 @@ public class GuardBehaviour : MonoBehaviour
 
         isAlert = false;
 
+        timerText.text = "";
+
         // Legacy vision system
         // drawnVisionRange = -1f;
         // drawnVisionAngle = -1f;
@@ -106,6 +112,7 @@ public class GuardBehaviour : MonoBehaviour
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
+        canvasTransform.eulerAngles = new Vector3(0,0,0);
     }
 
     void FixedUpdate()
@@ -113,8 +120,13 @@ public class GuardBehaviour : MonoBehaviour
         // Handle guard being disabled
         if (disabledTime > 0)
         {
+            timerText.text = Math.Truncate(disabledTime).ToString();
             disabledTime -= Time.fixedDeltaTime;
-            if (disabledTime <= 0) GetComponent<SpriteRenderer>().material.color = baseColor;
+            if (disabledTime <= 0)
+            {
+                GetComponent<SpriteRenderer>().material.color = baseColor;
+                timerText.text = "";
+            }
             else return;
         }
 
