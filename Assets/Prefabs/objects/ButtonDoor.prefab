@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7176471, g: 0.3019608, b: 0, a: 1}
+  m_Color: {r: 0.13611893, g: 0.3773585, b: 0.09137293, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -157,7 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldDoorBeClosed: 1
+  openableByGuard: 1
   spriteTransform: {fileID: 7980128205282303123}
   boxCollider: {fileID: 1340186213313752159}
   button1: {fileID: 0}
   button2: {fileID: 0}
+  togglesPermanently: 0
+  useImmediateButtonState: 0
