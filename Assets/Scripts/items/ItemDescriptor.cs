@@ -19,6 +19,8 @@ public abstract class ItemDescriptor : MonoBehaviour
         itemBehaviour = GetComponent<ItemBehaviour>();
     }
 
+    protected virtual void Update() { }
+
     public virtual bool UseKeyPressed() => false;
     public virtual void OnPickup(Player player)
     {
