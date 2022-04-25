@@ -17,8 +17,11 @@ public class DialogueUIScript : MonoBehaviour
     public float characterRevealDelay;
 
     private const string START_HIDDEN = "<alpha=#00>", END_HIDDEN = "<alpha=#FF>";
+    private HashSet<string> TAG_WHITELIST = new HashSet<string> {
+        "<i>", "</i>", "<b>", "</b>"
+    };
     private string targetDialogueText = "";
-    private int showDialogueIndex = 0, nextSpaceIndex = 0;
+    private int showDialogueIndex = 0;
     private bool revealCoroutineGoing = false;
 
     public void SetDialogueUI(string speaker, string dialogue)
@@ -31,7 +34,6 @@ public class DialogueUIScript : MonoBehaviour
         dialogueText.text = "";
         targetDialogueText = dialogue;
         showDialogueIndex = 0;
-        nextSpaceIndex = 0;
 
         if (!revealCoroutineGoing) StartCoroutine(DelayTextReveal());
     }
@@ -46,25 +48,30 @@ public class DialogueUIScript : MonoBehaviour
             return false;  // We just finished revealing the dialogue
         }
 
-        // See if we need to update the next space
-        if (nextSpaceIndex < showDialogueIndex)
+        // See if we need to move the index forward to handle a tag in the whitelist
+        if (targetDialogueText[showDialogueIndex] == '<')
         {
-            nextSpaceIndex = showDialogueIndex;
-            while (nextSpaceIndex < targetDialogueText.Length && targetDialogueText[nextSpaceIndex] != ' ')
-                nextSpaceIndex++;
+            int closeBracketIndex = showDialogueIndex + 1;
+            while (closeBracketIndex < targetDialogueText.Length && targetDialogueText[closeBracketIndex] != '>')
+                closeBracketIndex++;
+            if (closeBracketIndex < targetDialogueText.Length)
+            {
+                int tagLength = closeBracketIndex - showDialogueIndex + 1;
+                string possibleTag = targetDialogueText.Substring(showDialogueIndex, tagLength);
+                if (TAG_WHITELIST.Contains(possibleTag)) showDialogueIndex = closeBracketIndex;
+            }
         }
+        showDialogueIndex++;
 
         // Compose text string
-        string textOutput = targetDialogueText.Substring(0, showDialogueIndex + 1);
-        int extraMargin = nextSpaceIndex - showDialogueIndex - 1;
-        if (extraMargin > 0)
+        string textOutput = targetDialogueText.Substring(0, showDialogueIndex);
+        if (showDialogueIndex < targetDialogueText.Length)
         {
-            string hiddenText = targetDialogueText.Substring(showDialogueIndex + 1, extraMargin);
+            string hiddenText = targetDialogueText.Substring(showDialogueIndex);
             textOutput = textOutput + START_HIDDEN + hiddenText + END_HIDDEN;
         }
         dialogueText.text = textOutput;
 
-        showDialogueIndex++;
         return true;
     }
 
