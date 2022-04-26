@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Controls
     private KeyCode pickDropKey;
-    public bool pickItemsUsingButton = true;
+    public bool pickItemsAutomatically = false;
 
     // Misc
     private ContactFilter2D itemContactFilter;
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         GameObject itemObject = other.transform.parent.gameObject;
-        if (!pickItemsUsingButton && itemObject.tag == "Item")
+        if (pickItemsAutomatically && itemObject.tag == "Item")
         {
             if (itemObject == justDroppedItemObject)
             {
@@ -105,19 +105,16 @@ public class PlayerMovement : MonoBehaviour
                 heldItem.Drop();
             }
 
-            if (pickItemsUsingButton)
-            {
-                // Look to see if we're touching any items
-                Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
-                int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
+            // Look to see if we're touching any items
+            Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
+            int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
 
-                // If we are overlapping any other item, pick it up
-                if (numOverlappingColliders > 0)
-                {
-                    // Try to pick up the item
-                    GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
-                    overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
-                }
+            // If we are overlapping any other item, pick it up
+            if (numOverlappingColliders > 0)
+            {
+                // Try to pick up the item
+                GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
+                overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
             }
         }
     }

@@ -125,7 +125,7 @@ MonoBehaviour:
   moveSpeed: 10
   x_axis: 
   y_axis: 
-  circleCollider: {fileID: 0}
+  pickItemsAutomatically: 0
   rangeDisplayObject: {fileID: 7860588898707812371}
 --- !u!58 &-3522677471127249613
 CircleCollider2D:
