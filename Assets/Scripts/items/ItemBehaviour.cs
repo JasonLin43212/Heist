@@ -16,6 +16,7 @@ public abstract class ItemBehaviour : MonoBehaviour
 
     // Using the item
     public virtual bool HasFiniteUses => false;
+    public virtual bool DestroyAfterUsedUp => false;
     protected int maxUses = 0, remainingUses = 0;
 
     protected virtual void Start()
@@ -110,6 +111,7 @@ public abstract class ItemBehaviour : MonoBehaviour
     protected virtual void ItemOutOfUses()
     {
         Debug.Log("Item ran out of uses.");
+        if (DestroyAfterUsedUp) Destroy(gameObject);
     }
 
     // Set all important starting fields
