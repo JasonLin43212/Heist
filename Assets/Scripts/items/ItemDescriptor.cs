@@ -12,6 +12,8 @@ public abstract class ItemDescriptor : MonoBehaviour
     public virtual bool CanUseWithKey => false;
     protected virtual float ItemUseRange => 0f;
 
+    public bool showPlayerRangeCircle = true;
+
     protected ItemBehaviour itemBehaviour;
 
     protected virtual void Start()
@@ -24,12 +26,16 @@ public abstract class ItemDescriptor : MonoBehaviour
     public virtual bool UseKeyPressed() => false;
     public virtual void OnPickup(Player player)
     {
-        GameState.Instance.GetPlayerObject(player).GetComponent<PlayerMovement>().SetRange(ItemUseRange);
+        GameObject playerObject = GameState.Instance.GetPlayerObject(player);
+        playerObject.GetComponent<PlayerMovement>().SetRange(ItemUseRange);
+        if (!showPlayerRangeCircle) playerObject.GetComponent<PlayerMovement>().rangeDisplayObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public virtual void OnDrop(Player player)
     {
-        GameState.Instance.GetPlayerObject(player).GetComponent<PlayerMovement>().HideRange();
+        GameObject playerObject = GameState.Instance.GetPlayerObject(player);
+        playerObject.GetComponent<PlayerMovement>().HideRange();
+        if (!showPlayerRangeCircle) playerObject.GetComponent<PlayerMovement>().rangeDisplayObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     // Getters + Utility functions

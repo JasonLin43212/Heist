@@ -119,5 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displaySprite: {fileID: 0}
+  showPlayerRangeCircle: 0
   interactableObjects: []
   keycardUseRange: 1
