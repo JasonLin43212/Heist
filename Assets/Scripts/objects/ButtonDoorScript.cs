@@ -30,4 +30,11 @@ public class ButtonDoorScript : DoorScript
 
         base.Update();
     }
+
+    protected override string SerializeDoor() => $"{(wereButtonsPressed ? 'Y' : 'N')}{(doorLock ? 'Y' : 'N')}";
+    protected override void DeserializeDoor(string doorState)
+    {
+        wereButtonsPressed = doorState[0] == 'Y';
+        doorLock = doorState[1] == 'Y';
+    }
 }

@@ -19,11 +19,15 @@ public abstract class ItemBehaviour : MonoBehaviour
     public virtual bool DestroyAfterUsedUp => false;
     protected int maxUses = 0, remainingUses = 0;
 
+    private string uniqueIdentifier;
+    public string UniqueID => uniqueIdentifier;
+
     protected virtual void Start()
     {
         itemDescriptor = GetComponent<ItemDescriptor>();
         InitializeItemProperties();
         ValidateItemProperties();
+        uniqueIdentifier = $"Item<{itemDescriptor.Name},{transform.position.ToString()}>";
     }
 
     protected virtual void Update()
@@ -127,4 +131,24 @@ public abstract class ItemBehaviour : MonoBehaviour
     public Player? GetHolder() => holder;
     public int GetRemainingUses() => remainingUses;
     public int GetMaxUses() => maxUses;
+
+    // Save / load methods
+    public (int remainingUses, int maxUses, Vector3 location) Serialize()
+    {
+        Vector3 myLocation = (CanHold && holder.HasValue) ? GameState.Instance.GetPlayerObject(holder.Value).transform.position : transform.position;
+        return (remainingUses, maxUses, myLocation);
+    }
+
+    public void Deserialize((int, int, Vector3) state)
+    {
+        (int remainingUses, int maxUses, Vector3 location) = state;
+        this.remainingUses = remainingUses;
+        this.maxUses = maxUses;
+        transform.position = location;
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
 }

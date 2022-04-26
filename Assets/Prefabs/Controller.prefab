@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2112600577794416790}
   - component: {fileID: 1956869279278644312}
   - component: {fileID: 6979527973911103215}
+  - component: {fileID: 326061490327602152}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -62,10 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0454dca09a31f54eaa7b28dc6a6899a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 0}
-  collidersList: []
-  worldPosPublic: {x: 0, y: 0}
-  mousePosPublic: {x: 0, y: 0}
 --- !u!114 &6979527973911103215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4fc6d984ff2ea04e9bbafcc70a914d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueUI: {fileID: 0}
   characterList:
   - name: Belle
     displayName: Belle
@@ -88,3 +86,15 @@ MonoBehaviour:
   - name: Egg
     displayName: Egg
     sprite: {fileID: 21300000, guid: c3f30e97db9ca2f4b9d6b55d56e20679, type: 3}
+--- !u!114 &326061490327602152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112600577794416791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a68bb67fd83f149a1f3b6c3342c1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

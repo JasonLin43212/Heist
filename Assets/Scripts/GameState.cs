@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState
 {
@@ -57,6 +58,7 @@ public class GameState
         numberOfCamerasDisabled = 0;
 
         itemManager = new ItemManager();
+        sceneName = SceneManager.GetActiveScene().name;
 
         instance = this;
     }
@@ -65,6 +67,11 @@ public class GameState
     public GameObject GetPlayerObject(Player player)
     {
         return (player == Player.Player1) ? player1Object : player2Object;
+    }
+
+    public PlayerMovement GetPlayerMovementScript(Player player)
+    {
+        return GetPlayerObject(player).GetComponent<PlayerMovement>();
     }
 
     public Camera GetPlayerCamera(Player player)
@@ -87,4 +94,18 @@ public class GameState
     public ClickController ClickController => clickController;
     public CutsceneController CutsceneController => cutsceneController;
 
+
+    // Save/load tools
+
+    public (string sceneName, int camerasDisabled) Serialize()
+    {
+        return (sceneName, numberOfCamerasDisabled);
+    }
+
+    public void Deserialize((string, int) state)
+    {
+        (string sceneName, int camerasDisabled) = state;
+        GameState.sceneName = sceneName;
+        this.numberOfCamerasDisabled = camerasDisabled;
+    }
 }
