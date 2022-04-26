@@ -13,13 +13,17 @@ public class PlayerMovement : MonoBehaviour
 
     // Controls
     private KeyCode pickDropKey;
+    public bool pickItemsUsingButton = true;
 
     // Misc
     private ContactFilter2D itemContactFilter;
     private Collider2D myCollider;
 
+    private GameObject justDroppedItemObject;
+
     // References
     public GameObject rangeDisplayObject;
+    private ItemManager itemManager;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         itemContactFilter.useTriggers = true;
 
         myCollider = GetComponent<Collider2D>();
+        itemManager = GameState.Instance.ItemManager;
     }
 
     // Update is called once per frame
@@ -50,7 +55,8 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw(x_axis);
         movement.y = Input.GetAxisRaw(y_axis);
 
-        HandleItems();
+        HandleItemPick();
+        HandleItemUse();
     }
 
     void FixedUpdate()
@@ -67,32 +73,57 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HandleItems()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        ItemManager itemManager = GameState.Instance.ItemManager;
+        GameObject itemObject = other.transform.parent.gameObject;
+        if (!pickItemsUsingButton && itemObject.tag == "Item")
+        {
+            if (itemObject == justDroppedItemObject)
+            {
+                justDroppedItemObject = null;
+                return;
+            }
+            if (itemManager.PlayerIsHoldingItem(player))
+            {
+                ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
+                justDroppedItemObject = heldItem.gameObject;
+                heldItem.Drop();
+            }
+            itemObject.GetComponent<ItemBehaviour>().Pickup(player);
+        }
+    }
 
+    private void HandleItemPick()
+    {
         if (Input.GetKeyDown(pickDropKey))
         {
-            // Look to see if we're touching any items
-            Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
-            int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
-
             // If currently holding an item, drop it
             if (itemManager.PlayerIsHoldingItem(player))
             {
                 ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
+                justDroppedItemObject = heldItem.gameObject;
                 heldItem.Drop();
             }
 
-            // If we are overlapping any other item, pick it up
-            if (numOverlappingColliders > 0)
+            if (pickItemsUsingButton)
             {
-                // Try to pick up the item
-                GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
-                overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
+                // Look to see if we're touching any items
+                Collider2D[] colliderBuffer = new Collider2D[GameConfig.ITEM_COLLIDER_BUFFER_SIZE];
+                int numOverlappingColliders = GetComponent<Collider2D>().OverlapCollider(itemContactFilter, colliderBuffer);
+
+                // If we are overlapping any other item, pick it up
+                if (numOverlappingColliders > 0)
+                {
+                    // Try to pick up the item
+                    GameObject overlappingItem = colliderBuffer[0].transform.parent.gameObject;
+                    overlappingItem.GetComponent<ItemBehaviour>().Pickup(player);  // is true if pick up was successful
+                }
             }
         }
+    }
 
+    private void HandleItemUse()
+    {
         if (itemManager.PlayerIsHoldingItem(player))
         {
             // Check if item is being used

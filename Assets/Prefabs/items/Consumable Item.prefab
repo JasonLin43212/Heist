@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1317807458019764199}
   m_Layer: 6
   m_Name: Consumable Item
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteObject: {fileID: 8433532868118393112}
+  destroyAfterBeingUsedUp: 0
   maximumUses: 3
   startingUses: 3
 --- !u!1 &8433532868118393112
