@@ -75,8 +75,9 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (!pickItemsAutomatically) return;
         GameObject itemObject = other.transform.parent.gameObject;
-        if (pickItemsAutomatically && itemObject.tag == "Item")
+        if (itemObject.tag == "Item")
         {
             if (itemObject == justDroppedItemObject)
             {
@@ -146,4 +147,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public Collider2D GetCollider() => myCollider;
+
+    // Save/load tools
+    public Vector2 Serialize()
+    {
+        return (Vector2)transform.position;
+    }
+
+    public void Deserialize(Vector2 state)
+    {
+        Vector2 playerPosition = state;
+        transform.position = new Vector3(playerPosition.x, playerPosition.y, 0f);
+    }
 }
