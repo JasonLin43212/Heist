@@ -11,7 +11,7 @@ public class ItemKeycard : ItemDescriptor
     // Parameters
     public List<GameObject> interactableObjects;
     [Min(0f)]
-    public float keycardUseRange = 1f;
+    private float keycardUseRange = 1.5f;
     protected override float ItemUseRange => keycardUseRange;
 
     // Private variables

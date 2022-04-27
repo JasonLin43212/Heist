@@ -544,11 +544,10 @@ MonoBehaviour:
   catchRateMultiplierMax: 3
   suspicionDecreaseRate: 1
   visionConeResolution: 50
-  timerLimit: 2.5
+  timerLimit: 2.1
   timerText: {fileID: 8602198278446731193}
   canBeReset: 1
   defaultAngleRoute: []
-  mouseEventHandler: {fileID: 0}
   directionMarkerTransform: {fileID: 5937351034520735367}
   canvasTransform: {fileID: 213115202354312608}
   visionConeObject: {fileID: 5937351034480565911}

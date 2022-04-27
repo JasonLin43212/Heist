@@ -16,11 +16,14 @@ public class ButtonDoorScript : DoorScript
     {
         if (doorLock) return;  // door is locked, cannot open again
 
-        bool bothButtonsPressed = button1.IsTouchingPlayer && button2.IsTouchingPlayer;
+        bool bothButtonsPressed = button1.IsTouchingPlayer;
+        if(button2) bothButtonsPressed &= button2.IsTouchingPlayer;
+        Debug.Log(bothButtonsPressed);
+
         if (useImmediateButtonState) closed = (bothButtonsPressed != defaultState);
         else
         {
-            if (!wereButtonsPressed && bothButtonsPressed)
+            if ((!wereButtonsPressed && bothButtonsPressed))
             {
                 closed = !closed;
                 doorLock = togglesPermanently;

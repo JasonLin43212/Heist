@@ -157,10 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldDoorBeClosed: 1
-  openableByGuard: 1
+  openableByGuard: 0
   spriteTransform: {fileID: 7980128205282303123}
   boxCollider: {fileID: 1340186213313752159}
   button1: {fileID: 0}
   button2: {fileID: 0}
   togglesPermanently: 0
+  onlyNeedOneButton: 0
   useImmediateButtonState: 0

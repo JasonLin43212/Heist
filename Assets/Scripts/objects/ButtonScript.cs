@@ -7,6 +7,8 @@ public class ButtonScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Collider2D buttonCollider;
 
+    public GameObject guard; // the guard that may step on the button
+
     public Color unpressedColor, pressedColor;
 
     private bool isTouchingPlayer = false;
@@ -25,6 +27,9 @@ public class ButtonScript : MonoBehaviour
     void Update()
     {
         isTouchingPlayer = player1Rigidbody.IsTouching(buttonCollider) || player2Rigidbody.IsTouching(buttonCollider);
+        // Also check if the guard is touching the button, if it exists
+        if(guard != null)
+            isTouchingPlayer |= guard.GetComponent<Rigidbody2D>().IsTouching(buttonCollider);
         spriteRenderer.material.color = isTouchingPlayer ? pressedColor : unpressedColor;
     }
 }

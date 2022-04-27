@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 399900522534711269}
   - component: {fileID: 399900522534711266}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 399900523558329821}
   buttonCollider: {fileID: 399900523558329819}
+  guard: {fileID: 0}
   unpressedColor: {r: 0.6, g: 1, b: 0.6, a: 1}
   pressedColor: {r: 0, g: 0.8301887, b: 0, a: 1}
 --- !u!1 &399900523558329816
@@ -60,7 +61,7 @@ GameObject:
   - component: {fileID: 399900523558329818}
   - component: {fileID: 399900523558329821}
   - component: {fileID: 399900523558329819}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,11 +121,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1205852493
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.5981132, g: 1, b: 0.60008186, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

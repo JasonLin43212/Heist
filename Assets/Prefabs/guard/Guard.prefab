@@ -467,7 +467,7 @@ MonoBehaviour:
   targetChaseDistanceRatio: 0.7
   moveSpeed: 2
   chaseSpeed: 4
-  secondsToCatch: 2
+  secondsToCatch: 1.6
   catchRateMultiplierMin: 1
   catchRateMultiplierMax: 3
   suspicionDecreaseRate: 1

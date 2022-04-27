@@ -203,10 +203,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shouldDoorBeClosed: 1
-  openableByGuard: 1
+  openableByGuard: 0
   spriteTransform: {fileID: 5120156751035177614}
   boxCollider: {fileID: 4262696076267055682}
   spriteOutlineObject: {fileID: 6287935317945113696}
+  toggleOnceOnly: 0
 --- !u!1 &7602421444425446078
 GameObject:
   m_ObjectHideFlags: 0

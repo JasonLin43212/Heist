@@ -119,6 +119,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Keycard (Consumable)
       objectReference: {fileID: 0}
+    - target: {fileID: 8151516381453759693, guid: 1ae63c8f284eb2d4b970b77730b0842e, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433532868118393112, guid: 1ae63c8f284eb2d4b970b77730b0842e, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ae63c8f284eb2d4b970b77730b0842e, type: 3}
 --- !u!1 &4126579137208958539 stripped
