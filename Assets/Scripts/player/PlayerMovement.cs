@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // References
     public GameObject rangeDisplayObject;
     private ItemManager itemManager;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,14 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw(x_axis);
         movement.y = Input.GetAxisRaw(y_axis);
+
+        // 0: idle, 1: up, 2: right, 3: down, 4: left
+        int movementId = 0;
+        if (movement.y > 0) { movementId = 1; }
+        else if (movement.y < 0) { movementId = 3; }
+        else if (movement.x > 0) { movementId = 2; }
+        else if (movement.x < 0) { movementId = 4; }
+        animator.SetInteger("WalkDirection", movementId);
 
         HandleItemPick();
         HandleItemUse();
