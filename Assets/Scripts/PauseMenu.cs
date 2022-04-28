@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-        Time.timeScale = (isGamePaused || GameState.Instance.CutsceneController.InCutscene) ? 0f : 1f;
+        Time.timeScale = (isGamePaused || GameState.Instance.CutsceneController.InCutscene) ? 0f : 0.5f;
     }
 
     public void Resume()

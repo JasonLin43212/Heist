@@ -18,7 +18,6 @@ public class ButtonDoorScript : DoorScript
 
         bool bothButtonsPressed = button1.IsTouchingPlayer;
         if(button2) bothButtonsPressed &= button2.IsTouchingPlayer;
-        Debug.Log(bothButtonsPressed);
 
         if (useImmediateButtonState) closed = (bothButtonsPressed != defaultState);
         else
