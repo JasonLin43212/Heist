@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GoalTriggerScript : MonoBehaviour
 {
     private Collider2D myCollider;
@@ -21,14 +21,15 @@ public class GoalTriggerScript : MonoBehaviour
 
     void Update()
     {
-        if (player1Rigidbody.IsTouching(myCollider) || player2Rigidbody.IsTouching(myCollider))  // change to && if you want both players
+        if ((player1Rigidbody.IsTouching(myCollider) || player2Rigidbody.IsTouching(myCollider)) && isPayloadTrigger)  // change to && if you want both players
         {
-            if (isPayloadTrigger) GameState.Instance.payloadCollected = true;
-            else if (isVictoryTrigger)
-            {
-                // Win the game!
-                Debug.Log("game won");
-            }
+            GameState.Instance.payloadCollected = true;
+            Destroy(gameObject);
+        } else if (player1Rigidbody.IsTouching(myCollider) && player2Rigidbody.IsTouching(myCollider) && isVictoryTrigger)
+        {
+            // Win the game!
+            SavedState.hasSavedContent = false;
+            SceneManager.LoadScene(sceneName: "Win Screen");
             Destroy(gameObject);
         }
     }
