@@ -1,0 +1,27 @@
+# Cutscene Notes
+
+### Story Overview
+
+In the not-so-distant future, food has become the number one resource in the world. Chefs, gourmets, and food scientists hold immense political, financial, and social authority, wielding their top-secret recipes in a constant power struggle against one another. Unfortunately, such power breeds corruption, and while some of these wars have kept their participants in check, other powers are left unchecked.
+
+Something must change, but what can be done against those who make the law, those whose products are the only sustenance people have to stay alive? Only the bravest, most determined of all law-breakers are willing to take the risk and fight against the oppression of the culinary elite. Calling themselves the Crepetomaniacs, a trio of thieves prepare to burglar recipes from right under the nose of the largest restaurant chains in the world...
+
+### Character Overview
+
+**Belle** _(Player 1)_
+
+Belle was no stranger to the suffering experienced by the unprivileged. Left to a run-down orphanage the moment she was born, Belle lived on tasteless gruel and borderline-expired scraps. The moment she was old and confident enough to do so, she left - and though she was a clueless girl wandering the streets, no one actually cared to go after her. So Belle learned to live on the streets, scavenging through restaurant dumpsters for sustenance. Eventually, armed with daring recklessness that could only come from a resignation that it didn't matter if she lived or died, she took the step up from dumpsters to kitchens, sneaking into freezers and pantries to find meals that weren't covered in mold or trash. After a few close calls, she learned to be careful and smart about her crimes, staking out targets to figure out their security systems and practicing skills ranging from stealth to acrobatics, acting to lockpicking. At some point, she realized that there were options other than thievery, and yet felt as if she had gone too far to change her path. In fact, something felt right about getting one over on those who thought themselves invincible. With a new desire to not just survive but to also _fight_, Belle began taking on bolder and bolder challenges, taking on established restaurants instead of small diners, liberating them of invaluable ingredients and even recipes instead of mere leftovers. Then one day, she was caught mid-burglary by a cook named Pepper. Though she was fully ready to bonk him in the head with a crowbar, he surprised her by turning a blind eye instead, recognizing her goals and expressing his sympathy for them. Later, she returned to express her thanks, and left with a new partner.
+
+Daring, reckless yet careful, charming, spontaneous, argumentative, cunning and devious, determined, stubborn, defiant and rebellious.
+
+**Pepper Rony** _(Player 2)_
+
+As the son of Dr. Mac A. Rony, renowned for his groundbreaking molecular gastronomy research, Pepper was expected to follow in his father's footsteps. He was being thrown into lessons on both chemistry and cooking earlier than he could remember, and grew up with all the state-of-the-art equipment, personal tutors, and spirit-breaking expectations one could imagine. At the age of 12, the young prodigy was accepted to the prestigious Massachusetts Institute of Gastronomy (MIG). However, finally free from the constant supervision of his parents and tutors, Pepper discovered a surprising sensation: happiness. Realizing that he would never be able to live life as he wanted if he followed his family, he ran away from both home and university, disguising himself as a journeyman chef and hopping between restaurants all over the world to develop his skills and knowledge in his own way. While doing so, he began to develop a distaste for those who used their culinary power to exploit those without it. One day, he met Belle, a thief who expressed ideals that he could fully agree with. As a man who had always run away instead of standing his ground, he was impressed by her willingness to defy insurmountable odds to fight for what she believed in. She was merely one person, with few resources and a dangerous, reckless drive to achieve her goals, and yet something in what she said spoke to him. Inspired in a way he had never been before, Pepper proposed a bold suggestion, offering to work together and become what would eventually grow into the Crepetomaniacs.
+
+Idealistic, witty, humorous, extremely knowledgeable and intelligent, brave at heart but sometimes timid, errs on the side of caution.
+
+**Egg** _(Player 3)_
+
+Neither Belle nor Pepper ever really got all of Egg's story out of his tight lips, but after the rollercoaster adventures that were their first few operations as a trio, they knew with complete certainty that they could trust him. Perhaps they both sympathized with the hacker that seemed so young that he should have been in school, but definitely never was. Whether it was because he never had the opportunity like Belle, or ran away from it like Pepper, they learned to accept him without asking questions. The mysterious boy had secrets, but so did they all. In the end, they knew that behind his snarky, confident exterior hid a dark hatred for the same people both Belle and Pepper aimed to take down. Such unfiltered emotion could be considered scary, perhaps even dangerous, yet for the Crepetomaniacs he was an invaluable ally.
+
+Snarky, sarcastic, confident to near the point of arrogance, loves to insult people, aggressive, secretive and tight-lipped about his personal life.
