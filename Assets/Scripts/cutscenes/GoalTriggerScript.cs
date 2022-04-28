@@ -23,6 +23,7 @@ public class GoalTriggerScript : MonoBehaviour
     {
         if (player1Rigidbody.IsTouching(myCollider) || player2Rigidbody.IsTouching(myCollider))  // change to && if you want both players
         {
+            if (GetComponent<CutsceneTriggerScript>() != null || PauseMenu.PausedByCutscene) return;
             if (isPayloadTrigger) GameState.Instance.payloadCollected = true;
             else if (isVictoryTrigger)
             {
