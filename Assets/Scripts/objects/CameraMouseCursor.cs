@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseCursor : MonoBehaviour
+public class CameraMouseCursor : MonoBehaviour
 {
 
     public Texture2D disableCursor;
@@ -10,7 +10,7 @@ public class MouseCursor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,5 +27,15 @@ public class MouseCursor : MonoBehaviour
 
     private void OnMouseExit(){
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    private void OnMouseDown(){
+        GameObject lightningEffect = gameObject.transform.GetChild(0).gameObject;
+        lightningEffect.SetActive(true);
+    }
+
+    public void hideLightning(){
+        GameObject lightningEffect = gameObject.transform.GetChild(0).gameObject;
+        lightningEffect.SetActive(false);
     }
 }

@@ -43,6 +43,7 @@ public class BasicMouseCamera : MonoBehaviour
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     public GameObject spriteOutlineObject;
     private Mesh visionConeMesh;
+    public CameraMouseCursor clickCollider;
 
     // Toggles
     public bool enableMove = false; // , betterVisionCone = true;
@@ -140,6 +141,7 @@ public class BasicMouseCamera : MonoBehaviour
                 GameState.Instance.numberOfCamerasDisabled--;
                 cameraEnabled = true;
                 timerText.text = "";
+                clickCollider.hideLightning();
             }
         }
     }
