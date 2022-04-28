@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Misc
     private ContactFilter2D itemContactFilter;
-    public CircleCollider2D circleCollider;
+    public Collider2D playerCollider;
 
     // References
     public GameObject rangeDisplayObject;
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Door" && collision.gameObject.GetComponent<ClickDoorBehavior>().shouldDoorBeClosed == false)
         {
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), circleCollider);
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<BoxCollider2D>(), playerCollider);
         }
     }
 

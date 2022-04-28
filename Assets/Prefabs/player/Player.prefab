@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1470506021865361564}
   - component: {fileID: 2957237617291600147}
   - component: {fileID: 5323455744409526872}
-  - component: {fileID: -3522677471127249613}
+  - component: {fileID: 2769511094552734992}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 987633854, guid: 9b25fc2ad652724768f297eee4f7990c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,10 +125,11 @@ MonoBehaviour:
   moveSpeed: 10
   x_axis: 
   y_axis: 
-  circleCollider: {fileID: 0}
+  playerCollider: {fileID: 2769511094552734992}
   rangeDisplayObject: {fileID: 7860588898707812371}
---- !u!58 &-3522677471127249613
-CircleCollider2D:
+  animator: {fileID: 0}
+--- !u!70 &2769511094552734992
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -141,8 +142,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 0.47272727, y: 0.9818182}
+  m_Direction: 0
 --- !u!1 &7860588898707812371
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ public class DoorScript : MonoBehaviour
         PlayerMovement[] players = (PlayerMovement[])FindObjectsOfType(typeof(PlayerMovement));
         foreach (PlayerMovement player in players)
         {
-            Physics2D.IgnoreCollision(boxCollider, player.circleCollider, false);
+            Physics2D.IgnoreCollision(boxCollider, player.playerCollider, false);
         }
     }
 
