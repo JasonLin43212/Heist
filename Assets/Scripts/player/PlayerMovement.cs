@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject rangeDisplayObject;
     private ItemManager itemManager;
     public Animator animator;
+    public AudioSource walkingSound;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,14 @@ public class PlayerMovement : MonoBehaviour
         else if (movement.x > 0) { movementId = 2; }
         else if (movement.x < 0) { movementId = 4; }
         animator.SetInteger("WalkDirection", movementId);
+
+        if (movementId != 0) {
+            if (!walkingSound.isPlaying) {
+                walkingSound.Play();
+            } 
+        } else {
+            walkingSound.Stop();
+        }
 
         HandleItemPick();
         HandleItemUse();
