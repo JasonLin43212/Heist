@@ -22,7 +22,7 @@ public static class CampaignCutscenes
 
         { "narrative1", new Cutscene(new List<(string, string)> {
             ("Pepper", "I'll be honest. When I said \"Let's get WcDonald's\" today, this isn't what I meant."),
-            ("Pepper", "I wanted some Chicken WcNuggets and fries. However much they're the enemy, WdDonald's makes good fries. You can't deny that."),
+            ("Pepper", "I wanted some Chicken WcNuggets and fries. However much they're the enemy, WcDonald's makes good fries. You can't deny that."),
             ("Pepper", "Gotta say, if that recipe we're nabbing today doesn't explain their secret, I'm gonna be a bit... salty."),
             ("Belle", "...Are you serious?"),
             ("Pepper", "Sorry, sorry. It was a good pun, though. Surely, you can give me that."),
