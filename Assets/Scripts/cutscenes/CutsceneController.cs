@@ -34,7 +34,11 @@ public class CutsceneController : MonoBehaviour
             {
                 frameIndex++;
                 if (frameIndex < currentCutscene.NumFrames) UpdateDialogueUI();
-                else EndCutscene();
+                else
+                {
+                    EndCutscene();
+                    GameState.Instance.GameController.resumeStopwatch();
+                }
             }
         }
     }

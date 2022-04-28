@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class GameController : MonoBehaviour
     public GameObject player1Object, player2Object;
     private Camera player1Camera, player2Camera;
     public GameObject levelObject;
+    public TMP_Text gameStopwatch;
+
+    private bool isStopwatchCounting;
+    private float startTime;
+    private float totalTimeDuringCutscenes = 0;
 
     // Cheat codes
     public bool disableDeath;
@@ -30,12 +37,22 @@ public class GameController : MonoBehaviour
         );
 
         SpawnPlayersOnLevel();
+
+        startTime = Time.time;
+        isStopwatchCounting = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(isStopwatchCounting)
+        {
+            gameStopwatch.text = TimeSpan.FromSeconds(Time.time - totalTimeDuringCutscenes - startTime).ToString(@"mm\:ss\.ff");
+        } 
+        else
+        {
+            totalTimeDuringCutscenes += Time.deltaTime;
+        }
     }
 
     public void PlayerCaught(Player caughtPlayer)
@@ -53,5 +70,13 @@ public class GameController : MonoBehaviour
         player2Object.SetActive(true);
         player2Object.transform.position = levelBehaviourScript.GetPlayerSpawnPosition(Player.Player2);
         player2Object.GetComponent<SpriteRenderer>().color = levelBehaviourScript.GetPlayerColor(Player.Player2);
+    }
+
+    public void resumeStopwatch(){
+        isStopwatchCounting = true;
+    }
+
+    public void pauseStopwatch(){
+        isStopwatchCounting = false;
     }
 }

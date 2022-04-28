@@ -19,6 +19,7 @@ public class CutsceneTriggerScript : MonoBehaviour
         {
             GameState.Instance.CutsceneController.StartCutscene(CampaignCutscenes.GetCutscene(cutscene));
             Destroy(gameObject);
+            GameState.Instance.GameController.pauseStopwatch();
         }
     }
 }
