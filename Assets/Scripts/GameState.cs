@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState
 {
@@ -16,8 +17,11 @@ public class GameState
     private GameObject player1Object, player2Object;
     private Camera player1Camera, player2Camera;
     private GameObject levelObject;
+
+    // Variables
     public static string sceneName { get; set; }
     public int numberOfCamerasDisabled { get; set; }
+    public bool payloadCollected { get; set; }
 
     // Items
     private ItemManager itemManager;
@@ -55,8 +59,10 @@ public class GameState
         this.useKeys = new KeyCode[2] { player1UseKey, player2UseKey };
 
         numberOfCamerasDisabled = 0;
+        payloadCollected = false;
 
         itemManager = new ItemManager();
+        sceneName = SceneManager.GetActiveScene().name;
 
         instance = this;
     }
@@ -65,6 +71,11 @@ public class GameState
     public GameObject GetPlayerObject(Player player)
     {
         return (player == Player.Player1) ? player1Object : player2Object;
+    }
+
+    public PlayerMovement GetPlayerMovementScript(Player player)
+    {
+        return GetPlayerObject(player).GetComponent<PlayerMovement>();
     }
 
     public Camera GetPlayerCamera(Player player)
@@ -87,4 +98,19 @@ public class GameState
     public ClickController ClickController => clickController;
     public CutsceneController CutsceneController => cutsceneController;
 
+
+    // Save/load tools
+
+    public (string sceneName, int camerasDisabled, bool payloadCollected) Serialize()
+    {
+        return (sceneName, numberOfCamerasDisabled, payloadCollected);
+    }
+
+    public void Deserialize((string, int, bool) state)
+    {
+        (string sceneName, int camerasDisabled, bool payloadCollected) = state;
+        GameState.sceneName = sceneName;
+        this.numberOfCamerasDisabled = camerasDisabled;
+        this.payloadCollected = payloadCollected;
+    }
 }

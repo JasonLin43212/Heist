@@ -62,6 +62,9 @@ public class GuardBehaviour : MonoBehaviour
     public string debugText;
     public bool enableDebugLogging = false;
 
+    private string uniqueIdentifier;
+    public string UniqueID => uniqueIdentifier;
+
 
     void Start()
     {
@@ -85,6 +88,8 @@ public class GuardBehaviour : MonoBehaviour
         isAlert = false;
 
         timerText.text = "";
+
+        uniqueIdentifier = $"Guard<{myRigidbody.position.ToString()},{myRigidbody.rotation},{targetPosition.ToString()},{targetAngle}>";
 
         // Legacy vision system
         // drawnVisionRange = -1f;
@@ -112,7 +117,7 @@ public class GuardBehaviour : MonoBehaviour
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
-        canvasTransform.eulerAngles = new Vector3(0,0,0);
+        canvasTransform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void FixedUpdate()
@@ -356,6 +361,40 @@ public class GuardBehaviour : MonoBehaviour
         output = output + "]";
         return output;
     }
+
+    public GuardState Serialize()
+    {
+        return new GuardState(
+            myRigidbody.position,
+            myRigidbody.rotation,
+            defaultRouteIndex,
+            queueIndex,
+            queue,
+            targetPosition,
+            targetAngle,
+            (int)movementMode,
+            disabledTime,
+            isAlert,
+            suspicionTime,
+            waitTime
+        );
+    }
+
+    public void Deserialize(GuardState state)
+    {
+        transform.position = new Vector3(state.position.x, state.position.y, 0f);
+        transform.eulerAngles = new Vector3(0, 0, state.rotation);
+        this.defaultRouteIndex = state.defaultRouteIndex;
+        this.queueIndex = state.queueIndex;
+        this.queue = state.queue;
+        this.targetPosition = state.targetPosition;
+        this.targetAngle = state.targetAngle;
+        this.movementMode = (MovementMode)state.movementMode;
+        this.disabledTime = state.disabledTime;
+        this.isAlert = state.isAlert;
+        this.suspicionTime = state.suspicionTime;
+        this.waitTime = state.waitTime;
+    }
 }
 
 
@@ -412,5 +451,52 @@ public class GuardRouteAction
             default:
                 return "EmptyAction";
         }
+    }
+}
+
+
+[System.Serializable]
+public struct GuardState
+{
+    public Vector2 position;
+    public float rotation;
+
+    public int defaultRouteIndex, queueIndex;
+    public List<GuardRouteAction> queue;
+    public Vector2 targetPosition;
+    public float targetAngle;
+    public int movementMode;
+    public float disabledTime;
+    public bool isAlert;
+    public float suspicionTime;
+    public float waitTime;
+
+    public GuardState(
+        Vector2 position,
+        float rotation,
+        int defaultRouteIndex,
+        int queueIndex,
+        List<GuardRouteAction> queue,
+        Vector2 targetPosition,
+        float targetAngle,
+        int movementMode,
+        float disabledTime,
+        bool isAlert,
+        float suspicionTime,
+        float waitTime
+    )
+    {
+        this.position = position;
+        this.rotation = rotation;
+        this.defaultRouteIndex = defaultRouteIndex;
+        this.queueIndex = queueIndex;
+        this.queue = queue;
+        this.targetPosition = targetPosition;
+        this.targetAngle = targetAngle;
+        this.movementMode = movementMode;
+        this.disabledTime = disabledTime;
+        this.isAlert = isAlert;
+        this.suspicionTime = suspicionTime;
+        this.waitTime = waitTime;
     }
 }
