@@ -11,8 +11,8 @@ public class ButtonScript : MonoBehaviour
 
     public Color unpressedColor, pressedColor;
 
-    private bool isTouched = false;
-    public bool isTouched => isTouched;
+    private bool isTouchingPlayer = false;
+    public bool IsTouchingPlayer => isTouchingPlayer;
 
     private Rigidbody2D player1Rigidbody, player2Rigidbody;
 
@@ -26,13 +26,14 @@ public class ButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isTouched = player1Rigidbody.IsTouching(buttonCollider) || player2Rigidbody.IsTouching(buttonCollider);
-        // Also check if the guard's polygon collider is touching the button, if it exists
+        isTouchingPlayer = player1Rigidbody.IsTouching(buttonCollider) || player2Rigidbody.IsTouching(buttonCollider);
+        // Also check if the guard is touching the button, if it exists
         if(guard != null) 
         {
-            GameObject collisionBox = guard.transform.GetChild(3).gameObject;
-            isTouched |= collisionBox.GetComponent<PolygonCollider2D>().IsTouching(buttonCollider);
+            // GameObject collisionBox = guard.transform.GetChild(3).gameObject; Failed attempt to make the vision cone not interact with the button
+            // isTouchingPlayer |= collisionBox.GetComponent<BoxCollider2D>().IsTouching(buttonCollider);
+            isTouchingPlayer |= guard.GetComponent<Rigidbody2D>().IsTouching(buttonCollider);
         }
-        spriteRenderer.material.color = isTouched ? pressedColor : unpressedColor;
+        spriteRenderer.material.color = isTouchingPlayer ? pressedColor : unpressedColor;
     }
 }
