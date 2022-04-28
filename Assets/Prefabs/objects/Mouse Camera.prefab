@@ -111,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8631268536644638242}
   - component: {fileID: 1544069003311560332}
+  - component: {fileID: 8587885626144683493}
   m_Layer: 3
   m_Name: Click Collider
   m_TagString: Untagged
@@ -149,6 +150,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &8587885626144683493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3261356406891511946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f36e1a7554f564459f7cd1c043f967c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableCursor: {fileID: 2800000, guid: 8cb55b75d94f68a4abeb21356af1be03, type: 3}
 --- !u!1 &3549212072911219728
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +562,6 @@ MonoBehaviour:
   timerText: {fileID: 8602198278446731193}
   canBeReset: 1
   defaultAngleRoute: []
-  mouseEventHandler: {fileID: 0}
   directionMarkerTransform: {fileID: 5937351034520735367}
   canvasTransform: {fileID: 213115202354312608}
   visionConeObject: {fileID: 5937351034480565911}
