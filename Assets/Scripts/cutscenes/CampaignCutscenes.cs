@@ -62,6 +62,30 @@ public static class CampaignCutscenes
             ("Egg", "but my chicken sandwich")
         })},
 
+        // Lol this is why i should never work on dialogue.
+        { "keycard", new Cutscene(new List<(string, string)> {
+            ("Egg", "keycard.get() == true lmao"),
+            ("Belle", "What?"),
+            ("Pepper", "What?"),
+            ("Egg", "belle, press v near a door to use the keycard"),
+            ("Egg", "pepper, press enter near a door to use the keycard"),
+            ("Belle", "Understood.")
+        })},
+        { "button", new Cutscene(new List<(string, string)> {
+            ("Egg", "oh no"),
+            ("Belle", "Oh no."),
+            ("Pepper", "Oh no."),
+            ("Kool Aid Man", "OH YEAHHHH..........I don't think I should be here. Uhhhhhhh... bye!"),
+            ("Egg", "i think stepping on the colored buttons toggles the doors of the same colors."),
+            ("Belle", "Understood."),
+            ("Pepper", "Understood."),
+            ("Belle", "Hey! Stop copying me."),
+            ("Pepper", "Hey! Stop copying me."),
+            ("Belle", "lOseRsAysWhAt"),
+            ("Pepper", "What?"),
+            ("Egg", "get rekted lmao")
+        })},
+
         { "testCutscene", new Cutscene(new List<(string, string)> {
             ("Belle", "Hmm... so. Since when did we get these names?"),
             ("Pepper", "It's quite punny. To be honest, I think they're good names. Don't you? Where's your sense of humor, Belle?"),
