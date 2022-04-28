@@ -147,6 +147,7 @@ public abstract class ItemBehaviour : MonoBehaviour
         transform.position = location;
     }
 
+
     public void DestroySelf()
     {
         Destroy(gameObject);
