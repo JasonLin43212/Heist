@@ -33,6 +33,7 @@ public class KeycardDoorScript : DoorScript
         }
     }
 
+    public bool getDoorLock() => doorLock;
     protected override string SerializeDoor() => doorLock.ToString();
     protected override void DeserializeDoor(string state)
     {

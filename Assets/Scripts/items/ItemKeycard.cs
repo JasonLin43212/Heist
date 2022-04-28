@@ -75,7 +75,7 @@ public class ItemKeycard : ItemDescriptor
     {
         if (currentTargetObject == null) return false;
         KeycardDoorScript keycardDoor = currentTargetObject.GetComponent<KeycardDoorScript>();
-        if (keycardDoor != null)
+        if (keycardDoor != null && !keycardDoor.getDoorLock())
         {
             keycardDoor.Toggle();
             return true;
