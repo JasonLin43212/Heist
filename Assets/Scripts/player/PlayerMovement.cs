@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         movement.x = Input.GetAxisRaw(x_axis);
         movement.y = Input.GetAxisRaw(y_axis);
 
