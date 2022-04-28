@@ -25,6 +25,7 @@ public class SceneNavigator : MonoBehaviour
 
     public void MainMenu()
     {
+        SavedState.hasSavedContent = false;
         SceneManager.LoadScene(sceneName: "MainMenu");
     }
 }

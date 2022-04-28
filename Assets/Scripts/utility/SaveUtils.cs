@@ -5,7 +5,7 @@ using UnityEngine;
 public static class SavedState
 {
     public static bool hasSavedContent = false;
-    public static (string, int) gameStateState;
+    public static (string, int, bool) gameStateState;
     public static Vector2 player1State, player2State;
     public static Dictionary<string, GuardState> guardStates;
     public static Dictionary<string, (int, int, Vector3)> itemStates;

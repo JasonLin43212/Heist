@@ -17,8 +17,11 @@ public class GameState
     private GameObject player1Object, player2Object;
     private Camera player1Camera, player2Camera;
     private GameObject levelObject;
+
+    // Variables
     public static string sceneName { get; set; }
     public int numberOfCamerasDisabled { get; set; }
+    public bool payloadCollected { get; set; }
 
     // Items
     private ItemManager itemManager;
@@ -56,6 +59,7 @@ public class GameState
         this.useKeys = new KeyCode[2] { player1UseKey, player2UseKey };
 
         numberOfCamerasDisabled = 0;
+        payloadCollected = false;
 
         itemManager = new ItemManager();
         sceneName = SceneManager.GetActiveScene().name;
@@ -97,15 +101,16 @@ public class GameState
 
     // Save/load tools
 
-    public (string sceneName, int camerasDisabled) Serialize()
+    public (string sceneName, int camerasDisabled, bool payloadCollected) Serialize()
     {
-        return (sceneName, numberOfCamerasDisabled);
+        return (sceneName, numberOfCamerasDisabled, payloadCollected);
     }
 
-    public void Deserialize((string, int) state)
+    public void Deserialize((string, int, bool) state)
     {
-        (string sceneName, int camerasDisabled) = state;
+        (string sceneName, int camerasDisabled, bool payloadCollected) = state;
         GameState.sceneName = sceneName;
         this.numberOfCamerasDisabled = camerasDisabled;
+        this.payloadCollected = payloadCollected;
     }
 }
