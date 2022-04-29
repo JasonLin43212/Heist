@@ -39,6 +39,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // Disabled
     private float disabledTime;
+    private float distractedTime;
     private Color baseColor, disabledColor;
 
     // Vision variables
@@ -60,7 +61,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // Debugging
     public string debugText;
-    public bool enableDebugLogging = false;
+    public bool enableDebugLogging = true;
 
     private string uniqueIdentifier;
     public string UniqueID => uniqueIdentifier;
@@ -82,6 +83,7 @@ public class GuardBehaviour : MonoBehaviour
         movementMode = MovementMode.Default;
 
         disabledTime = 0;
+        distractedTime = 0;
         baseColor = GetComponent<SpriteRenderer>().material.color;
         disabledColor = new Color(baseColor.r - 0.3f, baseColor.g - 0.3f, baseColor.b - 0.3f, baseColor.a);
 
@@ -144,12 +146,20 @@ public class GuardBehaviour : MonoBehaviour
         if (angleDifference > 180f) angleDifference -= 360;
         else if (angleDifference < -180f) angleDifference += 360;
         if (Mathf.Abs(angleDifference) > 180f) Debug.Log(angleDifference);
-        if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
+        if (Mathf.Abs(angleDifference) >= ANGLE_TOL || distractedTime > 0)
         {
             // Rotate
+            if(distractedTime > 0)
+                ROTATION_SPEED *= 3;
             float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
             float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
             myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+            if(distractedTime > 0)
+                ROTATION_SPEED /= 3;
+            if(Mathf.Abs(angleDifference) < ANGLE_TOL)
+            {
+                distractedTime -= Time.fixedDeltaTime;
+            }
         }
         else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
         {
@@ -351,6 +361,16 @@ public class GuardBehaviour : MonoBehaviour
         return true;
     }
 
+    public bool DistractGuard(Vector2 placeToLookAt, float timeToDistractFor) // The guard turns to look at the place
+    {
+        // print out a debug statement
+        Debug.Log($"Distracting guard with time of {timeToDistractFor}");
+        distractedTime = timeToDistractFor;
+        suspicionTime += distractedTime;
+        targetAngle = Mathf.Atan2(placeToLookAt.y - myRigidbody.position.y, placeToLookAt.x - myRigidbody.position.x) * Mathf.Rad2Deg;
+        return true;
+    }
+
     private string QueueToString()
     {
         string output = $"Queue<{queue.Count}>: [";
@@ -374,6 +394,7 @@ public class GuardBehaviour : MonoBehaviour
             targetAngle,
             (int)movementMode,
             disabledTime,
+            distractedTime,
             isAlert,
             suspicionTime,
             waitTime
@@ -391,6 +412,7 @@ public class GuardBehaviour : MonoBehaviour
         this.targetAngle = state.targetAngle;
         this.movementMode = (MovementMode)state.movementMode;
         this.disabledTime = state.disabledTime;
+        this.distractedTime = state.distractedTime;
         this.isAlert = state.isAlert;
         this.suspicionTime = state.suspicionTime;
         this.waitTime = state.waitTime;
@@ -467,6 +489,8 @@ public struct GuardState
     public float targetAngle;
     public int movementMode;
     public float disabledTime;
+
+    public float distractedTime;
     public bool isAlert;
     public float suspicionTime;
     public float waitTime;
@@ -481,6 +505,7 @@ public struct GuardState
         float targetAngle,
         int movementMode,
         float disabledTime,
+        float distractedTime,
         bool isAlert,
         float suspicionTime,
         float waitTime
@@ -495,6 +520,7 @@ public struct GuardState
         this.targetAngle = targetAngle;
         this.movementMode = movementMode;
         this.disabledTime = disabledTime;
+        this.distractedTime = distractedTime;
         this.isAlert = isAlert;
         this.suspicionTime = suspicionTime;
         this.waitTime = waitTime;
