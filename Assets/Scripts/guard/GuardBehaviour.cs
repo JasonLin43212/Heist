@@ -363,8 +363,6 @@ public class GuardBehaviour : MonoBehaviour
 
     public bool DistractGuard(Vector2 placeToLookAt, float timeToDistractFor) // The guard turns to look at the place
     {
-        // print out a debug statement
-        Debug.Log($"Distracting guard with time of {timeToDistractFor}");
         distractedTime = timeToDistractFor;
         suspicionTime += distractedTime;
         targetAngle = Mathf.Atan2(placeToLookAt.y - myRigidbody.position.y, placeToLookAt.x - myRigidbody.position.x) * Mathf.Rad2Deg;

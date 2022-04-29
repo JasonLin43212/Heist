@@ -141,14 +141,12 @@ public class PlayerMovement : MonoBehaviour
 
         int numOverlappingColliders = playerRangeCollider.OverlapCollider(guardContactFilter, colliderResults);
 
-        Debug.Log("numOverlappingColliders: " + numOverlappingColliders);
-
         foreach (Collider2D guardCollider in colliderResults)
         {
             GameObject guardObject = guardCollider.gameObject;
             guardObject.GetComponent<GuardBehaviour>().DistractGuard(playerPosition, guardDistractTime);
         }
-        // SetRange(0);
+        HideRange();
     }
 
     private void HandleItemPick()
