@@ -39,6 +39,7 @@ public class GuardBehaviour : MonoBehaviour
 
     // Disabled
     private float disabledTime;
+    private float distractedTime;
     private Color baseColor, disabledColor;
 
     // Vision variables
@@ -60,7 +61,10 @@ public class GuardBehaviour : MonoBehaviour
 
     // Debugging
     public string debugText;
-    public bool enableDebugLogging = false;
+    public bool enableDebugLogging = true;
+
+    private string uniqueIdentifier;
+    public string UniqueID => uniqueIdentifier;
 
 
     void Start()
@@ -79,12 +83,15 @@ public class GuardBehaviour : MonoBehaviour
         movementMode = MovementMode.Default;
 
         disabledTime = 0;
+        distractedTime = 0;
         baseColor = GetComponent<SpriteRenderer>().material.color;
         disabledColor = new Color(baseColor.r - 0.3f, baseColor.g - 0.3f, baseColor.b - 0.3f, baseColor.a);
 
         isAlert = false;
 
         timerText.text = "";
+
+        uniqueIdentifier = $"Guard<{myRigidbody.position.ToString()},{myRigidbody.rotation},{targetPosition.ToString()},{targetAngle}>";
 
         // Legacy vision system
         // drawnVisionRange = -1f;
@@ -112,7 +119,7 @@ public class GuardBehaviour : MonoBehaviour
         alertMarkerObject.transform.eulerAngles = new Vector3(0, 0, 0);
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
-        canvasTransform.eulerAngles = new Vector3(0,0,0);
+        canvasTransform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void FixedUpdate()
@@ -139,12 +146,20 @@ public class GuardBehaviour : MonoBehaviour
         if (angleDifference > 180f) angleDifference -= 360;
         else if (angleDifference < -180f) angleDifference += 360;
         if (Mathf.Abs(angleDifference) > 180f) Debug.Log(angleDifference);
-        if (Mathf.Abs(angleDifference) >= ANGLE_TOL)
+        if (Mathf.Abs(angleDifference) >= ANGLE_TOL || distractedTime > 0)
         {
             // Rotate
+            if(distractedTime > 0)
+                ROTATION_SPEED *= 3;
             float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
             float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
             myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
+            if(distractedTime > 0)
+                ROTATION_SPEED /= 3;
+            if(Mathf.Abs(angleDifference) < ANGLE_TOL)
+            {
+                distractedTime -= Time.fixedDeltaTime;
+            }
         }
         else if (Vector2.Distance(myRigidbody.position, targetPosition) >= POSITION_TOL)
         {
@@ -346,6 +361,14 @@ public class GuardBehaviour : MonoBehaviour
         return true;
     }
 
+    public bool DistractGuard(Vector2 placeToLookAt, float timeToDistractFor) // The guard turns to look at the place
+    {
+        distractedTime = timeToDistractFor;
+        suspicionTime += distractedTime;
+        targetAngle = Mathf.Atan2(placeToLookAt.y - myRigidbody.position.y, placeToLookAt.x - myRigidbody.position.x) * Mathf.Rad2Deg;
+        return true;
+    }
+
     private string QueueToString()
     {
         string output = $"Queue<{queue.Count}>: [";
@@ -355,6 +378,42 @@ public class GuardBehaviour : MonoBehaviour
         }
         output = output + "]";
         return output;
+    }
+
+    public GuardState Serialize()
+    {
+        return new GuardState(
+            myRigidbody.position,
+            myRigidbody.rotation,
+            defaultRouteIndex,
+            queueIndex,
+            queue,
+            targetPosition,
+            targetAngle,
+            (int)movementMode,
+            disabledTime,
+            distractedTime,
+            isAlert,
+            suspicionTime,
+            waitTime
+        );
+    }
+
+    public void Deserialize(GuardState state)
+    {
+        transform.position = new Vector3(state.position.x, state.position.y, 0f);
+        transform.eulerAngles = new Vector3(0, 0, state.rotation);
+        this.defaultRouteIndex = state.defaultRouteIndex;
+        this.queueIndex = state.queueIndex;
+        this.queue = state.queue;
+        this.targetPosition = state.targetPosition;
+        this.targetAngle = state.targetAngle;
+        this.movementMode = (MovementMode)state.movementMode;
+        this.disabledTime = state.disabledTime;
+        this.distractedTime = state.distractedTime;
+        this.isAlert = state.isAlert;
+        this.suspicionTime = state.suspicionTime;
+        this.waitTime = state.waitTime;
     }
 }
 
@@ -412,5 +471,56 @@ public class GuardRouteAction
             default:
                 return "EmptyAction";
         }
+    }
+}
+
+
+[System.Serializable]
+public struct GuardState
+{
+    public Vector2 position;
+    public float rotation;
+
+    public int defaultRouteIndex, queueIndex;
+    public List<GuardRouteAction> queue;
+    public Vector2 targetPosition;
+    public float targetAngle;
+    public int movementMode;
+    public float disabledTime;
+
+    public float distractedTime;
+    public bool isAlert;
+    public float suspicionTime;
+    public float waitTime;
+
+    public GuardState(
+        Vector2 position,
+        float rotation,
+        int defaultRouteIndex,
+        int queueIndex,
+        List<GuardRouteAction> queue,
+        Vector2 targetPosition,
+        float targetAngle,
+        int movementMode,
+        float disabledTime,
+        float distractedTime,
+        bool isAlert,
+        float suspicionTime,
+        float waitTime
+    )
+    {
+        this.position = position;
+        this.rotation = rotation;
+        this.defaultRouteIndex = defaultRouteIndex;
+        this.queueIndex = queueIndex;
+        this.queue = queue;
+        this.targetPosition = targetPosition;
+        this.targetAngle = targetAngle;
+        this.movementMode = movementMode;
+        this.disabledTime = disabledTime;
+        this.distractedTime = distractedTime;
+        this.isAlert = isAlert;
+        this.suspicionTime = suspicionTime;
+        this.waitTime = waitTime;
     }
 }

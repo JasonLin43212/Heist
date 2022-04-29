@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1470506021865361564}
   - component: {fileID: 2957237617291600147}
   - component: {fileID: 5323455744409526872}
-  - component: {fileID: -3522677471127249613}
+  - component: {fileID: 2769511094552734992}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 987633854, guid: 9b25fc2ad652724768f297eee4f7990c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8666667, y: 1.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -123,12 +123,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: 0
   moveSpeed: 10
+  defaultItem: {fileID: 3372907270491020097, guid: 807d70d68e7ec664fac6987c73fe6375, type: 3}
+  shoutImage: {fileID: 3396944519754819963, guid: bf7d3aba35f4472818a090d9f670e7d3, type: 3}
+  guardDistractTime: 0.2
+  noiseRange: 5
   x_axis: 
   y_axis: 
-  circleCollider: {fileID: 0}
+  pickItemsAutomatically: 1
   rangeDisplayObject: {fileID: 7860588898707812371}
---- !u!58 &-3522677471127249613
-CircleCollider2D:
+  animator: {fileID: 0}
+  walkingSound: {fileID: 0}
+--- !u!70 &2769511094552734992
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,9 +146,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.03699083, y: -0.42803645}
+  m_Size: {x: 0.4264221, y: 0.8524412}
+  m_Direction: 0
 --- !u!1 &7860588898707812371
 GameObject:
   m_ObjectHideFlags: 0

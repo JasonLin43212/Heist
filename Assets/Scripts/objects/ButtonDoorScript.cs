@@ -16,11 +16,13 @@ public class ButtonDoorScript : DoorScript
     {
         if (doorLock) return;  // door is locked, cannot open again
 
-        bool bothButtonsPressed = button1.IsTouchingPlayer && button2.IsTouchingPlayer;
+        bool bothButtonsPressed = button1.IsTouchingPlayer;
+        if(button2) bothButtonsPressed &= button2.IsTouchingPlayer;
+
         if (useImmediateButtonState) closed = (bothButtonsPressed != defaultState);
         else
         {
-            if (!wereButtonsPressed && bothButtonsPressed)
+            if ((!wereButtonsPressed && bothButtonsPressed))
             {
                 closed = !closed;
                 doorLock = togglesPermanently;
@@ -29,5 +31,12 @@ public class ButtonDoorScript : DoorScript
         }
 
         base.Update();
+    }
+
+    protected override string SerializeDoor() => $"{(wereButtonsPressed ? 'Y' : 'N')}{(doorLock ? 'Y' : 'N')}";
+    protected override void DeserializeDoor(string doorState)
+    {
+        wereButtonsPressed = doorState[0] == 'Y';
+        doorLock = doorState[1] == 'Y';
     }
 }

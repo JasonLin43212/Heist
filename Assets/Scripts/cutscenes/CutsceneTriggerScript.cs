@@ -18,7 +18,8 @@ public class CutsceneTriggerScript : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             GameState.Instance.CutsceneController.StartCutscene(CampaignCutscenes.GetCutscene(cutscene));
-            Destroy(gameObject);
+            if (GetComponent<GoalTriggerScript>() != null) Destroy(this);
+            else Destroy(gameObject);
         }
     }
 }

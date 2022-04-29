@@ -9,6 +9,7 @@ TagManager:
   - Door
   - GuardVisionCone
   - GuardCollisionBox
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - Item
   - Guard
-  - 
-  - 
+  - KeycardObject
+  - Non-blocking Item
   - 
   - 
   - 
@@ -45,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 599808049
+    locked: 0
+  - name: Ground
+    uniqueID: 1205852493
     locked: 0
   - name: Default
     uniqueID: 0

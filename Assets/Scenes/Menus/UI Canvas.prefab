@@ -290,6 +290,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1983857616914318384, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 1983857616914318384, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410000278952487697, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 5410000278952487697, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5911223294707484576, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 5911223294707484576, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702d8ac698653cd4ca4b40edf56d5cea, type: 3}
 --- !u!224 &855378736036871392 stripped
@@ -332,6 +356,22 @@ PrefabInstance:
       propertyPath: itemDurabilityObject
       value: 
       objectReference: {fileID: 7741318841182427333}
+    - target: {fileID: 2922320170019936141, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 2922320170019936141, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 3253772497464940209, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 3253772497464940209, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
     - target: {fileID: 4309131640490063390, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -420,6 +460,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 1 HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 7240898166343615844, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 7240898166343615844, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
 --- !u!224 &558138962677368266 stripped
@@ -494,10 +542,34 @@ PrefabInstance:
       propertyPath: itemDurabilityObject
       value: 
       objectReference: {fileID: 7741318841710004514}
+    - target: {fileID: 921127068647567684, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 921127068647567684, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 2922320170019936141, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 2922320170019936141, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
     - target: {fileID: 3253772497464940209, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
       propertyPath: m_text
       value: None
       objectReference: {fileID: 0}
+    - target: {fileID: 3253772497464940209, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 3253772497464940209, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
     - target: {fileID: 4309131640490063390, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -586,6 +658,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 2 HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 7240898166343615844, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
+    - target: {fileID: 7240898166343615844, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e19bdbf9c29db042915c72e71c250f1, type: 3}
 --- !u!224 &558138962131997741 stripped

@@ -47,6 +47,9 @@ public class BasicMouseCamera : MonoBehaviour
     // Toggles
     public bool enableMove = false; // , betterVisionCone = true;
 
+    private string uniqueIdentifier;
+    public string UniqueID => uniqueIdentifier;
+
 
     void Start()
     {
@@ -58,6 +61,8 @@ public class BasicMouseCamera : MonoBehaviour
         isAlert = false;
         timerUntilEnabled = timerLimit;
         timerText.text = "";
+
+        uniqueIdentifier = $"BasicMouseCamera<{transform.position.ToString()},{transform.eulerAngles.z},{targetAngle}>";
 
         // Legacy vision system
         // drawnVisionRange = -1f;
@@ -214,4 +219,66 @@ public class BasicMouseCamera : MonoBehaviour
     {
         GameState.Instance.GameController.PlayerCaught(caughtPlayer);
     }
+
+    // Save/load methods
+    public MouseCameraState Serialize()
+    {
+        return new MouseCameraState(
+            transform.eulerAngles.z,
+            cameraEnabled,
+            timerIsCountingDown,
+            timerUntilEnabled,
+            routeIndex,
+            targetAngle,
+            isAlert,
+            suspicionTime
+        );
+    }
+
+    public void Deserialize(MouseCameraState state)
+    {
+        transform.eulerAngles = new Vector3(0, 0, state.angle);
+        this.cameraEnabled = state.cameraEnabled;
+        this.timerIsCountingDown = state.timerIsCountingDown;
+        this.timerUntilEnabled = state.timerUntilEnabled;
+        this.routeIndex = state.routeIndex;
+        this.targetAngle = state.targetAngle;
+        this.isAlert = state.isAlert;
+        this.suspicionTime = state.suspicionTime;
+    }
 }
+
+
+[System.Serializable]
+public struct MouseCameraState
+{
+    public float angle;
+    public bool cameraEnabled, timerIsCountingDown;
+    public float timerUntilEnabled;
+    public int routeIndex;
+    public float targetAngle;
+    public bool isAlert;
+    public float suspicionTime;
+
+    public MouseCameraState(
+        float angle,
+        bool cameraEnabled,
+        bool timerIsCountingDown,
+        float timerUntilEnabled,
+        int routeIndex,
+        float targetAngle,
+        bool isAlert,
+        float suspicionTime
+    )
+    {
+        this.angle = angle;
+        this.cameraEnabled = cameraEnabled;
+        this.timerIsCountingDown = timerIsCountingDown;
+        this.timerUntilEnabled = timerUntilEnabled;
+        this.routeIndex = routeIndex;
+        this.targetAngle = targetAngle;
+        this.isAlert = isAlert;
+        this.suspicionTime = suspicionTime;
+    }
+}
+

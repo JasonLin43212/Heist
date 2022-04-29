@@ -19,6 +19,9 @@ public class DoorScript : MonoBehaviour
     public Transform spriteTransform;
     public BoxCollider2D boxCollider;
 
+    private string uniqueIdentifier;
+    public string UniqueID => uniqueIdentifier;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class DoorScript : MonoBehaviour
         initialRotation = spriteTransform.rotation.eulerAngles.z;
         initialPosition = spriteTransform.position;
         defaultState = shouldDoorBeClosed;
+        uniqueIdentifier = $"Door<{initialPosition.ToString()},{initialRotation},{defaultState}>";
     }
 
     // Update is called once per frame
@@ -71,12 +75,30 @@ public class DoorScript : MonoBehaviour
         PlayerMovement[] players = (PlayerMovement[])FindObjectsOfType(typeof(PlayerMovement));
         foreach (PlayerMovement player in players)
         {
-            Physics2D.IgnoreCollision(boxCollider, player.circleCollider, false);
+            Physics2D.IgnoreCollision(boxCollider, player.GetCollider(), false);
         }
     }
 
     public void SetGuardNotLooking(bool target)
     {
         if (openableByGuard) guardNotLooking = target;
+    }
+
+    // Save/load methods
+    protected virtual string SerializeDoor() => "";
+    protected virtual void DeserializeDoor(string doorState) { }
+
+    public (bool closed, bool guardNotLooking, bool doorWasAlreadyClosed, string doorState) Serialize()
+    {
+        return (closed, guardNotLooking, doorWasAlreadyClosed, SerializeDoor());
+    }
+
+    public void Deserialize((bool, bool, bool, string) state)
+    {
+        (bool closed, bool guardNotLooking, bool doorWasAlreadyClosed, string doorState) = state;
+        this.closed = closed;
+        this.guardNotLooking = guardNotLooking;
+        this.doorWasAlreadyClosed = doorWasAlreadyClosed;
+        DeserializeDoor(doorState);
     }
 }
