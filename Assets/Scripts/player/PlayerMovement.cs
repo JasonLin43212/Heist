@@ -7,6 +7,15 @@ public class PlayerMovement : MonoBehaviour
     public Player player;
     public float moveSpeed = 10f;
 
+    public GameObject defaultItem;
+
+    public GameObject shoutImage;
+    // Parameters
+    [Min(0f)]
+    public float guardDistractTime = 0.2f;
+    [Min(0f)]
+    public float noiseRange = 5f;
+
     private Vector2 movement;
     public string x_axis;
     public string y_axis;
@@ -113,6 +122,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void Shout()
+    {
+        Vector2 playerPosition = (Vector2)transform.position;
+
+        // Creates a soundwave and sets its position
+        GameObject currentShout = Instantiate(shoutImage);
+        currentShout.GetComponent<Soundwave>().setPosition(playerPosition);
+        // From the player position, it emits a shockwave that will hit all guards within range
+
+
+
+        Collider2D playerRangeCollider = GetRangeCollider();
+        SetRange(noiseRange);
+        List<Collider2D> colliderResults = new List<Collider2D>();
+        ContactFilter2D guardContactFilter = new ContactFilter2D();
+        guardContactFilter.SetLayerMask(LayerMask.GetMask("Guard"));
+
+        int numOverlappingColliders = playerRangeCollider.OverlapCollider(guardContactFilter, colliderResults);
+
+        Debug.Log("numOverlappingColliders: " + numOverlappingColliders);
+
+        foreach (Collider2D guardCollider in colliderResults)
+        {
+            GameObject guardObject = guardCollider.gameObject;
+            guardObject.GetComponent<GuardBehaviour>().DistractGuard(playerPosition, guardDistractTime);
+        }
+        // SetRange(0);
+    }
+
     private void HandleItemPick()
     {
         if (Input.GetKeyDown(pickDropKey))
@@ -146,6 +184,11 @@ public class PlayerMovement : MonoBehaviour
             // Check if item is being used
             ItemBehaviour heldItem = itemManager.GetHeldItemBehaviour(player);
             heldItem.CheckForUse(player);
+        }
+        else
+        {
+            if (Input.GetKeyDown(GameState.Instance.GetUseKey(player)))
+                Shout();
         }
     }
 
