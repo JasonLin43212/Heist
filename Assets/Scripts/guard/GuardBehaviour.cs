@@ -65,10 +65,13 @@ public class GuardBehaviour : MonoBehaviour
 
     private string uniqueIdentifier;
     public string UniqueID => uniqueIdentifier;
+    public Animator animator;
 
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+
         // Set references
         myRigidbody = GetComponent<Rigidbody2D>();
         player1Rigidbody = GameState.Instance.GetPlayerObject(Player.Player1).GetComponent<Rigidbody2D>();
@@ -137,6 +140,18 @@ public class GuardBehaviour : MonoBehaviour
             else return;
         }
 
+        // Code for updating guard sprite
+        // 1: up, 2: right, 3: down, 4: left
+        int movementId = 0;
+        float myRotation = myRigidbody.rotation % 360;
+        if (myRotation >= 45 && myRotation < 135) { movementId = 1; }
+        else if (myRotation >= 225 && myRotation < 315) { movementId = 3; }
+        else if (myRotation < 45 || myRotation >= 315) { movementId = 2; }
+        else if (myRotation >= 135 && myRotation <= 225) { movementId = 4; }
+        
+        animator.SetInteger("Direction", movementId);
+        animator.SetBool("IsWalking", false);
+
         if (waitTime >= 0) waitTime -= Time.fixedDeltaTime;
         bool updatedVision = UpdateVision(Time.fixedDeltaTime);
         if (!enableMove) return;
@@ -166,6 +181,8 @@ public class GuardBehaviour : MonoBehaviour
             if (!updatedVision || Vector2.Distance(myRigidbody.position, targetPosition) >= visionRange * targetChaseDistanceRatio)
             {
                 // Move
+                animator.SetBool("IsWalking", true);
+
                 Vector2 movementDirection = targetPosition - myRigidbody.position;
                 float theSpeed = isAlert ? chaseSpeed : moveSpeed;
                 float moveDistance = Mathf.Min(Time.fixedDeltaTime * theSpeed / movementDirection.magnitude, 1f);
