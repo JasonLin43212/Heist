@@ -12,8 +12,10 @@ public class GameController : MonoBehaviour
     private Camera player1Camera, player2Camera;
     public GameObject levelObject;
     public TMP_Text gameStopwatch;
+    public GameObject loseScreen;
 
     private bool isStopwatchCounting;
+    public bool playersHaveLost;
 
     // Cheat codes
     public bool disableDeath;
@@ -37,6 +39,7 @@ public class GameController : MonoBehaviour
         SpawnPlayersOnLevel();
 
         isStopwatchCounting = true;
+        playersHaveLost = false;
     }
 
     // Update is called once per frame
@@ -47,6 +50,13 @@ public class GameController : MonoBehaviour
             GameState.Instance.stopwatchTime += Time.deltaTime;
             gameStopwatch.text = TimeSpan.FromSeconds(GameState.Instance.stopwatchTime).ToString(@"mm\:ss\.ff");
         } 
+
+        if(playersHaveLost){
+            loseScreen.SetActive(true);
+            if(Input.GetKeyDown(KeyCode.Space)){
+                SceneNavigator.RestartGame();
+            }
+        }
     }
 
     public void PlayerCaught(Player caughtPlayer)
@@ -54,7 +64,7 @@ public class GameController : MonoBehaviour
         Debug.Log($"Player {(int)caughtPlayer + 1} was caught!");
         if (!disableDeath){
             SaveUtils.SaveStopwatchTime();
-            SceneManager.LoadScene(sceneName: "Lose Screen");
+            playersHaveLost = true;
         }
     }
 

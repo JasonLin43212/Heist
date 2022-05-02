@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneNavigator : MonoBehaviour
 {
-    public void RestartGame()
+    public static void RestartGame()
     {
         if (GameState.sceneName == null)
         {
