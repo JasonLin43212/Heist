@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public Player player;
     public float moveSpeed = 10f;
+    public static bool playerMovementEnabled = true;
 
     public GameObject defaultItem;
 
@@ -64,8 +65,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        movement.x = Input.GetAxisRaw(x_axis);
-        movement.y = Input.GetAxisRaw(y_axis);
+        if(playerMovementEnabled){
+            movement.x = Input.GetAxisRaw(x_axis);
+            movement.y = Input.GetAxisRaw(y_axis);
+        } else{
+            movement.x = 0;
+            movement.y = 0;
+        }
 
         // 0: idle, 1: up, 2: right, 3: down, 4: left
         int movementId = 0;

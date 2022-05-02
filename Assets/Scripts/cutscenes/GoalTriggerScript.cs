@@ -30,7 +30,7 @@ public class GoalTriggerScript : MonoBehaviour
         {
             // Win the game!
             SavedState.hasSavedContent = false;
-            SceneManager.LoadScene(sceneName: "Win Screen");
+            GameState.Instance.GameController.WinScreenSequence();
             Destroy(gameObject);
         }
     }

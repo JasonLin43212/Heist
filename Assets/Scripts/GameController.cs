@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public GameObject levelObject;
     public TMP_Text gameStopwatch;
     public GameObject loseScreen;
+    public GameObject winScreen;
 
     private bool isStopwatchCounting;
     public bool playersHaveLost;
@@ -83,5 +84,20 @@ public class GameController : MonoBehaviour
 
     public void pauseStopwatch(){
         isStopwatchCounting = false;
+    }
+
+    public void WinScreenSequence(){
+        PlayerMovement.playerMovementEnabled = false;
+
+        winScreen.SetActive(true);
+
+        GameState.Instance.GetPlayerMovementScript(Player.Player1).GetCollider().enabled = false;
+        GameState.Instance.GetPlayerMovementScript(Player.Player2).GetCollider().enabled = false;
+
+        gameStopwatch.enabled = false;
+
+        winScreen.transform.GetChild(1).
+        gameObject.transform.GetChild(1).
+        gameObject.GetComponent<TMP_Text>().text = gameStopwatch.text;
     }
 }
