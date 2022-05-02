@@ -43,6 +43,7 @@ public class BasicMouseCamera : MonoBehaviour
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     public GameObject spriteOutlineObject;
     private Mesh visionConeMesh;
+    public CameraMouseCursor clickCollider;
 
     // Toggles
     public bool enableMove = false; // , betterVisionCone = true;
@@ -110,7 +111,8 @@ public class BasicMouseCamera : MonoBehaviour
     // Set enabled/disabled based on if the mouse is holding down on the camera
     private void HandleMouseInteraction()
     {
-        spriteOutlineObject.SetActive(GameState.Instance.ClickController.IsTargetObject(gameObject));
+        bool isHovering = GameState.Instance.ClickController.IsTargetObject(gameObject);
+        spriteOutlineObject.SetActive(isHovering);
         if (isAlert && !cameraEnabled) isAlert = false;
     }
 
@@ -144,6 +146,7 @@ public class BasicMouseCamera : MonoBehaviour
                 GameState.Instance.numberOfCamerasDisabled--;
                 cameraEnabled = true;
                 timerText.text = "";
+                clickCollider.hideLightning();
             }
         }
     }

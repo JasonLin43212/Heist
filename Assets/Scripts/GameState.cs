@@ -22,6 +22,7 @@ public class GameState
     public static string sceneName { get; set; }
     public int numberOfCamerasDisabled { get; set; }
     public bool payloadCollected { get; set; }
+    public float stopwatchTime { get; set; }
 
     // Items
     private ItemManager itemManager;
@@ -60,6 +61,7 @@ public class GameState
 
         numberOfCamerasDisabled = 0;
         payloadCollected = false;
+        stopwatchTime = 0;
 
         itemManager = new ItemManager();
         sceneName = SceneManager.GetActiveScene().name;

@@ -12,6 +12,7 @@ public static class SavedState
     public static Dictionary<string, MouseCameraState> cameraStates;
     public static Dictionary<string, (bool, bool, bool, string)> doorStates;
     public static HashSet<string> existingTriggers;
+    public static float gameStopwatchTime;
 }
 
 
@@ -19,7 +20,10 @@ public class SaveUtils : MonoBehaviour
 {
     void Start()
     {
-        if (SavedState.hasSavedContent) LoadCurrentState();
+        if (SavedState.hasSavedContent){
+            LoadCurrentState();
+            LoadStopwatchTime();
+        }
     }
 
     public static void SaveCurrentState()
@@ -101,5 +105,13 @@ public class SaveUtils : MonoBehaviour
         {
             if (!SavedState.existingTriggers.Contains(obj.UniqueID)) obj.DestroySelf();
         }
+    }
+
+    public static void SaveStopwatchTime(){
+        SavedState.gameStopwatchTime = GameState.Instance.stopwatchTime;
+    }
+
+    public static void LoadStopwatchTime(){
+        GameState.Instance.stopwatchTime = SavedState.gameStopwatchTime;
     }
 }
