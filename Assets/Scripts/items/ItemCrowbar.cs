@@ -7,6 +7,7 @@ public class ItemCrowbar : ItemDescriptor
     public override string Name => "Crowbar";
 
     public override bool CanUseWithKey => true;
+    public AudioSource hitSound;
 
     // Parameters
     [Min(0f)]
@@ -53,7 +54,7 @@ public class ItemCrowbar : ItemDescriptor
                 closestGuard = guardObject;
             }
         }
-
+        hitSound.Play();
         return closestGuard.GetComponent<GuardBehaviour>().DisableGuard(guardDisableTime);
     }
 }

@@ -55,6 +55,7 @@ public class GuardBehaviour : MonoBehaviour
     public Transform directionMarkerTransform;
     public GameObject visionConeObject, alertMarkerObject, alertSpriteMaskObject;
     private Mesh visionConeMesh;
+    public List<AudioSource> guardSounds;
 
     // Toggles
     public bool enableMove, strictChasing;  // , betterVisionCone;
@@ -67,11 +68,12 @@ public class GuardBehaviour : MonoBehaviour
     public string UniqueID => uniqueIdentifier;
     public Animator animator;
 
+    public GameObject guardSprite;
+    private bool isLookingAtPlayer;
+
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-
         // Set references
         myRigidbody = GetComponent<Rigidbody2D>();
         player1Rigidbody = GameState.Instance.GetPlayerObject(Player.Player1).GetComponent<Rigidbody2D>();
@@ -93,7 +95,7 @@ public class GuardBehaviour : MonoBehaviour
         isAlert = false;
 
         timerText.text = "";
-
+        isLookingAtPlayer = false;
         uniqueIdentifier = $"Guard<{myRigidbody.position.ToString()},{myRigidbody.rotation},{targetPosition.ToString()},{targetAngle}>";
 
         // Legacy vision system
@@ -123,6 +125,7 @@ public class GuardBehaviour : MonoBehaviour
         alertMarkerObject.SetActive(isAlert);
         alertSpriteMaskObject.transform.localPosition = new Vector3(Mathf.Min(0, suspicionTime / secondsToCatch - 1), 0, 0);
         canvasTransform.eulerAngles = new Vector3(0, 0, 0);
+        guardSprite.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     void FixedUpdate()
@@ -287,6 +290,10 @@ public class GuardBehaviour : MonoBehaviour
 
         if (foundPlayer.HasValue)
         {
+            if (!isLookingAtPlayer) {
+                playGuardSound();
+            }
+            isLookingAtPlayer = true;
             // Compute new chase waypoint
             targetPosition = (foundPlayer.Value == Player.Player1) ? player1Sighted.Value : player2Sighted.Value;
             targetAngle = Mathf.Atan2(targetPosition.y - myRigidbody.position.y, targetPosition.x - myRigidbody.position.x) * Mathf.Rad2Deg;
@@ -342,6 +349,7 @@ public class GuardBehaviour : MonoBehaviour
         }
         else
         {
+            isLookingAtPlayer = false;
             // Slowly return to yellow vision cone
             if (!isAlert && suspicionTime > 0)
             {
@@ -372,6 +380,7 @@ public class GuardBehaviour : MonoBehaviour
 
     public bool DisableGuard(float timeToDisableFor)
     {
+        playGuardSound();
         if (disabledTime > 0) return false;  // already disabled
         disabledTime = timeToDisableFor * disabledTimeMultiplier;
         GetComponent<SpriteRenderer>().material.color = disabledColor;
@@ -380,10 +389,15 @@ public class GuardBehaviour : MonoBehaviour
 
     public bool DistractGuard(Vector2 placeToLookAt, float timeToDistractFor) // The guard turns to look at the place
     {
+        playGuardSound();
         distractedTime = timeToDistractFor;
         suspicionTime += distractedTime;
         targetAngle = Mathf.Atan2(placeToLookAt.y - myRigidbody.position.y, placeToLookAt.x - myRigidbody.position.x) * Mathf.Rad2Deg;
         return true;
+    }
+
+    public void playGuardSound() {
+        guardSounds[UnityEngine.Random.Range(0, 5)].Play();
     }
 
     private string QueueToString()
