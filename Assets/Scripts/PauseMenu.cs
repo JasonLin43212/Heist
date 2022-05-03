@@ -6,9 +6,11 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isGamePaused = false;
     public GameObject pauseMenuUI;
+    public static bool popupIsEnabled;
 
     void Start()
     {
+        popupIsEnabled = false;
         Resume();
     }
 
@@ -28,7 +30,8 @@ public class PauseMenu : MonoBehaviour
         }
         Time.timeScale = (  isGamePaused 
                             || GameState.Instance.CutsceneController.InCutscene
-                            || GameState.Instance.GameController.playersHaveLost) ? 0f : .5f;
+                            || GameState.Instance.GameController.playersHaveLost
+                            || popupIsEnabled) ? 0f : .5f;
     }
 
     public void Resume()
