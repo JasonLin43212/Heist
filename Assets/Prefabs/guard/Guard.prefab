@@ -495,8 +495,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ROTATION_SPEED: 120
-  visionRange: 7
-  visionAngle: 20
+  visionRange: 6
+  visionAngle: 25
   targetChaseDistanceRatio: 0.7
   moveSpeed: 2
   chaseSpeed: 4
