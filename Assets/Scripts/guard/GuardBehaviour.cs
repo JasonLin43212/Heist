@@ -149,14 +149,14 @@ public class GuardBehaviour : MonoBehaviour
         if (Mathf.Abs(angleDifference) >= ANGLE_TOL || distractedTime > 0)
         {
             // Rotate
-            if(distractedTime > 0)
+            if (distractedTime > 0)
                 ROTATION_SPEED *= 3;
             float rotationSpeed = Mathf.Min(Time.fixedDeltaTime * ROTATION_SPEED, Mathf.Abs(angleDifference));
             float rotationDelta = (angleDifference > 0) ? rotationSpeed : -rotationSpeed;
             myRigidbody.MoveRotation(myRigidbody.rotation + rotationDelta);
-            if(distractedTime > 0)
+            if (distractedTime > 0)
                 ROTATION_SPEED /= 3;
-            if(Mathf.Abs(angleDifference) < ANGLE_TOL)
+            if (Mathf.Abs(angleDifference) < ANGLE_TOL)
             {
                 distractedTime -= Time.fixedDeltaTime;
             }
@@ -387,7 +387,7 @@ public class GuardBehaviour : MonoBehaviour
             myRigidbody.rotation,
             defaultRouteIndex,
             queueIndex,
-            queue,
+            new List<GuardRouteAction>(queue),
             targetPosition,
             targetAngle,
             (int)movementMode,
@@ -405,7 +405,7 @@ public class GuardBehaviour : MonoBehaviour
         transform.eulerAngles = new Vector3(0, 0, state.rotation);
         this.defaultRouteIndex = state.defaultRouteIndex;
         this.queueIndex = state.queueIndex;
-        this.queue = state.queue;
+        this.queue = new List<GuardRouteAction>(state.queue);
         this.targetPosition = state.targetPosition;
         this.targetAngle = state.targetAngle;
         this.movementMode = (MovementMode)state.movementMode;
