@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private ItemManager itemManager;
     public Animator animator;
     public AudioSource walkingSound;
+    public AudioSource whistlingSound;
 
     // Start is called before the first frame update
     void Start()
@@ -125,6 +126,8 @@ public class PlayerMovement : MonoBehaviour
     private void Shout()
     {
         Vector2 playerPosition = (Vector2)transform.position;
+
+        whistlingSound.Play();
 
         // Creates a soundwave and sets its position
         GameObject currentShout = Instantiate(shoutImage);
