@@ -8,6 +8,8 @@ public class KeycardDoorScript : DoorScript
 
     public bool toggleOnceOnly = false;
 
+    public AudioSource openSound;
+    public AudioSource closeSound;
     private bool doorLock = false;
 
     public void Highlight(bool highlightOn)
@@ -21,10 +23,12 @@ public class KeycardDoorScript : DoorScript
         if (closed)
         {
             closed = false;
+            openSound.Play();
         }
         else
         {
             closed = true;
+            closeSound.Play();
         }
         if (toggleOnceOnly)
         {

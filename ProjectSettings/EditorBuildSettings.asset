@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Heist.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: 21d55d2c1b0a6bf70a8cbe6a1ab65aaa
@@ -15,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/Lose Screen.unity
     guid: 9923da8c4d2b0d77a974454ffd160169
   - enabled: 1
-    path: Assets/Scenes/ThirdPrototype.unity
-    guid: e00676a3940f9d74db0eeeb8d861d802
-  - enabled: 1
     path: Assets/Scenes/Menus/Win Screen.unity
     guid: 7cd7d61aef555cb1e9ed6ec527c1483c
+  - enabled: 1
+    path: Assets/Scenes/Final Level.unity
+    guid: 195d96798e71c8c4ebb29d9892695ba0
   m_configObjects: {}

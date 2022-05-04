@@ -13,6 +13,8 @@ public class ButtonScript : MonoBehaviour
 
     private bool isTouchingPlayer = false;
     public bool IsTouchingPlayer => isTouchingPlayer;
+    private bool wasTouchingPlayer;
+    public AudioSource pressSound;
 
     private Rigidbody2D player1Rigidbody, player2Rigidbody;
 
@@ -26,7 +28,13 @@ public class ButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        wasTouchingPlayer = isTouchingPlayer;
+
         isTouchingPlayer = player1Rigidbody.IsTouching(buttonCollider) || player2Rigidbody.IsTouching(buttonCollider);
+        
+        if (!wasTouchingPlayer && isTouchingPlayer) {
+            pressSound.Play();
+        }
         // Also check if the guard is touching the button, if it exists
         if(guard != null) 
         {
@@ -34,6 +42,8 @@ public class ButtonScript : MonoBehaviour
             isTouchingPlayer |= collisionBox.GetComponent<BoxCollider2D>().IsTouching(buttonCollider);
             // isTouchingPlayer |= guard.GetComponent<Rigidbody2D>().IsTouching(buttonCollider);
         }
+
+        
         spriteRenderer.material.color = isTouchingPlayer ? pressedColor : unpressedColor;
     }
 }

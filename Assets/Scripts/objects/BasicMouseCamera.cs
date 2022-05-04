@@ -20,6 +20,8 @@ public class BasicMouseCamera : MonoBehaviour
     public float timerLimit;
     public TMP_Text timerText;
     public bool canBeReset = false;
+    public AudioSource detectSound;
+    public AudioSource disabledSound;
 
     // State variables
     private bool cameraEnabled;
@@ -122,12 +124,14 @@ public class BasicMouseCamera : MonoBehaviour
         if (cameraEnabled)
         {
             // Disable
+            disabledSound.Play();
             cameraEnabled = false;
             timerIsCountingDown = true;
             GameState.Instance.numberOfCamerasDisabled++;
         }
         else if (canBeReset)
         {
+            disabledSound.Play();
             timerUntilEnabled = timerLimit;
         }
     }

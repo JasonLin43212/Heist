@@ -11,6 +11,9 @@ public class ButtonDoorScript : DoorScript
 
     private bool wereButtonsPressed = false, doorLock = false;
 
+    public AudioSource openSound;
+    public AudioSource closeSound;
+
     // Update is called once per frame
     protected override void Update()
     {
@@ -25,6 +28,11 @@ public class ButtonDoorScript : DoorScript
             if ((!wereButtonsPressed && bothButtonsPressed))
             {
                 closed = !closed;
+                if (closed) {
+                    closeSound.Play();
+                } else {
+                    openSound.Play();
+                }
                 doorLock = togglesPermanently;
             }
             wereButtonsPressed = bothButtonsPressed;
