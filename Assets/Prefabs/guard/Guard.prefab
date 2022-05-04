@@ -392,7 +392,7 @@ MonoBehaviour:
   catchRateMultiplierMax: 3
   suspicionDecreaseRate: 1
   disabledTimeMultiplier: 1
-  visionConeResolution: 100
+  visionConeResolution: 50
   timerText: {fileID: 7571176751622700910}
   canvasTransform: {fileID: 6802327373034229225}
   defaultRouteActions: []
