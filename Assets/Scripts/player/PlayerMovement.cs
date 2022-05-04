@@ -67,10 +67,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PauseMenu.isGamePaused) return;
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        if(playerMovementEnabled){
+        if (playerMovementEnabled)
+        {
             movement.x = Input.GetAxisRaw(x_axis);
             movement.y = Input.GetAxisRaw(y_axis);
-        } else{
+        }
+        else
+        {
             movement.x = 0;
             movement.y = 0;
         }
@@ -83,11 +86,15 @@ public class PlayerMovement : MonoBehaviour
         else if (movement.x < 0) { movementId = 4; }
         animator.SetInteger("WalkDirection", movementId);
 
-        if (movementId != 0) {
-            if (!walkingSound.isPlaying) {
+        if (movementId != 0)
+        {
+            if (!walkingSound.isPlaying)
+            {
                 walkingSound.Play();
-            } 
-        } else {
+            }
+        }
+        else
+        {
             walkingSound.Stop();
         }
 
@@ -148,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         List<Collider2D> colliderResults = new List<Collider2D>();
         ContactFilter2D guardContactFilter = new ContactFilter2D();
         guardContactFilter.SetLayerMask(LayerMask.GetMask("Guard"));
+        guardContactFilter.useTriggers = true;
 
         int numOverlappingColliders = playerRangeCollider.OverlapCollider(guardContactFilter, colliderResults);
 

@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 6166422522389729071}
   - component: {fileID: 6166422522389729068}
   - component: {fileID: 6166422522389729070}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: Vision Cone
   m_TagString: GuardVisionCone
   m_Icon: {fileID: 0}
