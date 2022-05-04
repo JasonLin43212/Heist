@@ -20,7 +20,8 @@ public class SaveUtils : MonoBehaviour
 {
     void Start()
     {
-        if (SavedState.hasSavedContent){
+        if (SavedState.hasSavedContent)
+        {
             LoadCurrentState();
             LoadStopwatchTime();
         }
@@ -85,7 +86,7 @@ public class SaveUtils : MonoBehaviour
         foreach (ItemBehaviour obj in FindObjectsOfType<ItemBehaviour>())
         {
             if (!SavedState.itemStates.ContainsKey(obj.UniqueID)) obj.DestroySelf();
-            obj.Deserialize(SavedState.itemStates[obj.UniqueID]);
+            else obj.Deserialize(SavedState.itemStates[obj.UniqueID]);
         }
 
         // Cameras
@@ -107,11 +108,13 @@ public class SaveUtils : MonoBehaviour
         }
     }
 
-    public static void SaveStopwatchTime(){
+    public static void SaveStopwatchTime()
+    {
         SavedState.gameStopwatchTime = GameState.Instance.stopwatchTime;
     }
 
-    public static void LoadStopwatchTime(){
+    public static void LoadStopwatchTime()
+    {
         GameState.Instance.stopwatchTime = SavedState.gameStopwatchTime;
     }
 }
