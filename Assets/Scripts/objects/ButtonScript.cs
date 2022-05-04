@@ -38,9 +38,9 @@ public class ButtonScript : MonoBehaviour
         // Also check if the guard is touching the button, if it exists
         if(guard != null) 
         {
-            GameObject collisionBox = guard.transform.GetChild(3).gameObject; 
-            isTouchingPlayer |= collisionBox.GetComponent<BoxCollider2D>().IsTouching(buttonCollider);
-            // isTouchingPlayer |= guard.GetComponent<Rigidbody2D>().IsTouching(buttonCollider);
+            // GameObject collisionBox = guard.transform.GetChild(3).gameObject; 
+            // isTouchingPlayer |= collisionBox.GetComponent<BoxCollider2D>().IsTouching(buttonCollider);
+            isTouchingPlayer |= guard.GetComponent<Collider2D>().IsTouching(buttonCollider);
         }
 
         
