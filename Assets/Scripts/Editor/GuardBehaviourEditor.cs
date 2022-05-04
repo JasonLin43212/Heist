@@ -21,7 +21,8 @@ public class GuardBehaviourEditor : Editor
         };
         referenceFields = new List<string> {
             "directionMarkerTransform", "visionConeObject", "alertMarkerObject", 
-            "alertSpriteMaskObject", "timerText", "canvasTransform"
+            "alertSpriteMaskObject", "timerText", "canvasTransform", "guardSounds", "animator",
+            "guardSprite"
         };
         toggleFields = new List<string> {
             "enableMove", "strictChasing"
