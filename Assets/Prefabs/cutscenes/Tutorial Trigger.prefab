@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 8143041917201562940}
   - component: {fileID: 3057600035187794183}
   - component: {fileID: 4142200576844733117}
+  - component: {fileID: 3726109853569363509}
   m_Layer: 2
   m_Name: Tutorial Trigger
   m_TagString: Untagged
@@ -259,6 +260,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialPopupUI: {fileID: 746809061563279167}
+--- !u!114 &3726109853569363509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774163297579780680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4ecfcb8b154074cabe3ce92f224752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &737121206264790500
 PrefabInstance:
   m_ObjectHideFlags: 0

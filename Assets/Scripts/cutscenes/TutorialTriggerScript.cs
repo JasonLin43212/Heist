@@ -28,7 +28,6 @@ public class TutorialTriggerScript : GenericTriggerScript
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print(collision.gameObject);
         if(collision.gameObject.tag == "Player"){
             popupIsActive = true;
             tutorialPopupUI.SetActive(true);
