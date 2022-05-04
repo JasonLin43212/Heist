@@ -1330,12 +1330,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Portraits, Title Screen, Player / Guard Sprites by Eli
-
-    - Keycard
-    by
-
-    - Crowbar by'
+  m_text: "- Portraits, Title Screen, Player / Guard Sprites by Eli\n- Keycard -
+    Factory Keycard (Phoenix Rising)\n  Link: https://phoenix-rising-wiki.fandom.com/wiki/Factory_Key\n-
+    Crowbar by"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
   m_sharedMaterial: {fileID: 7382418273137075142, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}
