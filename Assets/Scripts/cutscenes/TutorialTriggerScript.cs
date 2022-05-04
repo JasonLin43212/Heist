@@ -16,8 +16,10 @@ public class TutorialTriggerScript : GenericTriggerScript
     // Update is called once per frame
     void Update()
     {
-        if(popupIsActive){
-            if (Input.GetMouseButtonDown(0)){
+        if (popupIsActive)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
                 popupIsActive = false;
                 tutorialPopupUI.SetActive(false);
                 PauseMenu.popupIsEnabled = false;
@@ -26,10 +28,10 @@ public class TutorialTriggerScript : GenericTriggerScript
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(collision);
-        if(collision.gameObject.tag == "Player"){
+        if (other.gameObject.tag == "Player")
+        {
             popupIsActive = true;
             tutorialPopupUI.SetActive(true);
             this.GetComponent<BoxCollider2D>().enabled = false;
