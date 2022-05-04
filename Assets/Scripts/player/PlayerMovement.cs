@@ -132,15 +132,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shout()
     {
+        whistlingSound.Play();
+
         Vector2 playerPosition = (Vector2)transform.position;
 
-        whistlingSound.Play();
 
         // Creates a soundwave and sets its position
         GameObject currentShout = Instantiate(shoutImage);
         currentShout.GetComponent<Soundwave>().setPosition(playerPosition);
         // From the player position, it emits a shockwave that will hit all guards within range
-
 
 
         Collider2D playerRangeCollider = GetRangeCollider();
