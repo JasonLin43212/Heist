@@ -24,7 +24,7 @@ public class ItemCrowbar : ItemDescriptor
         base.Start();
         guardContactFilter = new ContactFilter2D();
         guardContactFilter.SetLayerMask(LayerMask.GetMask("Guard"));
-        // guardContactFilter.useTriggers = true;
+        guardContactFilter.useTriggers = true;
     }
 
     public override bool UseKeyPressed()

@@ -1332,7 +1332,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "- Portraits, Title Screen, Player / Guard Sprites by Eli\n- Keycard -
     Factory Keycard (Phoenix Rising)\n  Link: https://phoenix-rising-wiki.fandom.com/wiki/Factory_Key\n-
-    Crowbar by\n- Lightning by\n- Disabled Effect from https://assetstore.unity.com/packages/\ntools/particles-effects/lightning-bolt-effect-for-unity-59471\n-
+    Crowbar: http://clipart-library.com/clipart/385847.htm\n- Lightning by\n- Disabled
+    Effect from https://assetstore.unity.com/packages/\ntools/particles-effects/lightning-bolt-effect-for-unity-59471\n-
     Circle Ripple by 588ku - pngtree.com"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 02d20d1dc7a7ce82cbcc1a452dc744d9, type: 2}

@@ -139,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shout()
     {
+        if (PauseMenu.isGamePaused) return;
         whistlingSound.Play();
 
         Vector2 playerPosition = (Vector2)transform.position;
