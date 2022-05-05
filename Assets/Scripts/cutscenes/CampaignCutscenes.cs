@@ -48,7 +48,8 @@ public static class CampaignCutscenes
         })},
 
         { "narrative2", new Cutscene(new List<(string, string)> {
-            ("Egg", "escape secure, u good"),
+            ("Pepper", "Wow, I can't believe they left their secret ingredients in a basket so close to the exit."),
+            ("Pepper", "Makes me wonder if we should have just gone through this way..."),
             ("Belle", "Hah! Take that, Donald WcDonald's or whatever your name is! I've waited for this moment for so many years..."),
             ("Pepper", "Phew. There were a few close calls there. I'm glad we made it out safely."),
             ("Belle", "I was never in doubt."),
