@@ -27,6 +27,7 @@ public class BasicMouseCamera : MonoBehaviour
     private bool cameraEnabled;
     private bool timerIsCountingDown = false;
     private float timerUntilEnabled;
+    private bool wasHovering = false;
 
     // Movement variables
     public List<float> defaultAngleRoute;
@@ -114,6 +115,9 @@ public class BasicMouseCamera : MonoBehaviour
     private void HandleMouseInteraction()
     {
         bool isHovering = GameState.Instance.ClickController.IsTargetObject(gameObject);
+        if (isHovering && !wasHovering) clickCollider.EnterTarget();
+        else if (!isHovering && wasHovering) clickCollider.LeaveTarget();
+        wasHovering = isHovering;
         spriteOutlineObject.SetActive(isHovering);
         if (isAlert && !cameraEnabled) isAlert = false;
     }
@@ -121,6 +125,7 @@ public class BasicMouseCamera : MonoBehaviour
     public void OnClick()
     {
         if (GameState.Instance.numberOfCamerasDisabled >= 200) return;  // Too many cameras disabled at once
+        clickCollider.StartLightningEffect();
         if (cameraEnabled)
         {
             // Disable

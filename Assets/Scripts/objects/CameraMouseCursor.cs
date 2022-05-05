@@ -16,26 +16,30 @@ public class CameraMouseCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    
+
     // Change cursor sprite if hovering over camera
-    private void OnMouseOver(){
+    public void EnterTarget()
+    {
         if (PauseMenu.isGamePaused) return;
-        Cursor.SetCursor(disableCursor, new Vector2(0,disableCursor.height), CursorMode.Auto);
+        Cursor.SetCursor(disableCursor, new Vector2(0, disableCursor.height), CursorMode.Auto);
     }
 
-    private void OnMouseExit(){
+    public void LeaveTarget()
+    {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
-    private void OnMouseDown(){
+    public void StartLightningEffect()
+    {
         GameObject lightningEffect = gameObject.transform.GetChild(0).gameObject;
         lightningEffect.SetActive(true);
     }
 
-    public void hideLightning(){
+    public void hideLightning()
+    {
         GameObject lightningEffect = gameObject.transform.GetChild(0).gameObject;
         lightningEffect.SetActive(false);
     }
