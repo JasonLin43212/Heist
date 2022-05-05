@@ -19,7 +19,7 @@ public class ClickController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isGamePaused && !PauseMenu.PausedByCutscene)
+        if (!PauseMenu.isGamePaused && !PauseMenu.PausedByCutscene && !PauseMenu.popupIsEnabled)
         {
             UpdateTargets(GetMouseWorldPosition());
             if (Input.GetMouseButtonDown(0)) HandleClick();
