@@ -99,6 +99,8 @@ public class DoorScript : MonoBehaviour
         this.closed = closed;
         this.guardNotLooking = guardNotLooking;
         this.doorWasAlreadyClosed = doorWasAlreadyClosed;
+        this.shouldDoorBeClosed = guardNotLooking && closed;
+        closeDoor();
         DeserializeDoor(doorState);
     }
 }
