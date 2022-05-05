@@ -115,8 +115,8 @@ public class BasicMouseCamera : MonoBehaviour
     private void HandleMouseInteraction()
     {
         bool isHovering = GameState.Instance.ClickController.IsTargetObject(gameObject);
-        if (isHovering && !wasHovering) clickCollider.EnterTarget();
-        else if (!isHovering && wasHovering) clickCollider.LeaveTarget();
+        if (isHovering && !CameraMouseCursor.CursorActivated) clickCollider.ActivateCursor();
+        else if (!isHovering && wasHovering) clickCollider.DeactivateCursor();
         wasHovering = isHovering;
         spriteOutlineObject.SetActive(isHovering);
         if (isAlert && !cameraEnabled) isAlert = false;
