@@ -64,31 +64,14 @@ public static class CampaignCutscenes
 
         // Lol this is why i should never work on dialogue. - Jason
         // Nah this is good!!! - Lilian
-        { "keycard", new Cutscene(new List<(string, string)> {
-            ("Egg", "keycard.get() == true lmao"),
-            ("Belle", "What?"),
-            ("Pepper", "What?"),
-            ("Egg", "belle, press v near a door to use the keycard"),
-            ("Egg", "pepper, press enter near a door to use the keycard"),
-            ("Belle", "Understood.")
-        })},
+        
 
         { "button", new Cutscene(new List<(string, string)> {
-            ("Egg", "oh no"),
-            ("Belle", "Oh no."),
-            ("Pepper", "Oh no."),
-            ("Kool Aid Man", "OH YEAHHHHHHH!!!!!!!!"),
-            ("Belle", "..."),
-            ("Pepper", "..."),
-            ("Kool Aid Man", ".........I don't think I should be here. Uhhhhhhh... bye!"),
-            ("Egg", "i think stepping on the colored buttons toggles the doors of the same colors."),
-            ("Belle", "Understood."),
-            ("Pepper", "Understood."),
-            ("Belle", "Hey! Stop copying me."),
-            ("Pepper", "Hey! Stop copying me."),
-            ("Belle", "LoSeRsAysWhAt"),
-            ("Pepper", "What?"),
-            ("Egg", "get rekted lmao")
+            ("Belle", "Oh no!"),
+            ("Pepper", "Oh no!"),
+            ("Egg", "did the door just close behind you? you aren't trapped right?"),
+            ("Belle", "Hmmm, maybe we can use these colored buttons that are on the ground"),
+            ("Pepper", "Let's try stepping on all of them! Who knows what can happen?"),
         })},
 
         // Additional misc dialogue

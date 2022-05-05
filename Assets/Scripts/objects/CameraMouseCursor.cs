@@ -22,7 +22,6 @@ public class CameraMouseCursor : MonoBehaviour
     
     // Change cursor sprite if hovering over camera
     private void OnMouseOver(){
-        if (PauseMenu.isGamePaused) return;
         Cursor.SetCursor(disableCursor, new Vector2(0,disableCursor.height), CursorMode.Auto);
     }
 
